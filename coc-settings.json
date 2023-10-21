@@ -1,0 +1,9 @@
+{
+    "java.home": "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home",
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ],
+    "scala": {
+      "keepUsing": true
+    },
+}
