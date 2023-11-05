@@ -34,9 +34,9 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'xiyaowong/nvim-transparent'
 Plug 'justinmk/vim-sneak'
 Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'maxmellon/vim-jsx-pretty'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'peitalin/vim-jsx-typescript'
+" Plug 'maxmellon/vim-jsx-pretty'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -46,7 +46,7 @@ Plug 'p00f/clangd_extensions.nvim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 Plug 'shime/vim-livedown'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'tag': 'v0.9.4'}
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'universal-ctags/ctags'
 Plug 'untitled-ai/jupyter_ascending.vim'
@@ -56,6 +56,11 @@ Plug 'folke/todo-comments.nvim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Vigemus/iron.nvim'
 Plug 'fs111/pydoc.vim'
+Plug 'tikhomirov/vim-glsl'
+Plug 'udalov/kotlin-vim'
+
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'PhilRunninger/nerdtree-buffer-ops'
 call plug#end()
 
 "color deus
@@ -174,3 +179,7 @@ hi @define.c guifg=coral3
 hi @constant.c guifg=IndianRed1
 
 let g:pydoc_open_cmd = 'tabnew'
+
+set foldmethod=manual
+
+autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
