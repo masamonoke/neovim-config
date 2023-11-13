@@ -22,7 +22,7 @@ require('nvim-cursorline').setup {
     enable = true,
     min_length = 3,
     hl = { underline = true },
-  }
+  },
 }
 
 require("clangd_extensions").setup {
@@ -120,7 +120,7 @@ require('neoscroll').setup({
     mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
                 '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
     hide_cursor = true,          -- Hide cursor while scrolling
-    stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+    stop_eof = false,             -- Stop at <EOF> when scrolling downwards
     respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
     cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
     easing_function = nil,       -- Default easing function
@@ -155,7 +155,7 @@ require'nvim-treesitter.configs'.setup {
     -- list of language that will be disabled
     disable = { },
     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    
+
     -- disable = function(lang, buf)
     --     local max_filesize = 100 * 1024 -- 100 KB
     --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -170,22 +170,14 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
-}
-
-require("nvim-treesitter.configs").setup {
-  highlight = {
-      -- ...
-  },
-  -- ...
   rainbow = {
     enable = true,
     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-	extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
     max_file_lines = nil, -- Do not enable for files with more than n lines, int
     -- colors = {}, -- table of hex strings
     -- termcolors = {} -- table of colour name strings
-  },
-
+  }
 }
 
 require("indent_blankline").setup {
@@ -244,4 +236,23 @@ vim.keymap.set('n', '<space>rs', '<cmd>IronRepl<cr>')
 vim.keymap.set('n', '<space>rr', '<cmd>IronRestart<cr>')
 vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
 vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
+
+require("nvim-tree").setup {
+	view = {
+		width = 50,
+	},
+	filters = {
+		exclude = { 'todo.txt' }
+	}
+}
+
+-- -- To get telescope-file-browser loaded and working with telescope,
+-- -- you need to call load_extension, somewhere after setup function:
+-- require("telescope").load_extension "file_browser"
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "F5",
+--   ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+--   { noremap = true }
+-- )
 

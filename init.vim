@@ -10,13 +10,14 @@ set noswapfile
 set nowrap
 set hlsearch
 set clipboard+=unnamedplus
+set noshowmode
 
 call plug#begin()
-Plug 'preservim/nerdtree'
+"Plug 'preservim/nerdtree'
 Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-commentary'
 Plug 'lfv89/vim-interestingwords'
-Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'vim-airline/vim-airline'
@@ -26,7 +27,6 @@ Plug 'itchyny/vim-gitbranch'
 Plug 'voldikss/vim-floaterm'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'ARM9/arm-syntax-vim'
-
 Plug 'sainnhe/gruvbox-material'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'luisiacc/gruvbox-baby', {'branch': 'main'}
@@ -34,16 +34,13 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'xiyaowong/nvim-transparent'
 Plug 'justinmk/vim-sneak'
 Plug 'pangloss/vim-javascript'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'peitalin/vim-jsx-typescript'
-" Plug 'maxmellon/vim-jsx-pretty'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'samodostal/image.nvim'
 Plug 'yamatsum/nvim-cursorline'
 Plug 'p00f/clangd_extensions.nvim'
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
 Plug 'shime/vim-livedown'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'tag': 'v0.9.4'}
@@ -58,9 +55,12 @@ Plug 'Vigemus/iron.nvim'
 Plug 'fs111/pydoc.vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'udalov/kotlin-vim'
-
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'PhilRunninger/nerdtree-buffer-ops'
+"Plug 'PhilRunninger/nerdtree-buffer-ops'
+Plug 'nvim-tree/nvim-tree.lua'
+" Plug 'nvim-telescope/telescope-file-browser.nvim'
+"Plug 'bfrg/vim-cpp-modern'
+" Plug 'jlcrochet/vim-cs'
 call plug#end()
 
 "color deus
@@ -78,7 +78,7 @@ let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_keymap_next = '<F8>'
 let g:floaterm_keymap_kill = '<F9>'
 let g:floaterm_wintype = 'split'
-let g:floaterm_height = 20
+let g:floaterm_height = 30
 hi Floaterm guibg=black
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
@@ -95,20 +95,20 @@ noremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
 noremap <C-t> :tabnew split<CR>
 
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-nmap <F6> :NERDTreeToggle<CR>
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" nmap <F6> :NERDTreeToggle<CR>
+" let g:NERDTreeWinSize=50
+" let NERDTreeShowHidden=1
+
 nnoremap <F4> :bp \| sp \| bn \| bd<CR>
-let g:NERDTreeWinSize=50
-let NERDTreeShowHidden=1
 
 set guicursor=i:block
 
-
-let g:buffet_powerline_separators = 1
-let g:buffet_tab_icon = "\uf00a"
-let g:buffet_left_trunc_icon = "\uf0a8"
-let g:buffet_right_trunc_icon = "\uf0a9"
-let g:buffet_show_index = 1
+" let g:buffet_powerline_separators = 1
+" let g:buffet_tab_icon = "\uf00a"
+" let g:buffet_left_trunc_icon = "\uf0a8"
+" let g:buffet_right_trunc_icon = "\uf0a9"
+" let g:buffet_show_index = 1
 
 highlight CocErrorFloat ctermfg=204 guifg=#ffffff
 
@@ -163,9 +163,9 @@ lua << EOF
 EOF
 
 " Check if NERDTree is open or active
-function! IsNERDTreeOpen()
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
+" function! IsNERDTreeOpen()
+"   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+" endfunction
 
 set keywordprg=:call\ CocActionAsync('doHover')
 augroup VimHelp
@@ -183,3 +183,6 @@ let g:pydoc_open_cmd = 'tabnew'
 set foldmethod=manual
 
 autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
+
+nmap <F6> :NvimTreeToggle<CR>
+

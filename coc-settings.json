@@ -10,7 +10,12 @@
 		"kotlin": {
 			"command": "/Users/masamonoke/lib/vim/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",
 			"filetypes": ["kotlin"]
-		}
+		},
+		"csharp-ls": {
+			"command": "csharp-ls",
+			"filetypes": ["cs"],
+			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
+        }
 	}
 
 }
