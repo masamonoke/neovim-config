@@ -1,7 +1,8 @@
 {
     "java.home": "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home",
     "clangd.arguments": [
-        "--header-insertion=never"
+        "--header-insertion=never",
+		"--clang-tidy",
     ],
     "scala": {
       "keepUsing": true
@@ -14,8 +15,7 @@
 		"csharp-ls": {
 			"command": "csharp-ls",
 			"filetypes": ["cs"],
-			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
-        }
-	}
-
+			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/", "*.sln"],
+        },
+	},
 }

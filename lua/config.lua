@@ -1,3 +1,33 @@
+require("telescope").setup {
+  extensions = {
+    file_browser = {
+      theme = "ivy",
+      -- disables netrw and use telescope-file-browser in its place
+      hijack_netrw = true,
+	  mappings = {
+        ["i"] = {
+          -- your custom insert mode mappings
+		  ["<Tab>"] = false,
+		  ["<S-Tab>"] = false
+        },
+        ["n"] = {
+          -- your custom normal mode mappings
+        },
+      },
+    },
+  },
+}
+
+require("telescope").load_extension "file_browser"
+vim.api.nvim_set_keymap(
+  "n",
+  "<F6>",
+  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+  { noremap = false }
+)
+
+require('telescope').load_extension('fzf')
+
 -- Require and call setup function somewhere in your init.lua
 require('image').setup {
   render = {
@@ -25,95 +55,95 @@ require('nvim-cursorline').setup {
   },
 }
 
-require("clangd_extensions").setup {
-    server = {
-        -- options to pass to nvim-lspconfig
-        -- i.e. the arguments to require("lspconfig").clangd.setup({})
-    },
-    extensions = {
-        -- defaults:
-        -- Automatically set inlay hints (type hints)
-        autoSetHints = true,
-        -- These apply to the default ClangdSetInlayHints command
-        inlay_hints = {
-            -- Only show inlay hints for the current line
-            only_current_line = false,
-            -- Event which triggers a refersh of the inlay hints.
-            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
-            -- not that this may cause  higher CPU usage.
-            -- This option is only respected when only_current_line and
-            -- autoSetHints both are true.
-            only_current_line_autocmd = "CursorHold",
-            -- whether to show parameter hints with the inlay hints or not
-            show_parameter_hints = true,
-            -- prefix for parameter hints
-            parameter_hints_prefix = "<- ",
-            -- prefix for all the other hints (type, chaining)
-            other_hints_prefix = "=> ",
-            -- whether to align to the length of the longest line in the file
-            max_len_align = false,
-            -- padding from the left if max_len_align is true
-            max_len_align_padding = 1,
-            -- whether to align to the extreme right or not
-            right_align = false,
-            -- padding from the right if right_align is true
-            right_align_padding = 7,
-            -- The color of the hints
-            highlight = "Comment",
-            -- The highlight group priority for extmark
-            priority = 100,
-        },
-        ast = {
-            -- These are unicode, should be available in any font
-            role_icons = {
-                 type = "🄣",
-                 declaration = "🄓",
-                 expression = "🄔",
-                 statement = ";",
-                 specifier = "🄢",
-                 ["template argument"] = "🆃",
-            },
-            kind_icons = {
-                Compound = "🄲",
-                Recovery = "🅁",
-                TranslationUnit = "🅄",
-                PackExpansion = "🄿",
-                TemplateTypeParm = "🅃",
-                TemplateTemplateParm = "🅃",
-                TemplateParamObject = "🅃",
-            },
-            --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
-            role_icons = {
-                type = "",
-                declaration = "",
-                expression = "",
-                specifier = "",
-                statement = "",
-                ["template argument"] = "",
-            },
+--require("clangd_extensions").setup {
+--    server = {
+--        -- options to pass to nvim-lspconfig
+--        -- i.e. the arguments to require("lspconfig").clangd.setup({})
+--    },
+--    extensions = {
+--        -- defaults:
+--        -- Automatically set inlay hints (type hints)
+--        autoSetHints = true,
+--        -- These apply to the default ClangdSetInlayHints command
+--        inlay_hints = {
+--            -- Only show inlay hints for the current line
+--            only_current_line = false,
+--            -- Event which triggers a refersh of the inlay hints.
+--            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+--            -- not that this may cause  higher CPU usage.
+--            -- This option is only respected when only_current_line and
+--            -- autoSetHints both are true.
+--            only_current_line_autocmd = "CursorHold",
+--            -- whether to show parameter hints with the inlay hints or not
+--            show_parameter_hints = false,
+--            -- prefix for parameter hints
+--            parameter_hints_prefix = "<- ",
+--            -- prefix for all the other hints (type, chaining)
+--            other_hints_prefix = "=> ",
+--            -- whether to align to the length of the longest line in the file
+--            max_len_align = false,
+--            -- padding from the left if max_len_align is true
+--            max_len_align_padding = 1,
+--            -- whether to align to the extreme right or not
+--            right_align = false,
+--            -- padding from the right if right_align is true
+--            right_align_padding = 7,
+--            -- The color of the hints
+--            highlight = "Comment",
+--            -- The highlight group priority for extmark
+--            priority = 100,
+--        },
+--        ast = {
+--            -- These are unicode, should be available in any font
+--            role_icons = {
+--                 type = "🄣",
+--                 declaration = "🄓",
+--                 expression = "🄔",
+--                 statement = ";",
+--                 specifier = "🄢",
+--                 ["template argument"] = "🆃",
+--            },
+--            kind_icons = {
+--                Compound = "🄲",
+--                Recovery = "🅁",
+--                TranslationUnit = "🅄",
+--                PackExpansion = "🄿",
+--                TemplateTypeParm = "🅃",
+--                TemplateTemplateParm = "🅃",
+--                TemplateParamObject = "🅃",
+--            },
+--            --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
+--            role_icons = {
+--                type = "",
+--                declaration = "",
+--                expression = "",
+--                specifier = "",
+--                statement = "",
+--                ["template argument"] = "",
+--            },
 
-            kind_icons = {
-                Compound = "",
-                Recovery = "",
-                TranslationUnit = "",
-                PackExpansion = "",
-                TemplateTypeParm = "",
-                TemplateTemplateParm = "",
-                TemplateParamObject = "",
-            }, ]]
+--            kind_icons = {
+--                Compound = "",
+--                Recovery = "",
+--                TranslationUnit = "",
+--                PackExpansion = "",
+--                TemplateTypeParm = "",
+--                TemplateTemplateParm = "",
+--                TemplateParamObject = "",
+--            }, ]]
 
-            highlights = {
-                detail = "Comment",
-            },
-        },
-        memory_usage = {
-            border = "none",
-        },
-        symbol_info = {
-            border = "none",
-        },
-    },
-}
+--            highlights = {
+--                detail = "Comment",
+--            },
+--        },
+--        memory_usage = {
+--            border = "none",
+--        },
+--        symbol_info = {
+--            border = "none",
+--        },
+--    },
+--}
 
 require('neoscroll').setup({
     -- All these keys will be mapped to their corresponding default scrolling animation
@@ -171,7 +201,7 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
   rainbow = {
-    enable = true,
+    enable =true,
     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
     max_file_lines = nil, -- Do not enable for files with more than n lines, int
@@ -237,22 +267,92 @@ vim.keymap.set('n', '<space>rr', '<cmd>IronRestart<cr>')
 vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
 vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
 
-require("nvim-tree").setup {
-	view = {
-		width = 50,
-	},
-	filters = {
-		exclude = { 'todo.txt' }
-	}
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+
+-- require("nvim-tree").setup {
+-- 	view = {
+-- 		width = 50,
+-- 	},
+-- 	filters = {
+-- 		exclude = { 'todo.txt' }
+-- 	}
+-- }
+
+require('gitsigns').setup {
+  signs = {
+    add          = { text = '│' },
+    change       = { text = '│' },
+    delete       = { text = '_' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
+    untracked    = { text = '┆'},
+
+  },
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir = {
+    follow_files = true
+  },
+  attach_to_untracked = true,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+    virt_text_priority = 100,
+  },
+  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000, -- Disable if file is longer than this (in lines)
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  yadm = {
+    enable = false
+  },
 }
 
--- -- To get telescope-file-browser loaded and working with telescope,
--- -- you need to call load_extension, somewhere after setup function:
--- require("telescope").load_extension "file_browser"
--- vim.api.nvim_set_keymap(
---   "n",
---   "F5",
---   ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
---   { noremap = true }
--- )
+require'barbar'.setup {
+	animation = true,
+	auto_hide = true,
+	icons = {
+		-- Enable highlighting visible buffers
+		highlight_visible = true,
+		modified = {button = '●'},
+		gitsigns = {
+			added = {enabled = true, icon = '+'},
+			changed = {enabled = true, icon = '~'},
+			deleted = {enabled = true, icon = '-'},
+			modified = {enabled = true, icon = 'M'}
+		},
+		pinned = {button = '', filename = true},
+	},
+	insert_at_end = true,
+}
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
 
+require("gruvbox").setup({
+	italic = {
+		strings = true,
+		emphasis = true,
+		comments = true,
+		operators = false,
+		folds = true,
+  },
+})
+vim.cmd("colorscheme gruvbox")
+
+require'lspconfig'.tsserver.setup{}

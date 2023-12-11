@@ -31,6 +31,7 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'luisiacc/gruvbox-baby', {'branch': 'main'}
 Plug 'neovim/nvim-lspconfig'
+" Plug 'VonHeikemen/lsp-zero.nvim'
 Plug 'xiyaowong/nvim-transparent'
 Plug 'justinmk/vim-sneak'
 Plug 'pangloss/vim-javascript'
@@ -55,17 +56,21 @@ Plug 'Vigemus/iron.nvim'
 Plug 'fs111/pydoc.vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'udalov/kotlin-vim'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "Plug 'PhilRunninger/nerdtree-buffer-ops'
-Plug 'nvim-tree/nvim-tree.lua'
-" Plug 'nvim-telescope/telescope-file-browser.nvim'
+" Plug 'nvim-tree/nvim-tree.lua'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 "Plug 'bfrg/vim-cpp-modern'
 " Plug 'jlcrochet/vim-cs'
+Plug 'jlcrochet/vim-razor'
+Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
+Plug 'romgrk/barbar.nvim'
+Plug 'sindrets/diffview.nvim'
 call plug#end()
 
 "color deus
 "color gruvbox-material
-color gruvbox
+" color gruvbox
 "color gruvbox-baby
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
@@ -128,16 +133,39 @@ autocmd TextChanged,TextChangedI <buffer> silent write
 
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
+"lua << EOF
+"require("telescope").setup {
+"  extensions = {
+"    file_browser = {
+"      theme = "ivy",
+"      -- disables netrw and use telescope-file-browser in its place
+"      hijack_netrw = true,
+"    },
+"  },
+"}
+"EOF
+
+"lua << EOF
+"require("telescope").load_extension "file_browser"
+"vim.api.nvim_set_keymap(
+"  "n",
+"  "<F5>",
+"  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+"  { noremap = false}
+")
+"EOF
+
+" lua << EOF
+" require('telescope').load_extension('fzf')
+" EOF
+
 "coc
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
-
-lua << EOF
-require('telescope').load_extension('fzf')
-EOF
 
 nnoremap <F1> :Telescope buffers <CR>
 nnoremap <F2> :Telescope find_files<CR>
 nnoremap <F3> :Telescope live_grep<CR>
+
 
 lua << EOF
 require("nvim-autopairs").setup {}
@@ -184,5 +212,4 @@ set foldmethod=manual
 
 autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
 
-nmap <F6> :NvimTreeToggle<CR>
-
+" nmap <F6> :NvimTreeToggle<CR>
