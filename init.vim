@@ -25,7 +25,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'karb94/neoscroll.nvim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'voldikss/vim-floaterm'
-Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim', {'tag': 'v2.20.8'}
 Plug 'ARM9/arm-syntax-vim'
 Plug 'sainnhe/gruvbox-material'
 Plug 'ellisonleao/gruvbox.nvim'
@@ -46,6 +46,7 @@ Plug 'preservim/vim-markdown'
 Plug 'shime/vim-livedown'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'tag': 'v0.9.4'}
 Plug 'p00f/nvim-ts-rainbow'
+" Plug 'rainbow-delimiters.nvim'
 Plug 'universal-ctags/ctags'
 Plug 'untitled-ai/jupyter_ascending.vim'
 Plug 'jalvesaq/Nvim-R'
@@ -212,4 +213,6 @@ set foldmethod=manual
 
 autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
 
-" nmap <F6> :NvimTreeToggle<CR>
+noremap d "_d
+
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
