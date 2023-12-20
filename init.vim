@@ -67,6 +67,7 @@ Plug 'jlcrochet/vim-razor'
 Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
 Plug 'romgrk/barbar.nvim'
 Plug 'sindrets/diffview.nvim'
+" Plug 'akinsho/toggleterm.nvim'
 call plug#end()
 
 "color deus
@@ -83,9 +84,10 @@ let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_keymap_next = '<F8>'
 let g:floaterm_keymap_kill = '<F9>'
-let g:floaterm_wintype = 'split'
-let g:floaterm_height = 30
-hi Floaterm guibg=black
+let g:floaterm_wintype = 'float'
+let g:floaterm_height = 45
+let g:floaterm_width = 160
+" hi Floaterm guibg=black
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)
