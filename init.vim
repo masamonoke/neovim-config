@@ -68,6 +68,8 @@ Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
 Plug 'romgrk/barbar.nvim'
 Plug 'sindrets/diffview.nvim'
 " Plug 'akinsho/toggleterm.nvim'
+Plug 'mfussenegger/nvim-dap'
+Plug 'mfussenegger/nvim-dap-python'
 call plug#end()
 
 "color deus
@@ -218,3 +220,9 @@ autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
 noremap d "_d
 
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+
+nnoremap <C-b> :lua require'dap'.toggle_breakpoint() <CR>
+nnoremap <C-m> :lua require'dap'.continue() <CR>
+nnoremap <C-n> :lua require'dap'.step_over() <CR>
+nnoremap <C-s> :lua require'dap'.step_into() <CR>
+nnoremap <F5> :lua require'dap'.repl.open() <CR>

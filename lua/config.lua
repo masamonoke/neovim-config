@@ -360,3 +360,5 @@ require("gruvbox").setup({
 vim.cmd("colorscheme gruvbox")
 
 require'lspconfig'.tsserver.setup{}
+
+require('dap-python').setup('/Users/masamonoke/.pyenv/shims/python')
