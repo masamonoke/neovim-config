@@ -75,7 +75,7 @@ require('nvim-cursorline').setup {
 --            -- autoSetHints both are true.
 --            only_current_line_autocmd = "CursorHold",
 --            -- whether to show parameter hints with the inlay hints or not
---            show_parameter_hints = false,
+--            show_parameter_hints = true,
 --            -- prefix for parameter hints
 --            parameter_hints_prefix = "<- ",
 --            -- prefix for all the other hints (type, chaining)
@@ -211,15 +211,18 @@ require'nvim-treesitter.configs'.setup {
 }
 
 
-require("indent_blankline").setup {
-    -- for example, context is off by default, use this to turn it on
-    show_current_context = true,
-    show_current_context_start = true,
-
-}
-
--- require("ibl").setup {
+-- require("indent_blankline").setup {
+--     -- for example, context is off by default, use this to turn it on
+--     show_current_context = true,
+--     show_current_context_start = true,
 -- }
+require("ibl").setup {
+	scope = {
+		highlight = {
+			"Label"
+		}
+	}
+}
 
 local iron = require("iron.core")
 
@@ -334,31 +337,70 @@ require'barbar'.setup {
 		-- Enable highlighting visible buffers
 		highlight_visible = true,
 		modified = {button = '●'},
-		gitsigns = {
-			added = {enabled = true, icon = '+'},
-			changed = {enabled = true, icon = '~'},
-			deleted = {enabled = true, icon = '-'},
-			modified = {enabled = true, icon = 'M'}
-		},
+		-- gitsigns = {
+		-- 	added = {enabled = true, icon = '+'},
+		-- 	changed = {enabled = true, icon = '~'},
+		-- 	deleted = {enabled = true, icon = '-'},
+		-- 	modified = {enabled = true, icon = 'M'}
+		-- },
 		pinned = {button = '', filename = true},
 	},
-	insert_at_end = true,
+	insert_at_end = false,
 }
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
 
-require("gruvbox").setup({
-	italic = {
-		strings = true,
-		emphasis = true,
-		comments = true,
-		operators = false,
-		folds = true,
-  },
-})
-vim.cmd("colorscheme gruvbox")
+-- require("gruvbox").setup({
+-- 	italic = {
+-- 		strings = true,
+-- 		emphasis = true,
+-- 		comments = true,
+-- 		operators = false,
+-- 		folds = true,
+--   },
+-- })
+-- vim.cmd("colorscheme gruvbox")
+
+vim.cmd("colorscheme gruvbox-material")
 
 require'lspconfig'.tsserver.setup{}
 
 require('dap-python').setup('/Users/masamonoke/.pyenv/shims/python')
+
+local dap = require('dap')
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/opt/homebrew/opt/llvm/bin/lldb-vscode', -- adjust as needed, must be absolute path
+  name = 'lldb'
+}
+dap.configurations.cpp = {
+  {
+    name = 'Launch',
+    type = 'lldb',
+    request = 'launch',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+
+    -- 💀
+    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+    --
+    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --
+    -- Otherwise you might get the following error:
+    --
+    --    Error on launch: Failed to attach to the target process
+    --
+    -- But you should be aware of the implications:
+    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+    -- runInTerminal = false,
+  },
+}
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
+
+-- require('mini.indentscope').setup()

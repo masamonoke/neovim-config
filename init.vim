@@ -25,7 +25,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'karb94/neoscroll.nvim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'voldikss/vim-floaterm'
-Plug 'lukas-reineke/indent-blankline.nvim', {'tag': 'v2.20.8'}
+" Plug 'lukas-reineke/indent-blankline.nvim', {'tag': 'v2.20.8'}
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'ARM9/arm-syntax-vim'
 Plug 'sainnhe/gruvbox-material'
 Plug 'ellisonleao/gruvbox.nvim'
@@ -70,12 +71,13 @@ Plug 'sindrets/diffview.nvim'
 " Plug 'akinsho/toggleterm.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'mfussenegger/nvim-dap-python'
+Plug 'cryptomilk/nightcity.nvim'
+" Plug 'echasnovski/mini.indentscope'
 call plug#end()
 
-"color deus
-"color gruvbox-material
 " color gruvbox
-"color gruvbox-baby
+color gruvbox-material
+let g:gruvbox_material_enable_bold = 1
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 " autocmd VimEnter * RainbowParentheses
