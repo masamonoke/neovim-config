@@ -18,6 +18,7 @@ require("telescope").setup {
   },
 }
 
+
 require("telescope").load_extension "file_browser"
 vim.api.nvim_set_keymap(
   "n",
@@ -43,11 +44,6 @@ require('image').setup {
 }
 
 require('nvim-cursorline').setup {
-  cursorline = {
-    enable = true,
-    timeout = 1000,
-    number = false,
-  },
   cursorword = {
     enable = true,
     min_length = 3,
@@ -200,15 +196,27 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
-  rainbow = {
-    enable =true,
-    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-    max_file_lines = nil, -- Do not enable for files with more than n lines, int
-    -- colors = {}, -- table of hex strings
-    -- termcolors = {} -- table of colour name strings
-  }
+  -- rainbow = {
+  --   enable =true,
+  --   -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+  --   extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+  --   max_file_lines = 1000, -- Do not enable for files with more than n lines, int
+  --   -- colors = {}, -- table of hex strings
+  --   -- termcolors = {} -- table of colour name strings
+  -- }
 }
+
+-- require('nvim-treesitter.configs').setup {
+--   rainbow = {
+--     enable = true,
+--     -- list of languages you want to disable the plugin for
+--     -- disable = { 'jsx', 'cpp' },
+--     -- Which query to use for finding delimiters
+--     query = 'rainbow-parens',
+--     -- Highlight the entire buffer all at once
+--     strategy = require('ts-rainbow').strategy.global,
+--   }
+-- }
 
 
 -- require("indent_blankline").setup {
@@ -345,24 +353,25 @@ require'barbar'.setup {
 		-- },
 		pinned = {button = '', filename = true},
 	},
-	insert_at_end = false,
 }
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
 
--- require("gruvbox").setup({
--- 	italic = {
--- 		strings = true,
--- 		emphasis = true,
--- 		comments = true,
--- 		operators = false,
--- 		folds = true,
---   },
--- })
--- vim.cmd("colorscheme gruvbox")
 
-vim.cmd("colorscheme gruvbox-material")
+require("gruvbox").setup({
+	italic = {
+		strings = true,
+		emphasis = true,
+		comments = true,
+		operators = false,
+		folds = true,
+  },
+})
+vim.cmd("colorscheme gruvbox")
+
+-- vim.cmd("colorscheme gruvbox-material")
+-- vim.cmd("let g:gruvbox_material_enable_bold = 1")
 
 require'lspconfig'.tsserver.setup{}
 
@@ -404,3 +413,117 @@ dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
 -- require('mini.indentscope').setup()
+
+-- require('dim').setup({})
+
+require 'colorizer'.setup()
+
+require('auto-session').setup()
+
+-- vim.api.nvim_create_autocmd('BufWritePre', {
+-- 	group = vim.api.nvim_create_augroup('ts lsp', { clear = true }),
+-- 	callback = function (opts)
+-- 		local filetype = vim.bo[opts.buf].filetype
+-- 		if filetype == 'javascript' or filetype == "typescript" then
+-- 			local cmp = require'cmp'
+
+-- 			cmp.setup({
+-- 				snippet = {
+-- 					-- REQUIRED - you must specify a snippet engine
+-- 					expand = function(args)
+-- 					vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+-- 					-- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+-- 					-- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+-- 					-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+-- 					end,
+-- 				},
+-- 				window = {
+-- 				  -- completion = cmp.config.window.bordered(),
+-- 				  -- documentation = cmp.config.window.bordered(),
+-- 				},
+-- 				mapping = cmp.mapping.preset.insert({
+-- 					['<C-b>'] = cmp.mapping.scroll_docs(-4),
+-- 					['<C-f>'] = cmp.mapping.scroll_docs(4),
+-- 					['<C-Space>'] = cmp.mapping.complete(),
+-- 					['<C-e>'] = cmp.mapping.abort(),
+-- 					['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+-- 				}),
+-- 				sources = cmp.config.sources({
+-- 					{ name = 'nvim_lsp' },
+-- 					{ name = 'vsnip' }, -- For vsnip users.
+-- 				}, {
+-- 					{ name = 'buffer' },
+-- 				})
+-- 			})
+
+-- 			local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- 			require('lspconfig')['tsserver'].setup {
+-- 				capabilities = capabilities
+-- 			}
+
+-- 		end
+-- 	end,
+-- })
+
+function isModuleAvailable(name)
+  if package.loaded[name] then
+    return true
+  else
+    for _, searcher in ipairs(package.searchers or package.loaders) do
+      local loader = searcher(name)
+      if type(loader) == 'function' then
+        package.preload[name] = loader
+        return true
+      end
+    end
+    return false
+  end
+end
+
+if (isModuleAvailable("cmp")) then
+
+	local cmp = require'cmp'
+
+	cmp.setup({
+		snippet = {
+			-- REQUIRED - you must specify a snippet engine
+			expand = function(args)
+			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+			end,
+		},
+		window = {
+			completion = cmp.config.window.bordered(),
+			documentation = cmp.config.window.bordered(),
+		},
+		mapping = cmp.mapping.preset.insert({
+			['<C-b>'] = cmp.mapping.scroll_docs(-4),
+			['<C-f>'] = cmp.mapping.scroll_docs(4),
+			['<C-Space>'] = cmp.mapping.complete(),
+			['<C-e>'] = cmp.mapping.abort(),
+			['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		}),
+		sources = cmp.config.sources({
+			{ name = 'nvim_lsp' },
+			{ name = 'vsnip' }, -- For vsnip users.
+		}, {
+			{ name = 'buffer' },
+		}),
+	})
+
+	-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+	-- require('lspconfig')['tsserver'].setup {
+	-- 	capabilities = capabilities
+	-- }
+
+	require'lspconfig'.glsl_analyzer.setup {}
+
+	require'lspconfig'.clangd.setup {}
+
+	require'lspconfig'.pyright.setup {}
+
+	require'lspconfig'.tsserver.setup {}
+
+	-- Show line diagnostics automatically in hover window
+	vim.o.updatetime = 250
+	vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+end

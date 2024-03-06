@@ -15,4 +15,7 @@
 			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/", "*.sln"],
         },
 	},
+	"diagnostic.virtualText": true,
+	"diagnostic.virtualTextCurrentLineOnly": false,
+	"semanticTokens.enable": true
 }
