@@ -29,117 +29,18 @@ vim.api.nvim_set_keymap(
 
 require('telescope').load_extension('fzf')
 
--- Require and call setup function somewhere in your init.lua
-require('image').setup {
-  render = {
-    min_padding = 0,
-    show_label = true,
-    use_dither = true,
-    foreground_color = false,
-    background_color = false
-  },
-  events = {
-    update_on_nvim_resize = true,
-  },
-}
-
 require('nvim-cursorline').setup {
-  cursorword = {
-    enable = true,
-    min_length = 3,
-    hl = { underline = true },
-  },
+	cursorword = {
+		enable = true,
+		min_length = 3,
+		hl = { underline = true },
+	},
+	cursorline = {
+		enable = true,
+		timeout = 100,
+		number = false,
+	},
 }
-
---require("clangd_extensions").setup {
---    server = {
---        -- options to pass to nvim-lspconfig
---        -- i.e. the arguments to require("lspconfig").clangd.setup({})
---    },
---    extensions = {
---        -- defaults:
---        -- Automatically set inlay hints (type hints)
---        autoSetHints = true,
---        -- These apply to the default ClangdSetInlayHints command
---        inlay_hints = {
---            -- Only show inlay hints for the current line
---            only_current_line = false,
---            -- Event which triggers a refersh of the inlay hints.
---            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
---            -- not that this may cause  higher CPU usage.
---            -- This option is only respected when only_current_line and
---            -- autoSetHints both are true.
---            only_current_line_autocmd = "CursorHold",
---            -- whether to show parameter hints with the inlay hints or not
---            show_parameter_hints = true,
---            -- prefix for parameter hints
---            parameter_hints_prefix = "<- ",
---            -- prefix for all the other hints (type, chaining)
---            other_hints_prefix = "=> ",
---            -- whether to align to the length of the longest line in the file
---            max_len_align = false,
---            -- padding from the left if max_len_align is true
---            max_len_align_padding = 1,
---            -- whether to align to the extreme right or not
---            right_align = false,
---            -- padding from the right if right_align is true
---            right_align_padding = 7,
---            -- The color of the hints
---            highlight = "Comment",
---            -- The highlight group priority for extmark
---            priority = 100,
---        },
---        ast = {
---            -- These are unicode, should be available in any font
---            role_icons = {
---                 type = "🄣",
---                 declaration = "🄓",
---                 expression = "🄔",
---                 statement = ";",
---                 specifier = "🄢",
---                 ["template argument"] = "🆃",
---            },
---            kind_icons = {
---                Compound = "🄲",
---                Recovery = "🅁",
---                TranslationUnit = "🅄",
---                PackExpansion = "🄿",
---                TemplateTypeParm = "🅃",
---                TemplateTemplateParm = "🅃",
---                TemplateParamObject = "🅃",
---            },
---            --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
---            role_icons = {
---                type = "",
---                declaration = "",
---                expression = "",
---                specifier = "",
---                statement = "",
---                ["template argument"] = "",
---            },
-
---            kind_icons = {
---                Compound = "",
---                Recovery = "",
---                TranslationUnit = "",
---                PackExpansion = "",
---                TemplateTypeParm = "",
---                TemplateTemplateParm = "",
---                TemplateParamObject = "",
---            }, ]]
-
---            highlights = {
---                detail = "Comment",
---            },
---        },
---        memory_usage = {
---            border = "none",
---        },
---        symbol_info = {
---            border = "none",
---        },
---    },
---}
 
 require('neoscroll').setup({
     -- All these keys will be mapped to their corresponding default scrolling animation
@@ -206,24 +107,6 @@ require'nvim-treesitter.configs'.setup {
   -- }
 }
 
--- require('nvim-treesitter.configs').setup {
---   rainbow = {
---     enable = true,
---     -- list of languages you want to disable the plugin for
---     -- disable = { 'jsx', 'cpp' },
---     -- Which query to use for finding delimiters
---     query = 'rainbow-parens',
---     -- Highlight the entire buffer all at once
---     strategy = require('ts-rainbow').strategy.global,
---   }
--- }
-
-
--- require("indent_blankline").setup {
---     -- for example, context is off by default, use this to turn it on
---     show_current_context = true,
---     show_current_context_start = true,
--- }
 require("ibl").setup {
 	scope = {
 		highlight = {
@@ -231,68 +114,6 @@ require("ibl").setup {
 		}
 	}
 }
-
-local iron = require("iron.core")
-
-iron.setup {
-  config = {
-    -- Whether a repl should be discarded or not
-    scratch_repl = true,
-    -- Your repl definitions come here
-    repl_definition = {
-      sh = {
-        -- Can be a table or a function that
-        -- returns a table (see below)
-        command = {"zsh"}
-      }
-    },
-    -- How the repl window will be displayed
-    -- See below for more information
-    --repl_open_cmd = require('iron.view').split.vertical.botright(50),
-	repl_open_cmd = require('iron.view').center("90%", 40),
-  },
-  -- Iron doesn't set keymaps by default anymore.
-  -- You can set them here or manually add keymaps to the functions in iron.core
-  keymaps = {
-    send_motion = "<space>sc",
-    visual_send = "<space>sc",
-    send_file = "<space>sf",
-    send_line = "<space>sl",
-    send_until_cursor = "<space>su",
-    send_mark = "<space>sm",
-    mark_motion = "<space>mc",
-    mark_visual = "<space>mc",
-    remove_mark = "<space>md",
-    cr = "<space>s<cr>",
-    interrupt = "<space>s<space>",
-    exit = "<space>sq",
-    clear = "<space>cl",
-  },
-  -- If the highlight is on, you can change how it looks
-  -- For the available options, check nvim_set_hl
-  highlight = {
-    italic = true
-  },
-  ignore_blank_lines = true, -- ignore blank lines when sending visual select lines
-}
-
--- iron also has a list of commands, see :h iron-commands for all available commands
-vim.keymap.set('n', '<space>rs', '<cmd>IronRepl<cr>')
-vim.keymap.set('n', '<space>rr', '<cmd>IronRestart<cr>')
-vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
-vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
-
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
-
--- require("nvim-tree").setup {
--- 	view = {
--- 		width = 50,
--- 	},
--- 	filters = {
--- 		exclude = { 'todo.txt' }
--- 	}
--- }
 
 require('gitsigns').setup {
   signs = {
@@ -338,26 +159,6 @@ require('gitsigns').setup {
   },
 }
 
-require'barbar'.setup {
-	animation = true,
-	auto_hide = true,
-	icons = {
-		-- Enable highlighting visible buffers
-		highlight_visible = true,
-		modified = {button = '●'},
-		-- gitsigns = {
-		-- 	added = {enabled = true, icon = '+'},
-		-- 	changed = {enabled = true, icon = '~'},
-		-- 	deleted = {enabled = true, icon = '-'},
-		-- 	modified = {enabled = true, icon = 'M'}
-		-- },
-		pinned = {button = '', filename = true},
-	},
-}
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
-map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
-
 
 require("gruvbox").setup({
 	italic = {
@@ -367,7 +168,12 @@ require("gruvbox").setup({
 		operators = false,
 		folds = true,
   },
+  undercurl = true,
+  underline = true,
+  inverse = true,
+  contrast = "soft"
 })
+vim.o.background = "dark"
 vim.cmd("colorscheme gruvbox")
 
 -- vim.cmd("colorscheme gruvbox-material")
@@ -375,97 +181,9 @@ vim.cmd("colorscheme gruvbox")
 
 require'lspconfig'.tsserver.setup{}
 
-require('dap-python').setup('/Users/masamonoke/.pyenv/shims/python')
-
-local dap = require('dap')
-dap.adapters.lldb = {
-  type = 'executable',
-  command = '/opt/homebrew/opt/llvm/bin/lldb-vscode', -- adjust as needed, must be absolute path
-  name = 'lldb'
-}
-dap.configurations.cpp = {
-  {
-    name = 'Launch',
-    type = 'lldb',
-    request = 'launch',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = false,
-    args = {},
-
-    -- 💀
-    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-    --
-    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-    --
-    -- Otherwise you might get the following error:
-    --
-    --    Error on launch: Failed to attach to the target process
-    --
-    -- But you should be aware of the implications:
-    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-    -- runInTerminal = false,
-  },
-}
-dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
-
--- require('mini.indentscope').setup()
-
--- require('dim').setup({})
-
-require 'colorizer'.setup()
-
 require('auto-session').setup()
 
--- vim.api.nvim_create_autocmd('BufWritePre', {
--- 	group = vim.api.nvim_create_augroup('ts lsp', { clear = true }),
--- 	callback = function (opts)
--- 		local filetype = vim.bo[opts.buf].filetype
--- 		if filetype == 'javascript' or filetype == "typescript" then
--- 			local cmp = require'cmp'
-
--- 			cmp.setup({
--- 				snippet = {
--- 					-- REQUIRED - you must specify a snippet engine
--- 					expand = function(args)
--- 					vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
--- 					-- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
--- 					-- require('snippy').expand_snippet(args.body) -- For `snippy` users.
--- 					-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
--- 					end,
--- 				},
--- 				window = {
--- 				  -- completion = cmp.config.window.bordered(),
--- 				  -- documentation = cmp.config.window.bordered(),
--- 				},
--- 				mapping = cmp.mapping.preset.insert({
--- 					['<C-b>'] = cmp.mapping.scroll_docs(-4),
--- 					['<C-f>'] = cmp.mapping.scroll_docs(4),
--- 					['<C-Space>'] = cmp.mapping.complete(),
--- 					['<C-e>'] = cmp.mapping.abort(),
--- 					['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
--- 				}),
--- 				sources = cmp.config.sources({
--- 					{ name = 'nvim_lsp' },
--- 					{ name = 'vsnip' }, -- For vsnip users.
--- 				}, {
--- 					{ name = 'buffer' },
--- 				})
--- 			})
-
--- 			local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- 			require('lspconfig')['tsserver'].setup {
--- 				capabilities = capabilities
--- 			}
-
--- 		end
--- 	end,
--- })
-
-function isModuleAvailable(name)
+local function isModuleAvailable(name)
   if package.loaded[name] then
     return true
   else
@@ -527,3 +245,33 @@ if (isModuleAvailable("cmp")) then
 	vim.o.updatetime = 250
 	vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 end
+
+require('fold-preview').setup({
+})
+
+require('hlargs').setup()
+
+require("scrollbar").setup()
+
+require'barbar'.setup {
+  animation = false,
+  auto_hide = true,
+  icons = {
+    -- Enable highlighting visible buffers
+    highlight_visible = true,
+    modified = {button = '●'},
+    -- gitsigns = {
+    --   added = {enabled = true, icon = '+'},
+    --   changed = {enabled = true, icon = '~'},
+    --   deleted = {enabled = true, icon = '-'},
+    --   modified = {enabled = true, icon = 'M'}
+    -- },
+    pinned = {button = '', filename = true},
+	separator = {left = '', right = ''},
+	separator_at_end = false,
+	preset = 'powerline',
+  },
+}
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)

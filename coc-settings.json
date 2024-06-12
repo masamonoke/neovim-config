@@ -1,7 +1,7 @@
 {
     "java.home": "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home",
     "clangd.arguments": [
-        "--header-insertion=never",
+		"--header-insertion=never",
 		"--clang-tidy",
     ],
 	"languageserver": {
@@ -12,10 +12,13 @@
 		"csharp-ls": {
 			"command": "csharp-ls",
 			"filetypes": ["cs"],
-			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/", "*.sln"],
-        },
+			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/", "*.sln"]
+        }
 	},
 	"diagnostic.virtualText": true,
 	"diagnostic.virtualTextCurrentLineOnly": false,
-	"semanticTokens.enable": true
+	"[cpp][c]": {
+		"semanticTokens.enable": true,
+		"semanticTokens.highlightPriority": 100
+	}
 }

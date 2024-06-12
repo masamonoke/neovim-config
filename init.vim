@@ -11,15 +11,12 @@ set nowrap
 set hlsearch
 set clipboard+=unnamedplus
 set noshowmode
-set cursorline
 set filetype=on
+set cursorline
 
 call plug#begin()
-"Plug 'preservim/nerdtree'
 Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-commentary'
-Plug 'lfv89/vim-interestingwords'
-"Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'vim-airline/vim-airline'
@@ -27,90 +24,42 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'karb94/neoscroll.nvim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'voldikss/vim-floaterm'
-" Plug 'lukas-reineke/indent-blankline.nvim', {'tag': 'v2.20.8'}
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'ARM9/arm-syntax-vim'
-Plug 'sainnhe/gruvbox-material'
 Plug 'ellisonleao/gruvbox.nvim'
-Plug 'luisiacc/gruvbox-baby', {'branch': 'main'}
 Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
-" Plug 'VonHeikemen/lsp-zero.nvim'
 Plug 'xiyaowong/nvim-transparent'
-Plug 'justinmk/vim-sneak'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'samodostal/image.nvim'
 Plug 'yamatsum/nvim-cursorline'
-" Plug 'itchyny/vim-cursorword'
-Plug 'p00f/clangd_extensions.nvim'
-" Plug 'godlygeek/tabular'
-Plug 'preservim/vim-markdown'
 Plug 'shime/vim-livedown'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'tag': 'v0.9.4'}
-" Plug 'p00f/nvim-ts-rainbow'
-" Plug 'HiPhish/nvim-ts-rainbow2'
-" Plug 'rainbow-delimiters.nvim'
-Plug 'HiPhish/rainbow-delimiters.nvim'
-Plug 'universal-ctags/ctags'
-Plug 'untitled-ai/jupyter_ascending.vim'
-Plug 'jalvesaq/Nvim-R'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'folke/todo-comments.nvim'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Vigemus/iron.nvim'
-Plug 'fs111/pydoc.vim'
 Plug 'tikhomirov/vim-glsl'
-Plug 'udalov/kotlin-vim'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-"Plug 'PhilRunninger/nerdtree-buffer-ops'
-" Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
-"Plug 'bfrg/vim-cpp-modern'
-" Plug 'jlcrochet/vim-cs'
-Plug 'jlcrochet/vim-razor'
 Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
 Plug 'romgrk/barbar.nvim'
 Plug 'sindrets/diffview.nvim'
-" Plug 'akinsho/toggleterm.nvim'
-Plug 'mfussenegger/nvim-dap'
-Plug 'mfussenegger/nvim-dap-python'
-Plug 'cryptomilk/nightcity.nvim'
 Plug 'pocco81/auto-save.nvim'
 Plug 'rmagatti/auto-session'
-Plug 'NvChad/nvim-colorizer.lua'
-" Plug 'TaDaa/vimade'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'maxmellon/vim-jsx-pretty'
-" Plug 'hrsh7th/cmp-nvim-lsp'
-" Plug 'hrsh7th/cmp-buffer'
-" Plug 'hrsh7th/cmp-vsnip'
-" Plug 'hrsh7th/nvim-cmp'
-" Plug 'hrsh7th/cmp-vsnip'
-" Plug 'hrsh7th/vim-vsnip'
+Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'anuvyklack/keymap-amend.nvim'
+Plug 'anuvyklack/fold-preview.nvim'
+Plug 'petertriho/nvim-scrollbar'
+Plug 'm-demare/hlargs.nvim'
+Plug 'HiPhish/rainbow-delimiters.nvim'
 call plug#end()
-
-" color gruvbox
-" color gruvbox-material
-" let g:gruvbox_material_enable_bold = 1
-
-" let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-" autocmd VimEnter * RainbowParentheses
-" let g:rainbow#max_level = 20
-" let g:rainbow#blacklist = [188, 231, 215, 220, 230, 180, 221, 226, "#ebdbb2", "#ffa61a"]
 
 let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_keymap_next = '<F8>'
 let g:floaterm_keymap_kill = '<F9>'
 let g:floaterm_wintype = 'float'
-let g:floaterm_height = 45
-let g:floaterm_width = 160
-" hi Floaterm guibg=black
+let g:floaterm_height = 30
+let g:floaterm_width = 120
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)
@@ -125,21 +74,9 @@ nmap <leader>0 <Plug>BuffetSwitch(10)
 noremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
 noremap <C-t> :tabnew split<CR>
-
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" nmap <F6> :NERDTreeToggle<CR>
-" let g:NERDTreeWinSize=50
-" let NERDTreeShowHidden=1
-
 nnoremap <F4> :bp \| sp \| bn \| bd<CR>
 
 set guicursor=i:block
-
-" let g:buffet_powerline_separators = 1
-" let g:buffet_tab_icon = "\uf00a"
-" let g:buffet_left_trunc_icon = "\uf0a8"
-" let g:buffet_right_trunc_icon = "\uf0a9"
-" let g:buffet_show_index = 1
 
 highlight CocErrorFloat ctermfg=204 guifg=#ffffff
 
@@ -158,32 +95,6 @@ nmap <space><space>r <Plug>JupyterRestart
 autocmd TextChanged,TextChangedI <buffer> silent write
 
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
-"lua << EOF
-"require("telescope").setup {
-"  extensions = {
-"    file_browser = {
-"      theme = "ivy",
-"      -- disables netrw and use telescope-file-browser in its place
-"      hijack_netrw = true,
-"    },
-"  },
-"}
-"EOF
-
-"lua << EOF
-"require("telescope").load_extension "file_browser"
-"vim.api.nvim_set_keymap(
-"  "n",
-"  "<F5>",
-"  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-"  { noremap = false}
-")
-"EOF
-
-" lua << EOF
-" require('telescope').load_extension('fzf')
-" EOF
 
 "coc
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
@@ -217,6 +128,8 @@ EOF
 
 
 set keywordprg=:call\ CocActionAsync('doHover')
+nnoremap <C-]> :call CocActionAsync('jumpDefinition') <CR>
+
 augroup VimHelp
   autocmd!
   autocmd Filetype vim,help setlocal keywordprg=:help
@@ -245,3 +158,13 @@ vnoremap > >gv
 
 let g:indent_blankline_show_current_context = v:true
 
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+cnoremap <C-h> <Left>
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-l> <Right>
+
+let g:highlighturl_guifg = '#DB7093'
