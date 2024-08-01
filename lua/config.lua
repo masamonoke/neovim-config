@@ -18,7 +18,6 @@ require("telescope").setup {
   },
 }
 
-
 require("telescope").load_extension "file_browser"
 vim.api.nvim_set_keymap(
   "n",
@@ -154,9 +153,6 @@ require('gitsigns').setup {
     row = 0,
     col = 1
   },
-  yadm = {
-    enable = false
-  },
 }
 
 
@@ -179,27 +175,24 @@ vim.cmd("colorscheme gruvbox")
 -- vim.cmd("colorscheme gruvbox-material")
 -- vim.cmd("let g:gruvbox_material_enable_bold = 1")
 
-require'lspconfig'.tsserver.setup{}
-
 require('auto-session').setup()
 
 local function isModuleAvailable(name)
-  if package.loaded[name] then
-    return true
-  else
-    for _, searcher in ipairs(package.searchers or package.loaders) do
-      local loader = searcher(name)
-      if type(loader) == 'function' then
-        package.preload[name] = loader
-        return true
-      end
-    end
-    return false
-  end
-end
+   if package.loaded[name] then
+     return true
+   else
+     for _, searcher in ipairs(package.searchers or package.loaders) do
+       local loader = searcher(name)
+       if type(loader) == 'function' then
+         package.preload[name] = loader
+         return true
+       end
+     end
+     return false
+   end
+ end
 
 if (isModuleAvailable("cmp")) then
-
 	local cmp = require'cmp'
 
 	cmp.setup({
@@ -228,50 +221,39 @@ if (isModuleAvailable("cmp")) then
 		}),
 	})
 
-	-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
-	-- require('lspconfig')['tsserver'].setup {
-	-- 	capabilities = capabilities
-	-- }
+	local capabilities = require('cmp_nvim_lsp').default_capabilities()
+	require'lspconfig'.clangd.setup {
+		capabilities = capabilities,
+		on_attach = function(client, bufnr)
+			require("inlay-hints").on_attach(client, bufnr)
+		end,
+		cmd = {
+			"clangd",
+			"--pretty",
+			"--header-insertion=never",
+			-- "--background-index",
+			"--suggest-missing-includes",
+			"-j=4",
+			"--clang-tidy",
+			"--inlay-hints=true"
+		},
+	}
 
 	require'lspconfig'.glsl_analyzer.setup {}
-
-	require'lspconfig'.clangd.setup {}
-
-	require'lspconfig'.pyright.setup {}
 
 	require'lspconfig'.tsserver.setup {}
 
 	-- Show line diagnostics automatically in hover window
-	vim.o.updatetime = 250
-	vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+	-- vim.o.updatetime = 250
+	-- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 end
 
-require('fold-preview').setup({
-})
+-- require('fold-preview').setup({})
 
 require('hlargs').setup()
 
 require("scrollbar").setup()
 
-require'barbar'.setup {
-  animation = false,
-  auto_hide = true,
-  icons = {
-    -- Enable highlighting visible buffers
-    highlight_visible = true,
-    modified = {button = '●'},
-    -- gitsigns = {
-    --   added = {enabled = true, icon = '+'},
-    --   changed = {enabled = true, icon = '~'},
-    --   deleted = {enabled = true, icon = '-'},
-    --   modified = {enabled = true, icon = 'M'}
-    -- },
-    pinned = {button = '', filename = true},
-	separator = {left = '', right = ''},
-	separator_at_end = false,
-	preset = 'powerline',
-  },
-}
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
-map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
+vim.cmd([[autocmd BufRead,BufEnter *.lua set filetype=lua]])
+
+vim.api.nvim_set_hl(0, "LspInlayHint", { bg = "#707772" })

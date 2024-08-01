@@ -40,13 +40,10 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'tikhomirov/vim-glsl'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
-Plug 'romgrk/barbar.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'pocco81/auto-save.nvim'
 Plug 'rmagatti/auto-session'
 Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'anuvyklack/keymap-amend.nvim'
-Plug 'anuvyklack/fold-preview.nvim'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'm-demare/hlargs.nvim'
 Plug 'HiPhish/rainbow-delimiters.nvim'
@@ -57,6 +54,7 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'MysticalDevil/inlay-hints.nvim'
 call plug#end()
 
 
@@ -164,3 +162,10 @@ vnoremap > >gv
 
 let g:indent_blankline_show_current_context = v:true
 
+" Jump forward or backward
+imap <expr> <C-j>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <C-j>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+au BufNewFile,BufRead *.lua setfiletype lua

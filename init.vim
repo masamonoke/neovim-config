@@ -15,42 +15,39 @@ set filetype=on
 set cursorline
 
 call plug#begin()
-Plug 'windwp/nvim-autopairs'
-Plug 'tpope/vim-commentary'
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-Plug 'nvim-tree/nvim-web-devicons'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'karb94/neoscroll.nvim'
-Plug 'itchyny/vim-gitbranch'
-Plug 'voldikss/vim-floaterm'
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'ARM9/arm-syntax-vim'
-Plug 'ellisonleao/gruvbox.nvim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'xiyaowong/nvim-transparent'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'yamatsum/nvim-cursorline'
-Plug 'shime/vim-livedown'
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'ryanoasis/vim-devicons'
-Plug 'folke/todo-comments.nvim'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'tikhomirov/vim-glsl'
-Plug 'nvim-telescope/telescope-file-browser.nvim'
-Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
-Plug 'romgrk/barbar.nvim'
-Plug 'sindrets/diffview.nvim'
-Plug 'pocco81/auto-save.nvim'
-Plug 'rmagatti/auto-session'
-Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'anuvyklack/keymap-amend.nvim'
-Plug 'anuvyklack/fold-preview.nvim'
-Plug 'petertriho/nvim-scrollbar'
-Plug 'm-demare/hlargs.nvim'
-Plug 'HiPhish/rainbow-delimiters.nvim'
+ Plug 'windwp/nvim-autopairs'
+ Plug 'tpope/vim-commentary'
+ Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+ Plug 'nvim-tree/nvim-web-devicons'
+ Plug 'vim-airline/vim-airline'
+ Plug 'vim-airline/vim-airline-themes'
+ Plug 'karb94/neoscroll.nvim'
+ Plug 'itchyny/vim-gitbranch'
+ Plug 'voldikss/vim-floaterm'
+ Plug 'lukas-reineke/indent-blankline.nvim'
+ Plug 'ARM9/arm-syntax-vim'
+ Plug 'ellisonleao/gruvbox.nvim'
+ Plug 'neovim/nvim-lspconfig'
+ Plug 'xiyaowong/nvim-transparent'
+ Plug 'nvim-lua/plenary.nvim'
+ Plug 'nvim-telescope/telescope.nvim'
+ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+ Plug 'yamatsum/nvim-cursorline'
+ Plug 'shime/vim-livedown'
+ Plug 'nvim-treesitter/nvim-treesitter'
+ Plug 'ryanoasis/vim-devicons'
+ Plug 'folke/todo-comments.nvim'
+ Plug 'ntpeters/vim-better-whitespace'
+ Plug 'nvim-telescope/telescope-file-browser.nvim'
+ Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
+ Plug 'sindrets/diffview.nvim'
+ Plug 'pocco81/auto-save.nvim'
+ Plug 'rmagatti/auto-session'
+ Plug 'nvim-treesitter/nvim-treesitter-context'
+ Plug 'petertriho/nvim-scrollbar'
+ Plug 'm-demare/hlargs.nvim'
+ Plug 'HiPhish/rainbow-delimiters.nvim'
+ Plug 'MysticalDevil/inlay-hints.nvim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
@@ -147,24 +144,20 @@ noremap d "_d
 
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 
-nnoremap <C-b> :lua require'dap'.toggle_breakpoint() <CR>
-nnoremap <C-m> :lua require'dap'.continue() <CR>
-nnoremap <C-n> :lua require'dap'.step_over() <CR>
-nnoremap <C-s> :lua require'dap'.step_into() <CR>
-nnoremap <F5> :lua require'dap'.repl.open() <CR>
-
 vnoremap < <gv
 vnoremap > >gv
 
 let g:indent_blankline_show_current_context = v:true
 
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
-cnoremap <C-h> <Left>
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
-cnoremap <C-l> <Right>
-
 let g:highlighturl_guifg = '#DB7093'
+
+lua << EOF
+	require'lspconfig'.clangd.setup {
+		on_attach = function(client, bufnr)
+			require("inlay-hints").on_attach(client, bufnr)
+			client.server_capabilities.semanticTokensProvider = nil
+		end,
+	}
+EOF
+
+hi CocInlayHint guibg=#707772
