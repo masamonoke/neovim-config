@@ -15,39 +15,40 @@ set filetype=on
 set cursorline
 
 call plug#begin()
- Plug 'windwp/nvim-autopairs'
- Plug 'tpope/vim-commentary'
- Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
- Plug 'nvim-tree/nvim-web-devicons'
- Plug 'vim-airline/vim-airline'
- Plug 'vim-airline/vim-airline-themes'
- Plug 'karb94/neoscroll.nvim'
- Plug 'itchyny/vim-gitbranch'
- Plug 'voldikss/vim-floaterm'
- Plug 'lukas-reineke/indent-blankline.nvim'
- Plug 'ARM9/arm-syntax-vim'
- Plug 'ellisonleao/gruvbox.nvim'
- Plug 'neovim/nvim-lspconfig'
- Plug 'xiyaowong/nvim-transparent'
- Plug 'nvim-lua/plenary.nvim'
- Plug 'nvim-telescope/telescope.nvim'
- Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
- Plug 'yamatsum/nvim-cursorline'
- Plug 'shime/vim-livedown'
- Plug 'nvim-treesitter/nvim-treesitter'
- Plug 'ryanoasis/vim-devicons'
- Plug 'folke/todo-comments.nvim'
- Plug 'ntpeters/vim-better-whitespace'
- Plug 'nvim-telescope/telescope-file-browser.nvim'
- Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
- Plug 'sindrets/diffview.nvim'
- Plug 'pocco81/auto-save.nvim'
- Plug 'rmagatti/auto-session'
- Plug 'nvim-treesitter/nvim-treesitter-context'
- Plug 'petertriho/nvim-scrollbar'
- Plug 'm-demare/hlargs.nvim'
- Plug 'HiPhish/rainbow-delimiters.nvim'
- Plug 'MysticalDevil/inlay-hints.nvim'
+	Plug 'windwp/nvim-autopairs'
+	Plug 'tpope/vim-commentary'
+	Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+	Plug 'nvim-tree/nvim-web-devicons'
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
+	Plug 'karb94/neoscroll.nvim'
+	Plug 'itchyny/vim-gitbranch'
+	Plug 'voldikss/vim-floaterm'
+	Plug 'lukas-reineke/indent-blankline.nvim'
+	Plug 'ARM9/arm-syntax-vim'
+	Plug 'ellisonleao/gruvbox.nvim'
+	Plug 'neovim/nvim-lspconfig'
+	Plug 'xiyaowong/nvim-transparent'
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-telescope/telescope.nvim'
+	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+	Plug 'yamatsum/nvim-cursorline'
+	Plug 'shime/vim-livedown'
+	Plug 'nvim-treesitter/nvim-treesitter'
+	Plug 'ryanoasis/vim-devicons'
+	Plug 'folke/todo-comments.nvim'
+	Plug 'ntpeters/vim-better-whitespace'
+	Plug 'nvim-telescope/telescope-file-browser.nvim'
+	Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
+	Plug 'sindrets/diffview.nvim'
+	Plug 'pocco81/auto-save.nvim'
+	Plug 'rmagatti/auto-session'
+	Plug 'nvim-treesitter/nvim-treesitter-context'
+	Plug 'petertriho/nvim-scrollbar'
+	Plug 'm-demare/hlargs.nvim'
+	Plug 'HiPhish/rainbow-delimiters.nvim'
+	Plug 'MysticalDevil/inlay-hints.nvim'
+	Plug 'nvim-tree/nvim-tree.lua'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
@@ -116,11 +117,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme = "deus"
 
 lua << EOF
-  require("todo-comments").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  }
+  require("todo-comments").setup {}
 EOF
 
 
@@ -151,13 +148,12 @@ let g:indent_blankline_show_current_context = v:true
 
 let g:highlighturl_guifg = '#DB7093'
 
-lua << EOF
-	require'lspconfig'.clangd.setup {
-		on_attach = function(client, bufnr)
-			require("inlay-hints").on_attach(client, bufnr)
-			client.server_capabilities.semanticTokensProvider = nil
-		end,
-	}
-EOF
-
 hi CocInlayHint guibg=#707772
+
+nnoremap <C-n> :NvimTreeToggle <CR>
+
+" augroup remember_folds
+"   autocmd!
+"   autocmd BufWinLeave * mkview
+"   autocmd BufWinEnter * silent! loadview
+" augroup END

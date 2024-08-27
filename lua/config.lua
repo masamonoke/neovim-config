@@ -155,7 +155,6 @@ require('gitsigns').setup {
   },
 }
 
-
 require("gruvbox").setup({
 	italic = {
 		strings = true,
@@ -176,77 +175,7 @@ vim.cmd("colorscheme gruvbox")
 -- vim.cmd("let g:gruvbox_material_enable_bold = 1")
 
 require('auto-session').setup()
-
-local function isModuleAvailable(name)
-   if package.loaded[name] then
-     return true
-   else
-     for _, searcher in ipairs(package.searchers or package.loaders) do
-       local loader = searcher(name)
-       if type(loader) == 'function' then
-         package.preload[name] = loader
-         return true
-       end
-     end
-     return false
-   end
- end
-
-if (isModuleAvailable("cmp")) then
-	local cmp = require'cmp'
-
-	cmp.setup({
-		snippet = {
-			-- REQUIRED - you must specify a snippet engine
-			expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-			end,
-		},
-		window = {
-			completion = cmp.config.window.bordered(),
-			documentation = cmp.config.window.bordered(),
-		},
-		mapping = cmp.mapping.preset.insert({
-			['<C-b>'] = cmp.mapping.scroll_docs(-4),
-			['<C-f>'] = cmp.mapping.scroll_docs(4),
-			['<C-Space>'] = cmp.mapping.complete(),
-			['<C-e>'] = cmp.mapping.abort(),
-			['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-		}),
-		sources = cmp.config.sources({
-			{ name = 'nvim_lsp' },
-			{ name = 'vsnip' }, -- For vsnip users.
-		}, {
-			{ name = 'buffer' },
-		}),
-	})
-
-	local capabilities = require('cmp_nvim_lsp').default_capabilities()
-	require'lspconfig'.clangd.setup {
-		capabilities = capabilities,
-		on_attach = function(client, bufnr)
-			require("inlay-hints").on_attach(client, bufnr)
-		end,
-		cmd = {
-			"clangd",
-			"--pretty",
-			"--header-insertion=never",
-			-- "--background-index",
-			"--suggest-missing-includes",
-			"-j=4",
-			"--clang-tidy",
-			"--inlay-hints=true"
-		},
-	}
-
-	require'lspconfig'.glsl_analyzer.setup {}
-
-	require'lspconfig'.tsserver.setup {}
-
-	-- Show line diagnostics automatically in hover window
-	-- vim.o.updatetime = 250
-	-- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
-end
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- require('fold-preview').setup({})
 
@@ -256,4 +185,13 @@ require("scrollbar").setup()
 
 vim.cmd([[autocmd BufRead,BufEnter *.lua set filetype=lua]])
 
-vim.api.nvim_set_hl(0, "LspInlayHint", { bg = "#707772" })
+require("nvim-tree").setup({
+	view = {
+		width = 70,
+	},
+	renderer = {
+		indent_markers = {
+			enable = true
+		}
+	}
+})

@@ -47,6 +47,8 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'm-demare/hlargs.nvim'
 Plug 'HiPhish/rainbow-delimiters.nvim'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'MysticalDevil/inlay-hints.nvim'
 
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -54,7 +56,6 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
-Plug 'MysticalDevil/inlay-hints.nvim'
 call plug#end()
 
 
@@ -169,3 +170,63 @@ imap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab
 smap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 au BufNewFile,BufRead *.lua setfiletype lua
+
+lua << EOF
+	local cmp = require'cmp'
+
+	cmp.setup({
+		snippet = {
+			-- REQUIRED - you must specify a snippet engine
+			expand = function(args)
+			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+			end,
+		},
+		window = {
+			completion = cmp.config.window.bordered(),
+			documentation = cmp.config.window.bordered(),
+		},
+		mapping = cmp.mapping.preset.insert({
+			['<C-b>'] = cmp.mapping.scroll_docs(-4),
+			['<C-f>'] = cmp.mapping.scroll_docs(4),
+			['<C-Space>'] = cmp.mapping.complete(),
+			['<C-e>'] = cmp.mapping.abort(),
+			['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		}),
+		sources = cmp.config.sources({
+			{ name = 'nvim_lsp' },
+			{ name = 'vsnip' }, -- For vsnip users.
+		}, {
+			{ name = 'buffer' },
+		}),
+	})
+
+	local capabilities = require('cmp_nvim_lsp').default_capabilities()
+	require'lspconfig'.clangd.setup {
+		capabilities = capabilities,
+		on_attach = function(client, bufnr)
+			require("inlay-hints").on_attach(client, bufnr)
+		end,
+		cmd = {
+			"clangd",
+			"--pretty",
+			"--header-insertion=never",
+			-- "--background-index",
+			"--suggest-missing-includes",
+			"-j=4",
+			"--clang-tidy",
+			"--inlay-hints=true"
+		},
+	}
+
+	require'lspconfig'.glsl_analyzer.setup {}
+
+	require'lspconfig'.tsserver.setup {}
+
+	-- Show line diagnostics automatically in hover window
+	vim.o.updatetime = 250
+	vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
+	vim.api.nvim_set_hl(0, "LspInlayHint", { bg = "#707772" })
+EOF
+
+nnoremap <C-n> :NvimTreeToggle <CR>
