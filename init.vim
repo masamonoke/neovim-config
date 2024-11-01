@@ -49,6 +49,7 @@ call plug#begin()
 	Plug 'HiPhish/rainbow-delimiters.nvim'
 	Plug 'MysticalDevil/inlay-hints.nvim'
 	Plug 'nvim-tree/nvim-tree.lua'
+	Plug 'rhysd/git-messenger.vim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
@@ -100,6 +101,7 @@ inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
 nnoremap <F1> :Telescope buffers <CR>
 nnoremap <F2> :Telescope find_files<CR>
 nnoremap <F3> :Telescope live_grep<CR>
+nnoremap <F5> :Telescope current_buffer_fuzzy_find<CR>
 
 
 lua << EOF
@@ -157,3 +159,5 @@ nnoremap <C-n> :NvimTreeToggle <CR>
 "   autocmd BufWinLeave * mkview
 "   autocmd BufWinEnter * silent! loadview
 " augroup END
+
+let g:airline#extensions#whitespace#enabled = 0
