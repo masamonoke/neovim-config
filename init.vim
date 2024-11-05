@@ -50,6 +50,7 @@ call plug#begin()
 	Plug 'MysticalDevil/inlay-hints.nvim'
 	Plug 'nvim-tree/nvim-tree.lua'
 	Plug 'rhysd/git-messenger.vim'
+	Plug 'Badhi/nvim-treesitter-cpp-tools'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
