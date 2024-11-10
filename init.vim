@@ -19,8 +19,8 @@ call plug#begin()
 	Plug 'tpope/vim-commentary'
 	Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 	Plug 'nvim-tree/nvim-web-devicons'
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
+	" Plug 'vim-airline/vim-airline'
+	" Plug 'vim-airline/vim-airline-themes'
 	Plug 'karb94/neoscroll.nvim'
 	Plug 'itchyny/vim-gitbranch'
 	Plug 'voldikss/vim-floaterm'
@@ -49,8 +49,20 @@ call plug#begin()
 	Plug 'HiPhish/rainbow-delimiters.nvim'
 	Plug 'MysticalDevil/inlay-hints.nvim'
 	Plug 'nvim-tree/nvim-tree.lua'
-	Plug 'rhysd/git-messenger.vim'
+	" Plug 'rhysd/git-messenger.vim'
 	Plug 'Badhi/nvim-treesitter-cpp-tools'
+	Plug 'monkoose/neocodeium'
+	Plug 'tveskag/nvim-blame-line'
+	Plug 'tomasky/bookmarks.nvim'
+	Plug 'isak102/telescope-git-file-history.nvim'
+	Plug 'tpope/vim-fugitive'
+	Plug 'rcarriga/nvim-notify'
+	" Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+	Plug 'nvim-lualine/lualine.nvim'
+	Plug 'simnalamburt/vim-mundo'
+	Plug 'kevinhwang91/promise-async'
+	Plug 'kevinhwang91/nvim-ufo'
+	Plug 'nvim-zh/better-escape.vim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
@@ -58,8 +70,8 @@ let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_keymap_next = '<F8>'
 let g:floaterm_keymap_kill = '<F9>'
 let g:floaterm_wintype = 'float'
-let g:floaterm_height = 30
-let g:floaterm_width = 120
+let g:floaterm_height = 50
+let g:floaterm_width = 170
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)
@@ -103,7 +115,8 @@ nnoremap <F1> :Telescope buffers <CR>
 nnoremap <F2> :Telescope find_files<CR>
 nnoremap <F3> :Telescope live_grep<CR>
 nnoremap <F5> :Telescope current_buffer_fuzzy_find<CR>
-
+nnoremap <F10> :Telescope bookmarks list<CR>
+nnoremap <F11> :Telescope git_file_history<CR>
 
 lua << EOF
 require("nvim-autopairs").setup {}
@@ -116,8 +129,8 @@ autocmd FileType vue setlocal sw=2 ts=2
 autocmd FileType r setlocal sw=1 ts=1 expandtab
 autocmd FileType xml setlocal sw=2 ts=2
 
-let g:airline_powerline_fonts = 1
-let g:airline_theme = "deus"
+" let g:airline_powerline_fonts = 1
+" let g:airline_theme = "deus"
 
 lua << EOF
   require("todo-comments").setup {}
@@ -162,3 +175,11 @@ nnoremap <C-n> :NvimTreeToggle <CR>
 " augroup END
 
 let g:airline#extensions#whitespace#enabled = 0
+nnoremap <silent> <leader>a :call CocActionAsync('codeAction')<CR>
+verbose nmap <leader>rn <Plug>(coc-rename)
+
+" let g:Lf_WindowPosition = 'popup'
+" let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+
+set undofile
+set undodir=~/.vim/undo

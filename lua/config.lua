@@ -217,3 +217,72 @@ require 'nt-cpp-tools'.setup({
         ]]
     }
 })
+
+require 'neocodeium'.setup({
+  "monkoose/neocodeium",
+  event = "VeryLazy",
+  opts = {
+    server = {
+      api_url = 'https://codeium.company.net/_route/api_server',
+      portal_url = 'https://codeium.company.net',
+    },
+  }
+})
+vim.keymap.set("i", "<A-f>", function()
+    require("neocodeium").accept()
+end)
+vim.keymap.set("i", "<A-c>", function()
+    require("neocodeium").clear()
+end)
+vim.keymap.set("i", "<A-w>", function()
+    require("neocodeium").accept_word()
+end)
+vim.keymap.set("i", "<A-a>", function()
+    require("neocodeium").accept_line()
+end)
+vim.keymap.set("i", "<A-e>", function()
+    require("neocodeium").cycle_or_complete()
+end)
+vim.keymap.set("i", "<A-r>", function()
+    require("neocodeium").cycle_or_complete(-1)
+end)
+
+require('bookmarks').setup {
+  sign_priority = 1000,  --set bookmark sign priority to cover other sign
+  save_file = vim.fn.expand "$HOME/.bookmarks", -- bookmarks save file path
+  keywords =  {
+    ["@t"] = "☑️ ", -- mark annotation startswith @t ,signs this icon as `Todo`
+    ["@w"] = "⚠️ ", -- mark annotation startswith @w ,signs this icon as `Warn`
+    ["@f"] = "⛏ ", -- mark annotation startswith @f ,signs this icon as `Fix`
+    ["@n"] = "👺", -- mark annotation startswith @n ,signs this icon as `Note`
+  },
+  on_attach = function(bufnr)
+    local bm = require "bookmarks"
+    local map = vim.keymap.set
+    map("n","mm",bm.bookmark_toggle) -- add or remove bookmark at current line
+    map("n","mi",bm.bookmark_ann) -- add or edit mark annotation at current line
+    map("n","mc",bm.bookmark_clean) -- clean all marks in local buffer
+    map("n","mn",bm.bookmark_next) -- jump to next mark in local buffer
+    map("n","mp",bm.bookmark_prev) -- jump to previous mark in local buffer
+    map("n","ml",bm.bookmark_list) -- show marked file list in quickfix window
+    map("n","mx",bm.bookmark_clear_all) -- removes all bookmarks
+  end
+}
+
+require('telescope').load_extension('bookmarks')
+
+require("telescope").load_extension("git_file_history")
+
+vim.notify = require("notify")
+
+require('lualine').setup()
+
+
+vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+require('ufo').setup()
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
