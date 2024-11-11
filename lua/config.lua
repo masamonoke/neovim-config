@@ -218,34 +218,34 @@ require 'nt-cpp-tools'.setup({
     }
 })
 
-require 'neocodeium'.setup({
-  "monkoose/neocodeium",
-  event = "VeryLazy",
-  opts = {
-    server = {
-      api_url = 'https://codeium.company.net/_route/api_server',
-      portal_url = 'https://codeium.company.net',
-    },
-  }
-})
-vim.keymap.set("i", "<A-f>", function()
-    require("neocodeium").accept()
-end)
-vim.keymap.set("i", "<A-c>", function()
-    require("neocodeium").clear()
-end)
-vim.keymap.set("i", "<A-w>", function()
-    require("neocodeium").accept_word()
-end)
-vim.keymap.set("i", "<A-a>", function()
-    require("neocodeium").accept_line()
-end)
-vim.keymap.set("i", "<A-e>", function()
-    require("neocodeium").cycle_or_complete()
-end)
-vim.keymap.set("i", "<A-r>", function()
-    require("neocodeium").cycle_or_complete(-1)
-end)
+-- require 'neocodeium'.setup({
+--   "monkoose/neocodeium",
+--   event = "VeryLazy",
+--   opts = {
+--     server = {
+--       api_url = 'https://codeium.company.net/_route/api_server',
+--       portal_url = 'https://codeium.company.net',
+--     },
+--   }
+-- })
+-- vim.keymap.set("i", "<A-f>", function()
+--     require("neocodeium").accept()
+-- end)
+-- vim.keymap.set("i", "<A-c>", function()
+--     require("neocodeium").clear()
+-- end)
+-- vim.keymap.set("i", "<A-w>", function()
+--     require("neocodeium").accept_word()
+-- end)
+-- vim.keymap.set("i", "<A-a>", function()
+--     require("neocodeium").accept_line()
+-- end)
+-- vim.keymap.set("i", "<A-e>", function()
+--     require("neocodeium").cycle_or_complete()
+-- end)
+-- vim.keymap.set("i", "<A-r>", function()
+--     require("neocodeium").cycle_or_complete(-1)
+-- end)
 
 require('bookmarks').setup {
   sign_priority = 1000,  --set bookmark sign priority to cover other sign
@@ -278,11 +278,10 @@ vim.notify = require("notify")
 require('lualine').setup()
 
 
-vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldcolumn = '0' -- '0' is not bad
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 require('ufo').setup()
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-
