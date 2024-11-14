@@ -285,3 +285,17 @@ vim.o.foldenable = true
 require('ufo').setup()
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+require('modicator').setup()
+
+vim.loader.enable()
+
+require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+
+local bufferline = require('bufferline')
+bufferline.setup({
+	options = {
+		separator_style = "slant"
+	}
+})
+

@@ -13,6 +13,7 @@ set clipboard+=unnamedplus
 set noshowmode
 set filetype=on
 set cursorline
+set formatprg=clang-format
 
 call plug#begin()
 	Plug 'windwp/nvim-autopairs'
@@ -63,6 +64,9 @@ call plug#begin()
 	Plug 'kevinhwang91/promise-async'
 	Plug 'kevinhwang91/nvim-ufo'
 	Plug 'nvim-zh/better-escape.vim'
+	Plug 'mawkler/modicator.nvim'
+	Plug 'smoka7/hop.nvim'
+	Plug 'akinsho/bufferline.nvim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
@@ -183,3 +187,5 @@ verbose nmap <leader>rn <Plug>(coc-rename)
 
 set undofile
 set undodir=~/.vim/undo
+
+nnoremap <leader>h :HopWord<CR>
