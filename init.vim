@@ -14,6 +14,7 @@ set noshowmode
 set filetype=on
 set cursorline
 set formatprg=clang-format
+set colorcolumn=120
 
 call plug#begin()
 	Plug 'windwp/nvim-autopairs'
@@ -68,8 +69,12 @@ call plug#begin()
 	Plug 'smoka7/hop.nvim'
 	Plug 'akinsho/bufferline.nvim'
 	Plug 'akinsho/git-conflict.nvim'
-	" Plug 'sunjon/Shade.nvim'
-	Plug 'levouh/tint.nvim'
+	" Plug 'levouh/tint.nvim'
+	Plug 'mfussenegger/nvim-dap'
+	Plug 'nvim-neotest/nvim-nio'
+	Plug 'rcarriga/nvim-dap-ui'
+	Plug 'nvim-focus/focus.nvim'
+	Plug 'Bekaboo/deadcolumn.nvim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
