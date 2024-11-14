@@ -67,6 +67,9 @@ call plug#begin()
 	Plug 'mawkler/modicator.nvim'
 	Plug 'smoka7/hop.nvim'
 	Plug 'akinsho/bufferline.nvim'
+	Plug 'akinsho/git-conflict.nvim'
+	" Plug 'sunjon/Shade.nvim'
+	Plug 'levouh/tint.nvim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
@@ -74,8 +77,8 @@ let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_keymap_next = '<F8>'
 let g:floaterm_keymap_kill = '<F9>'
 let g:floaterm_wintype = 'float'
-let g:floaterm_height = 50
-let g:floaterm_width = 170
+let g:floaterm_height = 80
+let g:floaterm_width = 270
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)

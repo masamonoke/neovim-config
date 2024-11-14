@@ -41,20 +41,6 @@ require('nvim-cursorline').setup {
 	},
 }
 
-require('neoscroll').setup({
-    -- All these keys will be mapped to their corresponding default scrolling animation
-    mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-                '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
-    hide_cursor = true,          -- Hide cursor while scrolling
-    stop_eof = false,             -- Stop at <EOF> when scrolling downwards
-    respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-    cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-    easing_function = nil,       -- Default easing function
-    pre_hook = nil,              -- Function to run before the scrolling animation starts
-    post_hook = nil,             -- Function to run after the scrolling animation ends
-    performance_mode = false,    -- Disable "Performance Mode" on all buffers.
-})
-
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the four listed parsers should always be installed)
   ensure_installed = { "lua", "vim" },
@@ -295,7 +281,47 @@ require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
 local bufferline = require('bufferline')
 bufferline.setup({
 	options = {
-		separator_style = "slant"
+		separator_style = "slant",
+		buffer_close_icon = '󰅖',
+		modified_icon = '● ',
+		close_icon = ' ',
+		left_trunc_marker = ' ',
+		right_trunc_marker = ' ',
+		truncate_names = false,
+		color_icons = true,
+		hover = {
+			enabled = true,
+			delay = 200,
+			reveal = {'close'}
+		},
+		diagnostics = "coc"
 	}
 })
 
+require('git-conflict').setup()
+
+-- require'shade'.setup({
+--   overlay_opacity = 50,
+--   opacity_step = 1,
+--   keys = {
+--     brightness_up    = '<C-Up>',
+--     brightness_down  = '<C-Down>',
+--     toggle           = '<Leader>s',
+--   }
+-- })
+
+require("tint").setup()
+
+require('neoscroll').setup({
+    -- All these keys will be mapped to their corresponding default scrolling animation
+    mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+                '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
+    hide_cursor = true,          -- Hide cursor while scrolling
+    stop_eof = false,             -- Stop at <EOF> when scrolling downwards
+    respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+    cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+    easing_function = nil,       -- Default easing function
+    pre_hook = nil,              -- Function to run before the scrolling animation starts
+    post_hook = nil,             -- Function to run after the scrolling animation ends
+    performance_mode = false,    -- Disable "Performance Mode" on all buffers.
+})
