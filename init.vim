@@ -15,6 +15,8 @@ set filetype=on
 set cursorline
 set formatprg=clang-format
 set colorcolumn=120
+" set guicursor=i:block
+set guicursor=n-v-c:block,i:ver25
 
 call plug#begin()
 	Plug 'windwp/nvim-autopairs'
@@ -51,7 +53,6 @@ call plug#begin()
 	Plug 'HiPhish/rainbow-delimiters.nvim'
 	Plug 'MysticalDevil/inlay-hints.nvim'
 	Plug 'nvim-tree/nvim-tree.lua'
-	" Plug 'rhysd/git-messenger.vim'
 	Plug 'Badhi/nvim-treesitter-cpp-tools'
 	Plug 'monkoose/neocodeium'
 	Plug 'tveskag/nvim-blame-line'
@@ -59,7 +60,6 @@ call plug#begin()
 	Plug 'isak102/telescope-git-file-history.nvim'
 	Plug 'tpope/vim-fugitive'
 	Plug 'rcarriga/nvim-notify'
-	" Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 	Plug 'nvim-lualine/lualine.nvim'
 	Plug 'simnalamburt/vim-mundo'
 	Plug 'kevinhwang91/promise-async'
@@ -69,7 +69,6 @@ call plug#begin()
 	Plug 'smoka7/hop.nvim'
 	Plug 'akinsho/bufferline.nvim'
 	Plug 'akinsho/git-conflict.nvim'
-	" Plug 'levouh/tint.nvim'
 	Plug 'mfussenegger/nvim-dap'
 	Plug 'nvim-neotest/nvim-nio'
 	Plug 'rcarriga/nvim-dap-ui'
@@ -82,8 +81,8 @@ let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_keymap_next = '<F8>'
 let g:floaterm_keymap_kill = '<F9>'
 let g:floaterm_wintype = 'float'
-let g:floaterm_height = 80
-let g:floaterm_width = 270
+let g:floaterm_height = 50
+let g:floaterm_width = 170
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)
@@ -99,8 +98,6 @@ noremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
 noremap <C-t> :tabnew split<CR>
 nnoremap <F4> :bp \| sp \| bn \| bd<CR>
-
-set guicursor=i:block
 
 highlight CocErrorFloat ctermfg=204 guifg=#ffffff
 
