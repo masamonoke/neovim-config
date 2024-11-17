@@ -398,7 +398,54 @@ vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "LspDiagnosticsSig
 
 require("focus").setup()
 
-require('deadcolumn').setup({
-	scope = "visible"
+-- require('deadcolumn').setup({
+-- 	scope = "visible"
+-- })
+
+require("virt-column").setup({
+	virtcolumn = "130"
 })
 
+ require("noice").setup({
+	presets = {
+		bottom_search = true, -- use a classic bottom cmdline for search
+		command_palette = true, -- position the cmdline and popupmenu together
+		long_message_to_split = true, -- long messages will be sent to a split
+		inc_rename = false, -- enables an input dialog for inc-rename.nvim
+		lsp_doc_border = false, -- add a border to hover docs and signature help
+	}
+})
+
+require("better_escape").setup()
+
+require('highlight-undo').setup({
+  duration = 300,
+  keymaps = {
+    Keymap_name = {
+      -- most fields here are the same as in vim.keymap.set
+      desc = "a description",
+      hlgroup = 'HighlightUndo',
+      mode = 'n',
+      lhs = 'lhs',
+      rhs = 'optional, can be nil',
+      opts = {
+        -- same as opts to vim.keymap.set. if rhs is nil, there should be a
+        -- callback key which points to a function
+      },
+    },
+  },
+})
+
+require("cheeky").setup({
+	langs = {
+		all = true,
+		lua = true,
+		cpp = true,
+		asm = true,
+		cmake = true,
+		markdown = true,
+		supercollider = true
+	},
+})
+
+-- require("precognition").setup()

@@ -14,7 +14,6 @@ set noshowmode
 set filetype=on
 set cursorline
 set formatprg=clang-format
-set colorcolumn=120
 " set guicursor=i:block
 set guicursor=n-v-c:block,i:ver25
 
@@ -64,7 +63,6 @@ call plug#begin()
 	Plug 'simnalamburt/vim-mundo'
 	Plug 'kevinhwang91/promise-async'
 	Plug 'kevinhwang91/nvim-ufo'
-	Plug 'nvim-zh/better-escape.vim'
 	Plug 'mawkler/modicator.nvim'
 	Plug 'smoka7/hop.nvim'
 	Plug 'akinsho/bufferline.nvim'
@@ -73,7 +71,15 @@ call plug#begin()
 	Plug 'nvim-neotest/nvim-nio'
 	Plug 'rcarriga/nvim-dap-ui'
 	Plug 'nvim-focus/focus.nvim'
-	Plug 'Bekaboo/deadcolumn.nvim'
+	Plug 'lukas-reineke/virt-column.nvim'
+	Plug 'folke/noice.nvim'
+	Plug 'MunifTanjim/nui.nvim'
+	Plug 'goolord/alpha-nvim'
+	Plug 'max397574/better-escape.nvim'
+	Plug 'tzachar/highlight-undo.nvim'
+	Plug 'madskjeldgaard/cheeky-snippets.nvim'
+	Plug 'L3MON4D3/LuaSnip'
+	" Plug 'tris203/precognition.nvim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
