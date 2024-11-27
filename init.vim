@@ -14,7 +14,6 @@ set noshowmode
 set filetype=on
 set cursorline
 set formatprg=clang-format
-" set guicursor=i:block
 set guicursor=n-v-c:block,i:ver25
 
 call plug#begin()
@@ -22,8 +21,6 @@ call plug#begin()
 	Plug 'tpope/vim-commentary'
 	Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 	Plug 'nvim-tree/nvim-web-devicons'
-	" Plug 'vim-airline/vim-airline'
-	" Plug 'vim-airline/vim-airline-themes'
 	Plug 'karb94/neoscroll.nvim'
 	Plug 'itchyny/vim-gitbranch'
 	Plug 'voldikss/vim-floaterm'
@@ -58,7 +55,6 @@ call plug#begin()
 	Plug 'tomasky/bookmarks.nvim'
 	Plug 'isak102/telescope-git-file-history.nvim'
 	Plug 'tpope/vim-fugitive'
-	Plug 'rcarriga/nvim-notify'
 	Plug 'nvim-lualine/lualine.nvim'
 	Plug 'simnalamburt/vim-mundo'
 	Plug 'kevinhwang91/promise-async'
@@ -66,7 +62,6 @@ call plug#begin()
 	Plug 'mawkler/modicator.nvim'
 	Plug 'smoka7/hop.nvim'
 	Plug 'akinsho/bufferline.nvim'
-	Plug 'akinsho/git-conflict.nvim'
 	Plug 'mfussenegger/nvim-dap'
 	Plug 'nvim-neotest/nvim-nio'
 	Plug 'rcarriga/nvim-dap-ui'
@@ -79,7 +74,9 @@ call plug#begin()
 	Plug 'tzachar/highlight-undo.nvim'
 	Plug 'madskjeldgaard/cheeky-snippets.nvim'
 	Plug 'L3MON4D3/LuaSnip'
-	" Plug 'tris203/precognition.nvim'
+	Plug 'sphamba/smear-cursor.nvim'
+	Plug 'kelvinauta/focushere.nvim'
+	Plug 'folke/snacks.nvim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'
@@ -123,7 +120,6 @@ autocmd TextChanged,TextChangedI <buffer> silent write
 
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
-"coc
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
 
 nnoremap <F1> :Telescope buffers <CR>
@@ -144,11 +140,8 @@ autocmd FileType vue setlocal sw=2 ts=2
 autocmd FileType r setlocal sw=1 ts=1 expandtab
 autocmd FileType xml setlocal sw=2 ts=2
 
-" let g:airline_powerline_fonts = 1
-" let g:airline_theme = "deus"
-
 lua << EOF
-  require("todo-comments").setup {}
+require("todo-comments").setup {}
 EOF
 
 
@@ -183,20 +176,17 @@ hi CocInlayHint guibg=#707772
 
 nnoremap <C-n> :NvimTreeToggle <CR>
 
-" augroup remember_folds
-"   autocmd!
-"   autocmd BufWinLeave * mkview
-"   autocmd BufWinEnter * silent! loadview
-" augroup END
-
-let g:airline#extensions#whitespace#enabled = 0
 nnoremap <silent> <leader>a :call CocActionAsync('codeAction')<CR>
 verbose nmap <leader>rn <Plug>(coc-rename)
-
-" let g:Lf_WindowPosition = 'popup'
-" let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
 set undofile
 set undodir=~/.vim/undo
 
 nnoremap <leader>h :HopWord<CR>
+
+lua require('smear_cursor').enabled = true
+
+set lazyredraw
+
+au WinEnter * setl winhl=WinSeparator:WinSeparatorA
+au WinLeave * setl winhl=WinSeparator:WinSeparator

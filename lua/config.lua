@@ -1,4 +1,9 @@
 require("telescope").setup {
+	defaults = {
+		preview = {
+			treesitter = false
+		}
+	},
   extensions = {
     file_browser = {
       theme = "ivy",
@@ -42,54 +47,17 @@ require('nvim-cursorline').setup {
 }
 
 require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all" (the four listed parsers should always be installed)
   ensure_installed = { "lua", "vim" },
 
-  -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
 
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   auto_install = false,
-
-  -- List of parsers to ignore installing (for "all")
-  -- ignore_install = { "javascript" },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
 
   highlight = {
     enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
     disable = { },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-
-    -- disable = function(lang, buf)
-    --     local max_filesize = 100 * 1024 -- 100 KB
-    --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-    --     if ok and stats and stats.size > max_filesize then
-    --         return true
-    --     end
-    -- end,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
-  -- rainbow = {
-  --   enable =true,
-  --   -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-  --   extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-  --   max_file_lines = 1000, -- Do not enable for files with more than n lines, int
-  --   -- colors = {}, -- table of hex strings
-  --   -- termcolors = {} -- table of colour name strings
-  -- }
 }
 
 require("ibl").setup {
@@ -259,10 +227,9 @@ require('telescope').load_extension('bookmarks')
 
 require("telescope").load_extension("git_file_history")
 
-vim.notify = require("notify")
+-- vim.notify = require("notify")
 
 require('lualine').setup()
-
 
 vim.o.foldcolumn = '0' -- '0' is not bad
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
@@ -273,8 +240,6 @@ vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 require('modicator').setup()
-
--- vim.loader.enable()
 
 require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
 
@@ -298,20 +263,6 @@ bufferline.setup({
 	}
 })
 
-require('git-conflict').setup()
-
--- require'shade'.setup({
---   overlay_opacity = 50,
---   opacity_step = 1,
---   keys = {
---     brightness_up    = '<C-Up>',
---     brightness_down  = '<C-Down>',
---     toggle           = '<Leader>s',
---   }
--- })
-
--- require("tint").setup()
-
 require('neoscroll').setup({
     -- All these keys will be mapped to their corresponding default scrolling animation
     mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
@@ -321,15 +272,15 @@ require('neoscroll').setup({
     respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
     cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
     easing_function = nil,       -- Default easing function
-    pre_hook = nil,              -- Function to run before the scrolling animation starts
-    post_hook = nil,             -- Function to run after the scrolling animation ends
-    performance_mode = false,    -- Disable "Performance Mode" on all buffers.
+    pre_hook = function()
+        local line_count = vim.api.nvim_buf_line_count(0)
+        if line_count > 1000 then
+            vim.g.neoscroll_performance_mode = true
+        else
+            vim.g.neoscroll_performance_mode = false
+        end
+    end,
 })
-
--- require("neodev").setup({
---   library = { plugins = { "nvim-dap-ui" }, types = true },
---   ...
--- })
 
 local dap = require('dap')
 dap.adapters.lldb = {
@@ -349,19 +300,6 @@ dap.configurations.cpp = {
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
     args = {},
-
-    -- 💀
-    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-    --
-    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-    --
-    -- Otherwise you might get the following error:
-    --
-    --    Error on launch: Failed to attach to the target process
-    --
-    -- But you should be aware of the implications:
-    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-    -- runInTerminal = false,
   },
 }
 
@@ -397,10 +335,6 @@ end
 vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" })
 
 require("focus").setup()
-
--- require('deadcolumn').setup({
--- 	scope = "visible"
--- })
 
 require("virt-column").setup({
 	virtcolumn = "130"
@@ -448,4 +382,14 @@ require("cheeky").setup({
 	},
 })
 
--- require("precognition").setup()
+require("focushere").setup()
+vim.keymap.set("v","<Leader>f" , ":FocusHere<CR>" , {noremap=true, silent=true})
+vim.keymap.set("n","<Leader>f" , ":FocusClear<CR>" , {noremap=true, silent=true})
+
+require("snacks").setup({
+	bigfile = { enabled = true },
+    quickfile = { enabled = true },
+    statuscolumn = { enabled = true },
+    words = { enabled = true },
+	bufdelete = { enabled = true }
+})
