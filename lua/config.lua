@@ -55,7 +55,9 @@ require'nvim-treesitter.configs'.setup {
 
   highlight = {
     enable = true,
-    disable = { },
+	disable = function(lang, bufnr) -- Disable in large C++ buffers
+        return vim.api.nvim_buf_line_count(bufnr) > 1000
+	end,
     additional_vim_regex_highlighting = false,
   },
 }
