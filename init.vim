@@ -75,8 +75,9 @@ call plug#begin()
 	Plug 'madskjeldgaard/cheeky-snippets.nvim'
 	Plug 'L3MON4D3/LuaSnip'
 	Plug 'sphamba/smear-cursor.nvim'
-	Plug 'kelvinauta/focushere.nvim'
+	" Plug 'kelvinauta/focushere.nvim'
 	Plug 'folke/snacks.nvim'
+	Plug 'folke/twilight.nvim'
 call plug#end()
 
 let g:floaterm_keymap_new    = '<F7>'

@@ -384,9 +384,9 @@ require("cheeky").setup({
 	},
 })
 
-require("focushere").setup()
-vim.keymap.set("v","<Leader>f" , ":FocusHere<CR>" , {noremap=true, silent=true})
-vim.keymap.set("n","<Leader>f" , ":FocusClear<CR>" , {noremap=true, silent=true})
+-- require("focushere").setup()
+-- vim.keymap.set("v","<Leader>f" , ":FocusHere<CR>" , {noremap=true, silent=true})
+-- vim.keymap.set("n","<Leader>f" , ":FocusClear<CR>" , {noremap=true, silent=true})
 
 require("snacks").setup({
 	bigfile = { enabled = true },
@@ -394,4 +394,22 @@ require("snacks").setup({
     statuscolumn = { enabled = true },
     words = { enabled = true },
 	bufdelete = { enabled = true }
+})
+
+require("twilight").setup({
+	dimming = {
+		alpha = 0.25,
+		color = { "Normal", "#ffffff" },
+		term_bg = "#000000",
+		inactive = false,
+	},
+	context = 10,
+	treesitter = true,
+	expand = {
+		"function",
+		"method",
+		"table",
+		"if_statement",
+	},
+	exclude = {},
 })

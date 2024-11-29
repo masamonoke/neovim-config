@@ -81,8 +81,9 @@ call plug#begin()
 	Plug 'madskjeldgaard/cheeky-snippets.nvim'
 	Plug 'L3MON4D3/LuaSnip'
 	Plug 'sphamba/smear-cursor.nvim'
-	Plug 'kelvinauta/focushere.nvim'
+	" Plug 'kelvinauta/focushere.nvim'
 	Plug 'folke/snacks.nvim'
+	Plug 'folke/twilight.nvim'
 call plug#end()
 
 " Jump forward or backward
