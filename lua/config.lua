@@ -62,13 +62,9 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require("ibl").setup {
-	scope = {
-		highlight = {
-			"Label"
-		}
-	}
-}
+require('mini.indentscope').setup({
+	symbol = '┃',
+})
 
 require('gitsigns').setup {
   signs = {
@@ -403,7 +399,7 @@ require("twilight").setup({
 		term_bg = "#000000",
 		inactive = false,
 	},
-	context = 10,
+	context = 30,
 	treesitter = true,
 	expand = {
 		"function",
@@ -413,3 +409,17 @@ require("twilight").setup({
 	},
 	exclude = {},
 })
+
+vim.notify = require("notify")
+
+require("auto-save").setup {
+	execution_message = {
+		message = function()
+			return ("")
+		end,
+	}
+}
+
+require('tiny-inline-diagnostic').setup()
+
+vim.diagnostic.config({ virtual_text = false })

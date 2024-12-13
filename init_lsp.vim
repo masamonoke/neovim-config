@@ -30,7 +30,6 @@ call plug#begin()
 	Plug 'karb94/neoscroll.nvim'
 	Plug 'itchyny/vim-gitbranch'
 	Plug 'voldikss/vim-floaterm'
-	Plug 'lukas-reineke/indent-blankline.nvim'
 	Plug 'ARM9/arm-syntax-vim'
 	Plug 'ellisonleao/gruvbox.nvim'
 	Plug 'neovim/nvim-lspconfig'
@@ -81,9 +80,11 @@ call plug#begin()
 	Plug 'madskjeldgaard/cheeky-snippets.nvim'
 	Plug 'L3MON4D3/LuaSnip'
 	Plug 'sphamba/smear-cursor.nvim'
-	" Plug 'kelvinauta/focushere.nvim'
 	Plug 'folke/snacks.nvim'
 	Plug 'folke/twilight.nvim'
+	Plug 'rcarriga/nvim-notify'
+	Plug 'rachartier/tiny-inline-diagnostic.nvim'
+	Plug 'echasnovski/mini.indentscope'
 call plug#end()
 
 " Jump forward or backward
