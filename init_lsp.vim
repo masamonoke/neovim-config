@@ -29,7 +29,7 @@ call plug#begin()
 	Plug 'nvim-tree/nvim-web-devicons'
 	Plug 'karb94/neoscroll.nvim'
 	Plug 'itchyny/vim-gitbranch'
-	Plug 'voldikss/vim-floaterm'
+	Plug 'akinsho/toggleterm.nvim'
 	Plug 'ARM9/arm-syntax-vim'
 	Plug 'ellisonleao/gruvbox.nvim'
 	Plug 'neovim/nvim-lspconfig'
@@ -82,7 +82,6 @@ call plug#begin()
 	Plug 'sphamba/smear-cursor.nvim'
 	Plug 'folke/snacks.nvim'
 	Plug 'folke/twilight.nvim'
-	Plug 'rcarriga/nvim-notify'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
 call plug#end()
@@ -104,10 +103,6 @@ lua << EOF
 			expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
 			end,
-		},
-		window = {
-			completion = cmp.config.window.bordered(),
-			documentation = cmp.config.window.bordered(),
 		},
 		mapping = cmp.mapping.preset.insert({
 			['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -149,18 +144,7 @@ lua << EOF
 	-- Show line diagnostics automatically in hover window
 	vim.o.updatetime = 250
 	vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
-
-	vim.api.nvim_set_hl(0, "LspInlayHint", { bg = "#707772" })
 EOF
-
-
-let g:floaterm_keymap_new    = '<F7>'
-let g:floaterm_keymap_toggle = '<F12>'
-let g:floaterm_keymap_next = '<F8>'
-let g:floaterm_keymap_kill = '<F9>'
-let g:floaterm_wintype = 'float'
-let g:floaterm_height = 50
-let g:floaterm_width = 170
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)
@@ -239,12 +223,7 @@ let g:indent_blankline_show_current_context = v:true
 
 let g:highlighturl_guifg = '#DB7093'
 
-hi CocInlayHint guibg=#707772
-
 nnoremap <C-n> :NvimTreeToggle <CR>
-
-" nnoremap <silent> <leader>a :call CocActionAsync('codeAction')<CR>
-" verbose nmap <leader>rn <Plug>(coc-rename)
 
 set undofile
 set undodir=~/.vim/undo
@@ -257,3 +236,5 @@ set lazyredraw
 
 au WinEnter * setl winhl=WinSeparator:WinSeparatorA
 au WinLeave * setl winhl=WinSeparator:WinSeparator
+
+highlight LspInlayHint guibg=#707772

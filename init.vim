@@ -23,7 +23,7 @@ call plug#begin()
 	Plug 'nvim-tree/nvim-web-devicons'
 	Plug 'karb94/neoscroll.nvim'
 	Plug 'itchyny/vim-gitbranch'
-	Plug 'voldikss/vim-floaterm'
+	Plug 'akinsho/toggleterm.nvim'
 	Plug 'lukas-reineke/indent-blankline.nvim'
 	Plug 'ARM9/arm-syntax-vim'
 	Plug 'ellisonleao/gruvbox.nvim'
@@ -77,18 +77,9 @@ call plug#begin()
 	Plug 'sphamba/smear-cursor.nvim'
 	Plug 'folke/snacks.nvim'
 	Plug 'folke/twilight.nvim'
-	Plug 'rcarriga/nvim-notify'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
 call plug#end()
-
-let g:floaterm_keymap_new    = '<F7>'
-let g:floaterm_keymap_toggle = '<F12>'
-let g:floaterm_keymap_next = '<F8>'
-let g:floaterm_keymap_kill = '<F9>'
-let g:floaterm_wintype = 'float'
-let g:floaterm_height = 50
-let g:floaterm_width = 170
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)

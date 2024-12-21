@@ -301,6 +301,8 @@ dap.configurations.cpp = {
   },
 }
 
+dap.configurations.c = dap.configurations.cpp
+
 vim.keymap.set('n', 'C', function() require('dap').continue() end)
 vim.keymap.set('n', 'O', function() require('dap').step_over() end)
 vim.keymap.set('n', 'I', function() require('dap').step_into() end)
@@ -410,8 +412,6 @@ require("twilight").setup({
 	exclude = {},
 })
 
-vim.notify = require("notify")
-
 require("auto-save").setup {
 	execution_message = {
 		message = function()
@@ -423,3 +423,8 @@ require("auto-save").setup {
 require('tiny-inline-diagnostic').setup()
 
 vim.diagnostic.config({ virtual_text = false })
+
+require("toggleterm").setup({
+	open_mapping = [[<F12>]],
+	direction = "float",
+})
