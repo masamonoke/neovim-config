@@ -76,7 +76,7 @@ call plug#begin()
 	Plug 'L3MON4D3/LuaSnip'
 	Plug 'sphamba/smear-cursor.nvim'
 	Plug 'folke/snacks.nvim'
-	Plug 'folke/twilight.nvim'
+	" Plug 'folke/twilight.nvim'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
 call plug#end()
@@ -185,3 +185,24 @@ set lazyredraw
 au WinEnter * setl winhl=WinSeparator:WinSeparatorA
 au WinLeave * setl winhl=WinSeparator:WinSeparator
 
+lua << EOF
+require('mini.indentscope').setup({
+	symbol = '┃',
+})
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "lua", "vim" },
+
+  sync_install = false,
+
+  auto_install = false,
+
+  highlight = {
+    enable = true,
+	disable = function(lang, bufnr)
+        return vim.api.nvim_buf_line_count(bufnr) > 3000
+	end,
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF

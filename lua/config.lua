@@ -46,26 +46,6 @@ require('nvim-cursorline').setup {
 	},
 }
 
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "lua", "vim" },
-
-  sync_install = false,
-
-  auto_install = false,
-
-  highlight = {
-    enable = true,
-	disable = function(lang, bufnr)
-        return vim.api.nvim_buf_line_count(bufnr) > 3000
-	end,
-    additional_vim_regex_highlighting = false,
-  },
-}
-
-require('mini.indentscope').setup({
-	symbol = '┃',
-})
-
 require('gitsigns').setup {
   signs = {
     add          = { text = '│' },
@@ -352,24 +332,6 @@ require("virt-column").setup({
 
 require("better_escape").setup()
 
-require('highlight-undo').setup({
-  duration = 300,
-  keymaps = {
-    Keymap_name = {
-      -- most fields here are the same as in vim.keymap.set
-      desc = "a description",
-      hlgroup = 'HighlightUndo',
-      mode = 'n',
-      lhs = 'lhs',
-      rhs = 'optional, can be nil',
-      opts = {
-        -- same as opts to vim.keymap.set. if rhs is nil, there should be a
-        -- callback key which points to a function
-      },
-    },
-  },
-})
-
 require("cheeky").setup({
 	langs = {
 		all = true,
@@ -382,34 +344,12 @@ require("cheeky").setup({
 	},
 })
 
--- require("focushere").setup()
--- vim.keymap.set("v","<Leader>f" , ":FocusHere<CR>" , {noremap=true, silent=true})
--- vim.keymap.set("n","<Leader>f" , ":FocusClear<CR>" , {noremap=true, silent=true})
-
 require("snacks").setup({
 	bigfile = { enabled = true },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
 	bufdelete = { enabled = true }
-})
-
-require("twilight").setup({
-	dimming = {
-		alpha = 0.25,
-		color = { "Normal", "#ffffff" },
-		term_bg = "#000000",
-		inactive = false,
-	},
-	context = 30,
-	treesitter = true,
-	expand = {
-		"function",
-		"method",
-		"table",
-		"if_statement",
-	},
-	exclude = {},
 })
 
 require("auto-save").setup {

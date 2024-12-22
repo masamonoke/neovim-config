@@ -76,13 +76,11 @@ call plug#begin()
 	Plug 'MunifTanjim/nui.nvim'
 	Plug 'goolord/alpha-nvim'
 	Plug 'max397574/better-escape.nvim'
-	Plug 'tzachar/highlight-undo.nvim'
 	Plug 'madskjeldgaard/cheeky-snippets.nvim'
 	Plug 'L3MON4D3/LuaSnip'
-	Plug 'sphamba/smear-cursor.nvim'
 	Plug 'folke/snacks.nvim'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
-	Plug 'echasnovski/mini.indentscope'
+	" Plug 'sainnhe/gruvbox-material'
 call plug#end()
 
 " Jump forward or backward
@@ -229,8 +227,6 @@ set undodir=~/.vim/undo
 
 nnoremap <leader>h :HopWord<CR>
 
-lua require('smear_cursor').enabled = true
-
 set lazyredraw
 
 au WinEnter * setl winhl=WinSeparator:WinSeparatorA
@@ -239,28 +235,6 @@ au WinLeave * setl winhl=WinSeparator:WinSeparator
 highlight LspInlayHint guibg=#707772
 
 lua << EOF
-require('highlight-undo').setup({
-  duration = 300,
-  keymaps = {
-    Keymap_name = {
-      -- most fields here are the same as in vim.keymap.set
-      desc = "a description",
-      hlgroup = 'HighlightUndo',
-      mode = 'n',
-      lhs = 'lhs',
-      rhs = 'optional, can be nil',
-      opts = {
-        -- same as opts to vim.keymap.set. if rhs is nil, there should be a
-        -- callback key which points to a function
-      },
-    },
-  },
-})
-
-require('mini.indentscope').setup({
-	symbol = '┃',
-})
-
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "lua", "vim" },
 
@@ -271,7 +245,7 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
 	disable = function(lang, bufnr)
-        return vim.api.nvim_buf_line_count(bufnr) > 3000
+        return vim.api.nvim_buf_line_count(bufnr) > 1000
 	end,
     additional_vim_regex_highlighting = false,
   },
