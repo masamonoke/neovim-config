@@ -76,7 +76,6 @@ call plug#begin()
 	Plug 'L3MON4D3/LuaSnip'
 	Plug 'sphamba/smear-cursor.nvim'
 	Plug 'folke/snacks.nvim'
-	" Plug 'folke/twilight.nvim'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
 call plug#end()
@@ -178,12 +177,7 @@ set undodir=~/.vim/undo
 
 nnoremap <leader>h :HopWord<CR>
 
-lua require('smear_cursor').enabled = true
-
 set lazyredraw
-
-au WinEnter * setl winhl=WinSeparator:WinSeparatorA
-au WinLeave * setl winhl=WinSeparator:WinSeparator
 
 lua << EOF
 require('mini.indentscope').setup({
@@ -206,3 +200,18 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+
+nnoremap <silent> <F10> :CocList diagnostics --current<CR>
+
+if exists("g:neovide")
+	nnoremap <D-s> :w<CR>
+	vnoremap <D-c> "+y
+	nnoremap <D-v> "+P
+	vnoremap <D-v> "+P
+	cnoremap <D-v> <C-R>+
+	inoremap <D-v> <C-R>+
+else
+	lua require('smear_cursor').enabled = true
+endif
+
+nnoremap <F7> :TransparentToggle<CR>

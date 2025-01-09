@@ -113,7 +113,7 @@ vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,te
 
 require('hlargs').setup()
 
-require("scrollbar").setup()
+-- require("scrollbar").setup()
 
 vim.cmd([[autocmd BufRead,BufEnter *.lua set filetype=lua]])
 
@@ -126,28 +126,6 @@ require("nvim-tree").setup({
 			enable = true
 		}
 	}
-})
-
-require 'nt-cpp-tools'.setup({
-    preview = {
-        quit = 'q', -- optional keymapping for quit preview
-        accept = '<tab>' -- optional keymapping for accept preview
-    },
-    header_extension = 'h', -- optional
-    source_extension = 'cxx', -- optional
-    custom_define_class_function_commands = { -- optional
-        TSCppImplWrite = {
-            output_handle = require'nt-cpp-tools.output_handlers'.get_add_to_cpp()
-        }
-        --[[
-        <your impl function custom command name> = {
-            output_handle = function (str, context) 
-                -- string contains the class implementation
-                -- do whatever you want to do with it
-            end
-        }
-        ]]
-    }
 })
 
 -- require 'neocodeium'.setup({
@@ -179,34 +157,6 @@ require 'nt-cpp-tools'.setup({
 --     require("neocodeium").cycle_or_complete(-1)
 -- end)
 
-require('bookmarks').setup {
-  sign_priority = 1000,  --set bookmark sign priority to cover other sign
-  save_file = vim.fn.expand "$HOME/.bookmarks", -- bookmarks save file path
-  keywords =  {
-    ["@t"] = "☑️ ", -- mark annotation startswith @t ,signs this icon as `Todo`
-    ["@w"] = "⚠️ ", -- mark annotation startswith @w ,signs this icon as `Warn`
-    ["@f"] = "⛏ ", -- mark annotation startswith @f ,signs this icon as `Fix`
-    ["@n"] = "👺", -- mark annotation startswith @n ,signs this icon as `Note`
-  },
-  on_attach = function(bufnr)
-    local bm = require "bookmarks"
-    local map = vim.keymap.set
-    map("n","mm",bm.bookmark_toggle) -- add or remove bookmark at current line
-    map("n","mi",bm.bookmark_ann) -- add or edit mark annotation at current line
-    map("n","mc",bm.bookmark_clean) -- clean all marks in local buffer
-    map("n","mn",bm.bookmark_next) -- jump to next mark in local buffer
-    map("n","mp",bm.bookmark_prev) -- jump to previous mark in local buffer
-    map("n","ml",bm.bookmark_list) -- show marked file list in quickfix window
-    map("n","mx",bm.bookmark_clear_all) -- removes all bookmarks
-  end
-}
-
-require('telescope').load_extension('bookmarks')
-
-require("telescope").load_extension("git_file_history")
-
--- vim.notify = require("notify")
-
 require('lualine').setup()
 
 vim.o.foldcolumn = '0' -- '0' is not bad
@@ -220,26 +170,6 @@ vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 require('modicator').setup()
 
 require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-
-local bufferline = require('bufferline')
-bufferline.setup({
-	options = {
-		separator_style = "slant",
-		buffer_close_icon = '󰅖',
-		modified_icon = '● ',
-		close_icon = ' ',
-		left_trunc_marker = ' ',
-		right_trunc_marker = ' ',
-		truncate_names = false,
-		color_icons = true,
-		hover = {
-			enabled = true,
-			delay = 200,
-			reveal = {'close'}
-		},
-		diagnostics = "coc"
-	}
-})
 
 require('neoscroll').setup({
     -- All these keys will be mapped to their corresponding default scrolling animation
