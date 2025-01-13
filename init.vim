@@ -78,6 +78,7 @@ call plug#begin()
 	Plug 'folke/snacks.nvim'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
+	Plug 'Bekaboo/dropbar.nvim'
 call plug#end()
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
