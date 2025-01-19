@@ -62,6 +62,7 @@ call plug#begin()
 	Plug 'mawkler/modicator.nvim'
 	Plug 'smoka7/hop.nvim'
 	Plug 'akinsho/bufferline.nvim'
+	" Plug 'romgrk/barbar.nvim'
 	Plug 'mfussenegger/nvim-dap'
 	Plug 'nvim-neotest/nvim-nio'
 	Plug 'rcarriga/nvim-dap-ui'
@@ -80,6 +81,8 @@ call plug#begin()
 	Plug 'echasnovski/mini.indentscope'
 	Plug 'Bekaboo/dropbar.nvim'
 	Plug 'epwalsh/pomo.nvim'
+	Plug 'JordenHuang/como.nvim'
+	Plug 'TaDaa/vimade'
 call plug#end()
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
@@ -216,4 +219,4 @@ else
 	lua require('smear_cursor').enabled = true
 endif
 
-nnoremap <F7> :TransparentToggle<CR>
+nnoremap <F7> :Como compile<CR>

@@ -325,3 +325,9 @@ bufferline.setup({
 		diagnostics = "coc"
 	}
 })
+
+require('como').setup()
+
+require('vimade').setup({
+	recipe = {'default', {animate=true}},
+})
