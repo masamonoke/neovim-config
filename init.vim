@@ -43,8 +43,6 @@ call plug#begin()
 	Plug 'sindrets/diffview.nvim'
 	Plug 'pocco81/auto-save.nvim'
 	Plug 'rmagatti/auto-session'
-	Plug 'nvim-treesitter/nvim-treesitter-context'
-	Plug 'petertriho/nvim-scrollbar'
 	Plug 'm-demare/hlargs.nvim'
 	Plug 'HiPhish/rainbow-delimiters.nvim'
 	Plug 'MysticalDevil/inlay-hints.nvim'
@@ -62,7 +60,6 @@ call plug#begin()
 	Plug 'mawkler/modicator.nvim'
 	Plug 'smoka7/hop.nvim'
 	Plug 'akinsho/bufferline.nvim'
-	" Plug 'romgrk/barbar.nvim'
 	Plug 'mfussenegger/nvim-dap'
 	Plug 'nvim-neotest/nvim-nio'
 	Plug 'rcarriga/nvim-dap-ui'
@@ -80,9 +77,9 @@ call plug#begin()
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
 	Plug 'Bekaboo/dropbar.nvim'
-	Plug 'epwalsh/pomo.nvim'
-	Plug 'JordenHuang/como.nvim'
-	Plug 'TaDaa/vimade'
+	" Plug 'nvim-treesitter/nvim-treesitter-context'
+	Plug 'nullromo/go-up.nvim'
+	Plug 'NStefan002/visual-surround.nvim'
 call plug#end()
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
@@ -209,12 +206,23 @@ EOF
 nnoremap <silent> <F10> :CocList diagnostics --current<CR>
 
 if exists("g:neovide")
-	nnoremap <D-s> :w<CR>
-	vnoremap <D-c> "+y
-	nnoremap <D-v> "+P
-	vnoremap <D-v> "+P
-	cnoremap <D-v> <C-R>+
-	inoremap <D-v> <C-R>+
+	let s:uname = system("uname")
+	if s:uname == "Darwin\n"
+		nnoremap <D-s> :w<CR>
+		vnoremap <D-c> "+y
+		nnoremap <D-v> "+P
+		vnoremap <D-v> "+P
+		cnoremap <D-v> <C-R>+
+		inoremap <D-v> <C-R>+
+	else
+		vnoremap <silent> <sc-c> "+P
+		cnoremap <silent> <sc-v> <C-o>l<C-o>"+<C-o>P<C-o>l
+		tnoremap <silent> <sc-v> <C-\><C-n>"+Pi
+		inoremap <silent> <sc-v> <C-R>+
+		nnoremap <silent> <sc-v> "+P
+	endif
+
+	let g:neovide_fullscreen=v:true
 else
 	lua require('smear_cursor').enabled = true
 endif

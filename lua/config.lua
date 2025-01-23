@@ -171,23 +171,29 @@ require('modicator').setup()
 
 require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
 
-require('neoscroll').setup({
-    -- All these keys will be mapped to their corresponding default scrolling animation
-    mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-                '<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
-    hide_cursor = true,          -- Hide cursor while scrolling
-    stop_eof = false,             -- Stop at <EOF> when scrolling downwards
-    respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-    cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-    easing_function = nil,       -- Default easing function
-    pre_hook = function()
-        local line_count = vim.api.nvim_buf_line_count(0)
-        if line_count > 1000 then
-            vim.g.neoscroll_performance_mode = true
-        else
-            vim.g.neoscroll_performance_mode = false
-        end
-    end,
+if not vim.g.neovide then
+	require('neoscroll').setup({
+		-- All these keys will be mapped to their corresponding default scrolling animation
+		mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+					'<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
+		hide_cursor = true,          -- Hide cursor while scrolling
+		stop_eof = false,             -- Stop at <EOF> when scrolling downwards
+		respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+		cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+		easing_function = nil,       -- Default easing function
+		pre_hook = function()
+			local line_count = vim.api.nvim_buf_line_count(0)
+			if line_count > 1000 then
+				vim.g.neoscroll_performance_mode = true
+			else
+				vim.g.neoscroll_performance_mode = false
+			end
+		end,
+	})
+
+end
+
+require("virt-column").setup({
 })
 
 local dap = require('dap')
@@ -246,10 +252,6 @@ vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "LspDiagnosticsSig
 
 require("focus").setup()
 
-require("virt-column").setup({
-	virtcolumn = "130"
-})
-
  require("noice").setup({
 	presets = {
 		bottom_search = true, -- use a classic bottom cmdline for search
@@ -304,8 +306,6 @@ vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in win
 vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
 vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
 
-require("pomo").setup({})
-
 local bufferline = require('bufferline')
 bufferline.setup({
 	options = {
@@ -326,8 +326,6 @@ bufferline.setup({
 	}
 })
 
-require('como').setup()
+require('go-up').setup()
 
-require('vimade').setup({
-	recipe = {'default', {animate=true}},
-})
+require("visual-surround").setup()

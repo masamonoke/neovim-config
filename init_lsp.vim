@@ -83,6 +83,11 @@ call plug#begin()
 	Plug 'folke/snacks.nvim'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
+	" Plug 'wurli/visimatch.nvim'
+	Plug 'rachartier/tiny-glimmer.nvim'
+	Plug 'nullromo/go-up.nvim'
+	Plug 'Bekaboo/dropbar.nvim'
+	Plug 'epwalsh/pomo.nvim'
 call plug#end()
 
 " Jump forward or backward
@@ -229,14 +234,31 @@ set undodir=~/.vim/undo
 
 nnoremap <leader>h :HopWord<CR>
 
-lua require('smear_cursor').enabled = true
-
 set lazyredraw
 
-au WinEnter * setl winhl=WinSeparator:WinSeparatorA
-au WinLeave * setl winhl=WinSeparator:WinSeparator
-
 highlight LspInlayHint guibg=#707772
+
+if exists("g:neovide")
+	let s:uname = system("uname")
+	if s:uname == "Darwin\n"
+		nnoremap <D-s> :w<CR>
+		vnoremap <D-c> "+y
+		nnoremap <D-v> "+P
+		vnoremap <D-v> "+P
+		cnoremap <D-v> <C-R>+
+		inoremap <D-v> <C-R>+
+	else
+		vnoremap <silent> <sc-c> "+P
+		cnoremap <silent> <sc-v> <C-o>l<C-o>"+<C-o>P<C-o>l
+		tnoremap <silent> <sc-v> <C-\><C-n>"+Pi
+		inoremap <silent> <sc-v> <C-R>+
+		nnoremap <silent> <sc-v> "+P
+	endif
+
+	let g:neovide_fullscreen=v:true
+else
+	lua require('smear_cursor').enabled = true
+endif
 
 lua << EOF
 require('highlight-undo').setup({
@@ -276,4 +298,6 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
 EOF
