@@ -88,6 +88,7 @@ call plug#begin()
 	Plug 'nullromo/go-up.nvim'
 	Plug 'Bekaboo/dropbar.nvim'
 	Plug 'epwalsh/pomo.nvim'
+	Plug 'NStefan002/visual-surround.nvim'
 call plug#end()
 
 " Jump forward or backward

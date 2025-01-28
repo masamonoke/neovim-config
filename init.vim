@@ -195,9 +195,6 @@ require'nvim-treesitter.configs'.setup {
 
   highlight = {
     enable = true,
-	disable = function(lang, bufnr)
-        return vim.api.nvim_buf_line_count(bufnr) > 3000
-	end,
     additional_vim_regex_highlighting = false,
   },
 }
@@ -228,3 +225,9 @@ else
 endif
 
 nnoremap <F7> :Como compile<CR>
+
+let g:coc_user_config = {
+  \ "clangd": {
+  \   "fallbackFlags": ["-std=c++20"]
+  \ }
+  \ }
