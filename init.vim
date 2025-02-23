@@ -231,3 +231,5 @@ let g:coc_user_config = {
   \   "fallbackFlags": ["-std=c++20"]
   \ }
   \ }
+
+au BufNewFile,BufRead *.wgsl set filetype=wgsl

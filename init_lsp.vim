@@ -146,6 +146,15 @@ lua << EOF
 
 	require'lspconfig'.tsserver.setup {}
 
+	vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	  pattern = "*.wgsl",
+	  callback = function()
+		vim.bo.filetype = "wgsl"
+	  end,
+	})
+
+	require'lspconfig'.wgsl_analyzer.setup({})
+
 	-- Show line diagnostics automatically in hover window
 	vim.o.updatetime = 250
 	vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]

@@ -218,6 +218,7 @@ dap.configurations.cpp = {
 }
 
 dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
 
 vim.keymap.set('n', 'C', function() require('dap').continue() end)
 vim.keymap.set('n', 'O', function() require('dap').step_over() end)
@@ -322,7 +323,8 @@ bufferline.setup({
 			delay = 200,
 			reveal = {'close'}
 		},
-		diagnostics = "coc"
+		diagnostics = "coc",
+		always_show_bufferline = false
 	}
 })
 

@@ -16,7 +16,11 @@
 			"command": "csharp-ls",
 			"filetypes": ["cs"],
 			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/", "*.sln"]
-        }
+        },
+		"wgsl": {
+          "command": "wgsl_analyzer",
+          "filetypes": ["wgsl"],
+        },
 	},
 	"diagnostic.virtualText": true,
 	"diagnostic.virtualTextCurrentLineOnly": true,
