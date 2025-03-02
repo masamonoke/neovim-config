@@ -6,22 +6,12 @@
     "clangd.arguments": [
 		"--clang-tidy",
 		"--header-insertion=never",
-		"-j=4",
+		"-j=8",
 		"--inlay-hints=true",
 		"--background-index",
+		"--pch-storage=memory",
     ],
 	"clangd.checkUpdates": true,
-	"languageserver": {
-		"csharp-ls": {
-			"command": "csharp-ls",
-			"filetypes": ["cs"],
-			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/", "*.sln"]
-        },
-		"wgsl": {
-          "command": "wgsl_analyzer",
-          "filetypes": ["wgsl"],
-        },
-	},
 	"diagnostic.virtualText": true,
 	"diagnostic.virtualTextCurrentLineOnly": true,
 	"[cpp][c]": {

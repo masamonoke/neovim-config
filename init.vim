@@ -33,14 +33,14 @@ call plug#begin()
 	Plug 'nvim-telescope/telescope.nvim'
 	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 	Plug 'yamatsum/nvim-cursorline'
-	Plug 'shime/vim-livedown'
+	" Plug 'shime/vim-livedown'
 	Plug 'nvim-treesitter/nvim-treesitter'
 	Plug 'ryanoasis/vim-devicons'
 	Plug 'folke/todo-comments.nvim'
 	Plug 'ntpeters/vim-better-whitespace'
 	Plug 'nvim-telescope/telescope-file-browser.nvim'
 	Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
-	Plug 'sindrets/diffview.nvim'
+	" Plug 'sindrets/diffview.nvim'
 	Plug 'pocco81/auto-save.nvim'
 	Plug 'rmagatti/auto-session'
 	Plug 'm-demare/hlargs.nvim'
@@ -76,10 +76,9 @@ call plug#begin()
 	Plug 'folke/snacks.nvim'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
-	Plug 'Bekaboo/dropbar.nvim'
-	" Plug 'nvim-treesitter/nvim-treesitter-context'
 	Plug 'nullromo/go-up.nvim'
 	Plug 'NStefan002/visual-surround.nvim'
+	Plug 'MeanderingProgrammer/render-markdown.nvim'
 call plug#end()
 
 nmap <leader>1 <Plug>BuffetSwitch(1)

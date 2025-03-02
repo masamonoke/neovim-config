@@ -74,9 +74,9 @@ call plug#begin()
 	Plug 'lukas-reineke/virt-column.nvim'
 	Plug 'folke/noice.nvim'
 	Plug 'MunifTanjim/nui.nvim'
-	Plug 'goolord/alpha-nvim'
+	" Plug 'goolord/alpha-nvim'
 	Plug 'max397574/better-escape.nvim'
-	Plug 'tzachar/highlight-undo.nvim'
+	" Plug 'tzachar/highlight-undo.nvim'
 	Plug 'madskjeldgaard/cheeky-snippets.nvim'
 	Plug 'L3MON4D3/LuaSnip'
 	Plug 'sphamba/smear-cursor.nvim'
@@ -86,9 +86,11 @@ call plug#begin()
 	" Plug 'wurli/visimatch.nvim'
 	Plug 'rachartier/tiny-glimmer.nvim'
 	Plug 'nullromo/go-up.nvim'
-	Plug 'Bekaboo/dropbar.nvim'
+	" Plug 'Bekaboo/dropbar.nvim'
 	Plug 'epwalsh/pomo.nvim'
 	Plug 'NStefan002/visual-surround.nvim'
+	Plug 'mrcjkb/haskell-tools.nvim'
+	Plug 'MeanderingProgrammer/render-markdown.nvim'
 call plug#end()
 
 " Jump forward or backward
@@ -132,13 +134,13 @@ lua << EOF
 		end,
 		cmd = {
 			"clangd",
-			"--pretty",
 			"--header-insertion=never",
-			-- "--background-index",
+			"--background-index",
 			"--suggest-missing-includes",
-			"-j=4",
+			"-j=8",
 			"--clang-tidy",
-			"--inlay-hints=true"
+			"--inlay-hints=true",
+			"--pch-storage=memory"
 		},
 	}
 
@@ -271,23 +273,6 @@ else
 endif
 
 lua << EOF
-require('highlight-undo').setup({
-  duration = 300,
-  keymaps = {
-    Keymap_name = {
-      -- most fields here are the same as in vim.keymap.set
-      desc = "a description",
-      hlgroup = 'HighlightUndo',
-      mode = 'n',
-      lhs = 'lhs',
-      rhs = 'optional, can be nil',
-      opts = {
-        -- same as opts to vim.keymap.set. if rhs is nil, there should be a
-        -- callback key which points to a function
-      },
-    },
-  },
-})
 
 require('mini.indentscope').setup({
 	symbol = '┃',
