@@ -336,3 +336,11 @@ bufferline.setup({
 require('go-up').setup()
 
 require("visual-surround").setup()
+
+require("local-highlight").setup()
+
+require('player-one').setup({
+	theme = "synth"
+})
+
+require('precognition').setup()

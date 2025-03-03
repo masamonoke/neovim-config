@@ -79,6 +79,9 @@ call plug#begin()
 	Plug 'nullromo/go-up.nvim'
 	Plug 'NStefan002/visual-surround.nvim'
 	Plug 'MeanderingProgrammer/render-markdown.nvim'
+	Plug 'tzachar/local-highlight.nvim'
+	Plug 'jackplus-xyz/player-one.nvim'
+	Plug 'tris203/precognition.nvim'
 call plug#end()
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
