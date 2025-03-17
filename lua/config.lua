@@ -187,12 +187,7 @@ if not vim.g.neovide then
 		cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
 		easing_function = nil,       -- Default easing function
 		pre_hook = function()
-			local line_count = vim.api.nvim_buf_line_count(0)
-			if line_count > 1000 then
-				vim.g.neoscroll_performance_mode = true
-			else
-				vim.g.neoscroll_performance_mode = false
-			end
+			local line_count = vim.api.nvim_buf_line_count(0) if line_count > 1000 then vim.g.neoscroll_performance_mode = true else vim.g.neoscroll_performance_mode = false end
 		end,
 	})
 
@@ -298,7 +293,7 @@ require("auto-save").setup {
 	}
 }
 
-require('tiny-inline-diagnostic').setup()
+-- require('tiny-inline-diagnostic').setup()
 
 vim.diagnostic.config({ virtual_text = false })
 
@@ -337,10 +332,16 @@ require('go-up').setup()
 
 require("visual-surround").setup()
 
-require("local-highlight").setup()
+-- require("local-highlight").setup()
 
-require('player-one').setup({
-	theme = "synth"
+-- require('player-one').setup({
+-- 	theme = "synth"
+-- })
+
+-- require('precognition').setup({
+-- 	showBlankVirtLine = false
+-- })
+
+require('gen').setup({
+	model = "llama3.2"
 })
-
-require('precognition').setup()

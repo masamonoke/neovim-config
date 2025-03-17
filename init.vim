@@ -82,6 +82,7 @@ call plug#begin()
 	Plug 'tzachar/local-highlight.nvim'
 	Plug 'jackplus-xyz/player-one.nvim'
 	Plug 'tris203/precognition.nvim'
+	Plug 'David-Kunz/gen.nvim'
 call plug#end()
 
 nmap <leader>1 <Plug>BuffetSwitch(1)

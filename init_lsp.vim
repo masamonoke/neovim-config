@@ -91,6 +91,9 @@ call plug#begin()
 	Plug 'NStefan002/visual-surround.nvim'
 	Plug 'mrcjkb/haskell-tools.nvim'
 	Plug 'MeanderingProgrammer/render-markdown.nvim'
+	Plug 'tzachar/local-highlight.nvim'
+	Plug 'jackplus-xyz/player-one.nvim'
+	Plug 'tris203/precognition.nvim'
 call plug#end()
 
 " Jump forward or backward
