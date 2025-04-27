@@ -83,6 +83,7 @@ call plug#begin()
 	Plug 'jackplus-xyz/player-one.nvim'
 	Plug 'tris203/precognition.nvim'
 	Plug 'David-Kunz/gen.nvim'
+	Plug 'nvim-treesitter/nvim-treesitter-context'
 call plug#end()
 
 nmap <leader>1 <Plug>BuffetSwitch(1)
@@ -229,10 +230,13 @@ endif
 
 nnoremap <F7> :Como compile<CR>
 
-let g:coc_user_config = {
-  \ "clangd": {
-  \   "fallbackFlags": ["-std=c++20"]
-  \ }
-  \ }
+augroup cpp_coc_settings
+  autocmd!
+  autocmd FileType cpp let g:coc_user_config = {
+    \ "clangd": {
+    \   "fallbackFlags": ["-std=c++20"]
+    \ }
+    \ }
+augroup END
 
 au BufNewFile,BufRead *.wgsl set filetype=wgsl
