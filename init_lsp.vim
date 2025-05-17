@@ -94,6 +94,7 @@ call plug#begin()
 	Plug 'tzachar/local-highlight.nvim'
 	Plug 'jackplus-xyz/player-one.nvim'
 	Plug 'tris203/precognition.nvim'
+	Plug 'David-Kunz/gen.nvim'
 call plug#end()
 
 " Jump forward or backward
