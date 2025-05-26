@@ -30,22 +30,18 @@ call plug#begin()
 	Plug 'karb94/neoscroll.nvim'
 	Plug 'itchyny/vim-gitbranch'
 	Plug 'akinsho/toggleterm.nvim'
-	Plug 'ARM9/arm-syntax-vim'
 	Plug 'ellisonleao/gruvbox.nvim'
 	Plug 'neovim/nvim-lspconfig'
-	Plug 'xiyaowong/nvim-transparent'
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'nvim-telescope/telescope.nvim'
 	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 	Plug 'yamatsum/nvim-cursorline'
-	Plug 'shime/vim-livedown'
 	Plug 'nvim-treesitter/nvim-treesitter'
 	Plug 'ryanoasis/vim-devicons'
 	Plug 'folke/todo-comments.nvim'
 	Plug 'ntpeters/vim-better-whitespace'
 	Plug 'nvim-telescope/telescope-file-browser.nvim'
-	Plug 'lewis6991/gitsigns.nvim' " OPTIONAL: for git status
-	Plug 'sindrets/diffview.nvim'
+	Plug 'lewis6991/gitsigns.nvim'
 	Plug 'pocco81/auto-save.nvim'
 	Plug 'rmagatti/auto-session'
 	Plug 'nvim-treesitter/nvim-treesitter-context'
@@ -55,38 +51,26 @@ call plug#begin()
 	Plug 'MysticalDevil/inlay-hints.nvim'
 	Plug 'nvim-tree/nvim-tree.lua'
 	Plug 'Badhi/nvim-treesitter-cpp-tools'
-	Plug 'monkoose/neocodeium'
 	Plug 'tveskag/nvim-blame-line'
-	Plug 'tomasky/bookmarks.nvim'
 	Plug 'isak102/telescope-git-file-history.nvim'
-	Plug 'tpope/vim-fugitive'
 	Plug 'nvim-lualine/lualine.nvim'
-	Plug 'simnalamburt/vim-mundo'
 	Plug 'kevinhwang91/promise-async'
 	Plug 'kevinhwang91/nvim-ufo'
 	Plug 'mawkler/modicator.nvim'
 	Plug 'smoka7/hop.nvim'
 	Plug 'akinsho/bufferline.nvim'
-	Plug 'mfussenegger/nvim-dap'
-	Plug 'nvim-neotest/nvim-nio'
-	Plug 'rcarriga/nvim-dap-ui'
-	Plug 'nvim-focus/focus.nvim'
 	Plug 'lukas-reineke/virt-column.nvim'
 	Plug 'folke/noice.nvim'
 	Plug 'MunifTanjim/nui.nvim'
-	" Plug 'goolord/alpha-nvim'
 	Plug 'max397574/better-escape.nvim'
-	" Plug 'tzachar/highlight-undo.nvim'
 	Plug 'madskjeldgaard/cheeky-snippets.nvim'
 	Plug 'L3MON4D3/LuaSnip'
 	Plug 'sphamba/smear-cursor.nvim'
 	Plug 'folke/snacks.nvim'
 	Plug 'rachartier/tiny-inline-diagnostic.nvim'
 	Plug 'echasnovski/mini.indentscope'
-	" Plug 'wurli/visimatch.nvim'
 	Plug 'rachartier/tiny-glimmer.nvim'
 	Plug 'nullromo/go-up.nvim'
-	" Plug 'Bekaboo/dropbar.nvim'
 	Plug 'epwalsh/pomo.nvim'
 	Plug 'NStefan002/visual-surround.nvim'
 	Plug 'mrcjkb/haskell-tools.nvim'
@@ -98,6 +82,8 @@ call plug#begin()
 	Plug 'slugbyte/lackluster.nvim'
 	Plug 'tzachar/highlight-undo.nvim'
 call plug#end()
+
+lua require('config')
 
 imap <expr> <C-j> vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 smap <expr> <C-j> vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
@@ -151,7 +137,7 @@ lua << EOF
 
 	require'lspconfig'.glsl_analyzer.setup {}
 
-	require'lspconfig'.tsserver.setup {}
+	require'lspconfig'.ts_ls.setup {}
 
 	vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	  pattern = "*.wgsl",
@@ -167,36 +153,16 @@ lua << EOF
 	vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 EOF
 
-nmap <leader>1 <Plug>BuffetSwitch(1)
-nmap <leader>2 <Plug>BuffetSwitch(2)
-nmap <leader>3 <Plug>BuffetSwitch(3)
-nmap <leader>4 <Plug>BuffetSwitch(4)
-nmap <leader>5 <Plug>BuffetSwitch(5)
-nmap <leader>6 <Plug>BuffetSwitch(6)
-nmap <leader>7 <Plug>BuffetSwitch(7)
-nmap <leader>8 <Plug>BuffetSwitch(8)
-nmap <leader>9 <Plug>BuffetSwitch(9)
-nmap <leader>0 <Plug>BuffetSwitch(10)
 noremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
-noremap <C-t> :tabnew split<CR>
 nnoremap <F4> :bp \| sp \| bn \| bd<CR>
+nnoremap <C-p> <C-i>
 
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 
 let g:indentLine_setColors = 0
 
-nmap gm :LivedownToggle<CR>
-
-lua require('config')
-
-nmap <space><space>x <Plug>JupyterExecute
-nmap <space><space>X <Plug>JupyterExecuteAll
-nmap <space><space>r <Plug>JupyterRestart
-
 autocmd TextChanged,TextChangedI <buffer> silent write
-
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
 
@@ -207,20 +173,10 @@ nnoremap <F5> :Telescope current_buffer_fuzzy_find<CR>
 nnoremap <F10> :Telescope bookmarks list<CR>
 nnoremap <F11> :Telescope git_file_history<CR>
 
-lua << EOF
-require("nvim-autopairs").setup {}
-EOF
-
-autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
-
 autocmd FileType html setlocal sw=2 ts=2
 autocmd FileType vue setlocal sw=2 ts=2
 autocmd FileType r setlocal sw=1 ts=1 expandtab
 autocmd FileType xml setlocal sw=2 ts=2
-
-lua << EOF
-  require("todo-comments").setup {}
-EOF
 
 augroup VimHelp
   autocmd!
@@ -278,26 +234,5 @@ else
 endif
 
 lua << EOF
-
-require('mini.indentscope').setup({
-	symbol = '┃',
-})
-
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "lua", "vim" },
-
-  sync_install = false,
-
-  auto_install = false,
-
-  highlight = {
-    enable = true,
-	disable = function(lang, bufnr)
-        return vim.api.nvim_buf_line_count(bufnr) > 3000
-	end,
-    additional_vim_regex_highlighting = false,
-  },
-}
-
 vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
 EOF

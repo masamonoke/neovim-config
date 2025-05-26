@@ -130,35 +130,6 @@ require("nvim-tree").setup({
 	}
 })
 
--- require 'neocodeium'.setup({
---   "monkoose/neocodeium",
---   event = "VeryLazy",
---   opts = {
---     server = {
---       api_url = 'https://codeium.company.net/_route/api_server',
---       portal_url = 'https://codeium.company.net',
---     },
---   }
--- })
--- vim.keymap.set("i", "<A-f>", function()
---     require("neocodeium").accept()
--- end)
--- vim.keymap.set("i", "<A-c>", function()
---     require("neocodeium").clear()
--- end)
--- vim.keymap.set("i", "<A-w>", function()
---     require("neocodeium").accept_word()
--- end)
--- vim.keymap.set("i", "<A-a>", function()
---     require("neocodeium").accept_line()
--- end)
--- vim.keymap.set("i", "<A-e>", function()
---     require("neocodeium").cycle_or_complete()
--- end)
--- vim.keymap.set("i", "<A-r>", function()
---     require("neocodeium").cycle_or_complete(-1)
--- end)
-
 if vim.fn.has('nvim-0.11') == 1 then
 	vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
 	vim.api.nvim_set_hl(0, "StatusLineNC", {reverse = false})
@@ -198,62 +169,60 @@ end
 require("virt-column").setup({
 })
 
-local dap = require('dap')
-dap.adapters.lldb = {
-  type = 'executable',
-  command = '/opt/homebrew/opt/llvm/bin/lldb-dap',
-  name = 'lldb'
-}
+-- local dap = require('dap')
+-- dap.adapters.lldb = {
+--   type = 'executable',
+--   command = '/opt/homebrew/opt/llvm/bin/lldb-dap',
+--   name = 'lldb'
+-- }
 
-dap.configurations.cpp = {
-  {
-    name = 'Launch',
-    type = 'lldb',
-    request = 'launch',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = false,
-    args = {},
-  },
-}
+-- dap.configurations.cpp = {
+--   {
+--     name = 'Launch',
+--     type = 'lldb',
+--     request = 'launch',
+--     program = function()
+--       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--     end,
+--     cwd = '${workspaceFolder}',
+--     stopOnEntry = false,
+--     args = {},
+--   },
+-- }
 
-dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
+-- dap.configurations.c = dap.configurations.cpp
+-- dap.configurations.rust = dap.configurations.cpp
 
-vim.keymap.set('n', 'C', function() require('dap').continue() end)
-vim.keymap.set('n', 'O', function() require('dap').step_over() end)
-vim.keymap.set('n', 'I', function() require('dap').step_into() end)
-vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
-vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
-vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
-vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
+-- vim.keymap.set('n', 'C', function() require('dap').continue() end)
+-- vim.keymap.set('n', 'O', function() require('dap').step_over() end)
+-- vim.keymap.set('n', 'I', function() require('dap').step_into() end)
+-- vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
+-- vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
+-- vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
+-- vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
 
-local ui = require "dapui"
+-- local ui = require "dapui"
 
- require("dapui").setup()
+--  require("dapui").setup()
 
--- Eval var under cursor
-vim.keymap.set("n", "<space>?", function()
-	require("dapui").eval(nil, { enter = true })
-end)
-dap.listeners.before.attach.dapui_config = function()
-	ui.open()
-end
-dap.listeners.before.launch.dapui_config = function()
-	ui.open()
-end
-dap.listeners.before.event_terminated.dapui_config = function()
-	ui.close()
-end
-dap.listeners.before.event_exited.dapui_config = function()
-	ui.close()
-end
+-- -- Eval var under cursor
+-- vim.keymap.set("n", "<space>?", function()
+-- 	require("dapui").eval(nil, { enter = true })
+-- end)
+-- dap.listeners.before.attach.dapui_config = function()
+-- 	ui.open()
+-- end
+-- dap.listeners.before.launch.dapui_config = function()
+-- 	ui.open()
+-- end
+-- dap.listeners.before.event_terminated.dapui_config = function()
+-- 	ui.close()
+-- end
+-- dap.listeners.before.event_exited.dapui_config = function()
+-- 	ui.close()
+-- end
 
-vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" })
-
-require("focus").setup()
+-- vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" })
 
  require("noice").setup({
 	presets = {
@@ -295,19 +264,12 @@ require("auto-save").setup {
 	}
 }
 
--- require('tiny-inline-diagnostic').setup()
-
 vim.diagnostic.config({ virtual_text = false })
 
 require("toggleterm").setup({
 	open_mapping = [[<F12>]],
 	direction = "float",
 })
-
--- local dropbar_api = require('dropbar.api')
--- vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
--- vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
--- vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
 
 if vim.g.colors_name == 'gruvbox' then
 	local bufferline = require('bufferline')
@@ -338,16 +300,26 @@ require("visual-surround").setup()
 
 require('highlight-undo').setup({})
 
--- require("local-highlight").setup()
+require("nvim-autopairs").setup {}
 
--- require('player-one').setup({
--- 	theme = "synth"
--- })
+require("todo-comments").setup {}
 
--- require('precognition').setup({
--- 	showBlankVirtLine = false
--- })
-
-require('gen').setup({
-	model = "llama3.2"
+require('mini.indentscope').setup({
+	symbol = '┃',
 })
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "lua", "vim" },
+
+  sync_install = false,
+
+  auto_install = false,
+
+  highlight = {
+    enable = true,
+	disable = function(lang, bufnr)
+        return vim.api.nvim_buf_line_count(bufnr) > 3000
+	end,
+    additional_vim_regex_highlighting = false,
+  },
+}
