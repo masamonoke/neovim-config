@@ -95,11 +95,12 @@ call plug#begin()
 	Plug 'jackplus-xyz/player-one.nvim'
 	Plug 'tris203/precognition.nvim'
 	Plug 'David-Kunz/gen.nvim'
+	Plug 'slugbyte/lackluster.nvim'
+	Plug 'tzachar/highlight-undo.nvim'
 call plug#end()
 
-" Jump forward or backward
-imap <expr> <C-j>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-smap <expr> <C-j>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <C-j> vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <C-j> vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 imap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 smap <expr> <C-k> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 

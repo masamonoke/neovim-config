@@ -87,6 +87,8 @@ require('gitsigns').setup {
   },
 }
 
+-- vim.cmd("colorscheme lackluster-hack")
+
 require("gruvbox").setup({
 	italic = {
 		strings = true,
@@ -307,30 +309,34 @@ require("toggleterm").setup({
 -- vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
 -- vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
 
-local bufferline = require('bufferline')
-bufferline.setup({
-	options = {
-		separator_style = "slant",
-		buffer_close_icon = '󰅖',
-		modified_icon = '● ',
-		close_icon = ' ',
-		left_trunc_marker = ' ',
-		right_trunc_marker = ' ',
-		truncate_names = false,
-		color_icons = true,
-		hover = {
-			enabled = true,
-			delay = 200,
-			reveal = {'close'}
-		},
-		diagnostics = "coc",
-		always_show_bufferline = false
-	}
-})
+if vim.g.colors_name == 'gruvbox' then
+	local bufferline = require('bufferline')
+	bufferline.setup({
+		options = {
+			separator_style = "slant",
+			buffer_close_icon = '󰅖',
+			modified_icon = '● ',
+			close_icon = ' ',
+			left_trunc_marker = ' ',
+			right_trunc_marker = ' ',
+			truncate_names = false,
+			color_icons = true,
+			hover = {
+				enabled = true,
+				delay = 200,
+				reveal = {'close'}
+			},
+			diagnostics = "coc",
+			always_show_bufferline = false
+		}
+	})
+end
 
 require('go-up').setup()
 
 require("visual-surround").setup()
+
+require('highlight-undo').setup({})
 
 -- require("local-highlight").setup()
 
