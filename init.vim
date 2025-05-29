@@ -153,7 +153,7 @@ if exists("g:neovide")
 
 	let g:neovide_fullscreen=v:true
 else
-	lua require('smear_cursor').enabled = true
+	" lua require('smear_cursor').enabled = true
 endif
 
 augroup cpp_coc_settings

@@ -1,41 +1,34 @@
 {
-    "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home",
+	"java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home",
 	"java.jdt.ls.vmargs": "-javaagent:/Users/masamonoke/dev/lib/lombok-1.18.34.jar",
 	"java.jdt.ls.lombokSupport.enabled": true,
 	"java.inlayHints.parameterNames.enabled": "all",
-    "clangd.arguments": [
+	"clangd.arguments": [
 		"--clang-tidy",
 		"--header-insertion=never",
 		"-j=8",
 		"--inlay-hints=true",
 		"--background-index",
 		"--pch-storage=memory",
-    ],
+	],
 	"clangd.checkUpdates": true,
 	"diagnostic.virtualText": true,
 	"diagnostic.virtualTextCurrentLineOnly": true,
 	"[cpp][c]": {
 		"semanticTokens.enable": true,
 		"semanticTokens.highlightPriority": 100,
-  },
-  "java.imports.gradle.wrapper.checksums": [
-    {
-      "sha256": "e2b82129ab64751fd40437007bd2f7f2afb3c6e41a9198e628650b22d5824a14",
-      "allowed": true
-    }
-  ],
-   "languageserver": {
-        "csharp-ls": {
-          "command": "csharp-ls",
-          "filetypes": ["cs"],
-          "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
-        },
+	},
+	"languageserver": {
+		"csharp-ls": {
+			"command": "csharp-ls",
+			"filetypes": ["cs"],
+			"rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
+		},
 		"haskell": {
-		  "command": "haskell-language-server-wrapper",
-		  "args": ["--lsp"],
-		  "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
-		  "filetypes": ["haskell", "lhaskell"]
+			"command": "haskell-language-server-wrapper",
+			"args": ["--lsp"],
+			"rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+			"filetypes": ["haskell", "lhaskell"]
 		}
-	  }
-    }
+	}
 }
