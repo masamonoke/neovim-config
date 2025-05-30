@@ -122,13 +122,7 @@ lua << EOF
 		capabilities = capabilities,
 		on_attach = function(client, bufnr)
 			require("inlay-hints").on_attach(client, bufnr)
-
-			local buf_size = vim.api.nvim_buf_get_offset(bufnr, vim.api.nvim_buf_line_count(bufnr)) / 1024
-			local max_size_kb = 300
-			if buf_size > max_size_kb then
-			  client.server_capabilities.semanticTokensProvider = nil
-			  vim.notify(string.format("Disabled semantic tokens for large file (%.1fKB)", buf_size), vim.log.levels.INFO)
-			end
+		    client.server_capabilities.semanticTokensProvider = nil
 		end,
 		cmd = {
 			"clangd",
@@ -237,7 +231,7 @@ if exists("g:neovide")
 
 	let g:neovide_fullscreen=v:true
 else
-	lua require('smear_cursor').enabled = true
+	" lua require('smear_cursor').enabled = true
 endif
 
 lua << EOF
