@@ -81,6 +81,7 @@ call plug#begin()
 	Plug 'David-Kunz/gen.nvim'
 	Plug 'slugbyte/lackluster.nvim'
 	Plug 'tzachar/highlight-undo.nvim'
+	Plug 'nvim-zh/colorful-winsep.nvim'
 call plug#end()
 
 lua require('config')
