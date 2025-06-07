@@ -82,7 +82,6 @@ call plug#begin()
 	Plug 'tzachar/highlight-undo.nvim'
 	Plug 'nvim-zh/colorful-winsep.nvim'
 	Plug 'NMAC427/guess-indent.nvim'
-	Plug 'yioneko/nvim-yati'
 call plug#end()
 
 lua require('config')
