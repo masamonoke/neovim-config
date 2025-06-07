@@ -66,6 +66,8 @@ call plug#begin()
 	Plug 'nvim-treesitter/nvim-treesitter-context'
 	Plug 'slugbyte/lackluster.nvim'
 	Plug 'nvim-zh/colorful-winsep.nvim'
+	Plug 'NMAC427/guess-indent.nvim'
+	Plug 'yioneko/nvim-yati'
 call plug#end()
 
 lua require('config')

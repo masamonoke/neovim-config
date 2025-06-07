@@ -4,31 +4,31 @@ require("telescope").setup {
 			treesitter = false
 		}
 	},
-  extensions = {
-    file_browser = {
-      theme = "ivy",
-      -- disables netrw and use telescope-file-browser in its place
-      hijack_netrw = true,
-	  mappings = {
-        ["i"] = {
-          -- your custom insert mode mappings
-		  ["<Tab>"] = false,
-		  ["<S-Tab>"] = false
-        },
-        ["n"] = {
-          -- your custom normal mode mappings
-        },
-      },
-    },
-  },
+	extensions = {
+		file_browser = {
+			theme = "ivy",
+			-- disables netrw and use telescope-file-browser in its place
+			hijack_netrw = true,
+			mappings = {
+				["i"] = {
+				-- your custom insert mode mappings
+				["<Tab>"] = false,
+				["<S-Tab>"] = false
+				},
+				["n"] = {
+				-- your custom normal mode mappings
+				},
+			},
+		},
+	},
 }
 
 require("telescope").load_extension "file_browser"
 vim.api.nvim_set_keymap(
-  "n",
-  "<F6>",
-  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-  { noremap = false }
+	"n",
+	"<F6>",
+	":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+	{ noremap = false }
 )
 
 require('telescope').load_extension('fzf')
@@ -47,44 +47,43 @@ require('nvim-cursorline').setup {
 }
 
 require('gitsigns').setup {
-  signs = {
-    add          = { text = '│' },
-    change       = { text = '│' },
-    delete       = { text = '_' },
-    topdelete    = { text = '‾' },
-    changedelete = { text = '~' },
-    untracked    = { text = '┆'},
-
-  },
-  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
-  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
-  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
-  watch_gitdir = {
-    follow_files = true
-  },
-  attach_to_untracked = true,
-  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-  current_line_blame_opts = {
-    virt_text = true,
-    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-    delay = 1000,
-    ignore_whitespace = false,
-    virt_text_priority = 100,
-  },
-  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
-  max_file_length = 40000, -- Disable if file is longer than this (in lines)
-  preview_config = {
-    -- Options passed to nvim_open_win
-    border = 'single',
-    style = 'minimal',
-    relative = 'cursor',
-    row = 0,
-    col = 1
-  },
+	signs = {
+		add          = { text = '│' },
+		change       = { text = '│' },
+		delete       = { text = '_' },
+		topdelete    = { text = '‾' },
+		changedelete = { text = '~' },
+		untracked    = { text = '┆'},
+	},
+	signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+	numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+	linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+	word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+	watch_gitdir = {
+		follow_files = true
+	},
+	attach_to_untracked = true,
+	current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+	current_line_blame_opts = {
+		virt_text = true,
+		virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+		delay = 1000,
+		ignore_whitespace = false,
+		virt_text_priority = 100,
+	},
+	current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+	sign_priority = 6,
+	update_debounce = 100,
+	status_formatter = nil, -- Use default
+	max_file_length = 40000, -- Disable if file is longer than this (in lines)
+	preview_config = {
+		-- Options passed to nvim_open_win
+		border = 'single',
+		style = 'minimal',
+		relative = 'cursor',
+		row = 0,
+		col = 1
+	},
 }
 
 -- vim.cmd("colorscheme lackluster-hack")
@@ -96,11 +95,11 @@ require("gruvbox").setup({
 		comments = true,
 		operators = false,
 		folds = true,
-  },
-  undercurl = true,
-  underline = true,
-  inverse = true,
-  contrast = "soft"
+	},
+	undercurl = true,
+	underline = true,
+	inverse = true,
+	contrast = "soft"
 })
 vim.o.background = "dark"
 vim.cmd("colorscheme gruvbox")
@@ -153,7 +152,7 @@ if not vim.g.neovide then
 	require('neoscroll').setup({
 		-- All these keys will be mapped to their corresponding default scrolling animation
 		mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
-					'<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
+			'<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
 		hide_cursor = true,          -- Hide cursor while scrolling
 		stop_eof = false,             -- Stop at <EOF> when scrolling downwards
 		respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
@@ -163,66 +162,10 @@ if not vim.g.neovide then
 			local line_count = vim.api.nvim_buf_line_count(0) if line_count > 1000 then vim.g.neoscroll_performance_mode = true else vim.g.neoscroll_performance_mode = false end
 		end,
 	})
-
 end
 
 require("virt-column").setup({
 })
-
--- local dap = require('dap')
--- dap.adapters.lldb = {
---   type = 'executable',
---   command = '/opt/homebrew/opt/llvm/bin/lldb-dap',
---   name = 'lldb'
--- }
-
--- dap.configurations.cpp = {
---   {
---     name = 'Launch',
---     type = 'lldb',
---     request = 'launch',
---     program = function()
---       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
---     end,
---     cwd = '${workspaceFolder}',
---     stopOnEntry = false,
---     args = {},
---   },
--- }
-
--- dap.configurations.c = dap.configurations.cpp
--- dap.configurations.rust = dap.configurations.cpp
-
--- vim.keymap.set('n', 'C', function() require('dap').continue() end)
--- vim.keymap.set('n', 'O', function() require('dap').step_over() end)
--- vim.keymap.set('n', 'I', function() require('dap').step_into() end)
--- vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
--- vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
--- vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
--- vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
-
--- local ui = require "dapui"
-
---  require("dapui").setup()
-
--- -- Eval var under cursor
--- vim.keymap.set("n", "<space>?", function()
--- 	require("dapui").eval(nil, { enter = true })
--- end)
--- dap.listeners.before.attach.dapui_config = function()
--- 	ui.open()
--- end
--- dap.listeners.before.launch.dapui_config = function()
--- 	ui.open()
--- end
--- dap.listeners.before.event_terminated.dapui_config = function()
--- 	ui.close()
--- end
--- dap.listeners.before.event_exited.dapui_config = function()
--- 	ui.close()
--- end
-
--- vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" })
 
  require("noice").setup({
 	presets = {
@@ -250,16 +193,16 @@ require("cheeky").setup({
 
 require("snacks").setup({
 	bigfile = { enabled = true },
-    quickfile = { enabled = true },
-    statuscolumn = { enabled = true },
-    words = { enabled = true },
+	quickfile = { enabled = true },
+	statuscolumn = { enabled = true },
+	words = { enabled = true },
 	bufdelete = { enabled = true }
 })
 
 require("auto-save").setup {
 	execution_message = {
 		message = function()
-			return ("")
+			return ("Saved buffer")
 		end,
 	}
 }
@@ -309,19 +252,19 @@ require('mini.indentscope').setup({
 })
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "lua", "vim" },
+	ensure_installed = { "lua", "vim" },
 
-  sync_install = false,
+	sync_install = false,
 
-  auto_install = false,
+	auto_install = false,
 
-  highlight = {
-    enable = true,
-	disable = function(lang, bufnr)
-        return vim.api.nvim_buf_line_count(bufnr) > 3000
-	end,
-    additional_vim_regex_highlighting = false,
-  },
+	highlight = {
+		enable = true,
+		disable = function(lang, bufnr)
+			return vim.api.nvim_buf_line_count(bufnr) > 3000
+		end,
+		additional_vim_regex_highlighting = false,
+	},
 }
 
 vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
@@ -332,3 +275,26 @@ vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window s
 vim.api.nvim_set_keymap('n', '<C-c>', [[:let @+ = expand("%:p")<CR>]], {noremap = true, silent = true})
 
 require('colorful-winsep').setup()
+
+require('guess-indent').setup {}
+
+require("nvim-treesitter.configs").setup {
+	yati = {
+		enable = true,
+		-- Disable by languages, see `Supported languages`
+		disable = { "python" },
+
+		-- Whether to enable lazy mode (recommend to enable this if bad indent happens frequently)
+		default_lazy = true,
+
+		-- Determine the fallback method used when we cannot calculate indent by tree-sitter
+		--   "auto": fallback to vim auto indent
+		--   "asis": use current indent as-is
+		--   "cindent": see `:h cindent()`
+		-- Or a custom function return the final indent result.
+		default_fallback = "auto"
+	},
+	indent = {
+		enable = false -- disable builtin indent module
+	}
+}

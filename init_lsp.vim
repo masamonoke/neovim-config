@@ -23,7 +23,6 @@ call plug#begin()
 	Plug 'hrsh7th/nvim-cmp'
 	Plug 'hrsh7th/cmp-vsnip'
 	Plug 'hrsh7th/vim-vsnip'
-
 	Plug 'windwp/nvim-autopairs'
 	Plug 'tpope/vim-commentary'
 	Plug 'nvim-tree/nvim-web-devicons'
@@ -82,6 +81,8 @@ call plug#begin()
 	Plug 'slugbyte/lackluster.nvim'
 	Plug 'tzachar/highlight-undo.nvim'
 	Plug 'nvim-zh/colorful-winsep.nvim'
+	Plug 'NMAC427/guess-indent.nvim'
+	Plug 'yioneko/nvim-yati'
 call plug#end()
 
 lua require('config')
@@ -123,7 +124,7 @@ lua << EOF
 		capabilities = capabilities,
 		on_attach = function(client, bufnr)
 			require("inlay-hints").on_attach(client, bufnr)
-		    client.server_capabilities.semanticTokensProvider = nil
+			client.server_capabilities.semanticTokensProvider = nil
 		end,
 		cmd = {
 			"clangd",
@@ -142,10 +143,10 @@ lua << EOF
 	require'lspconfig'.ts_ls.setup {}
 
 	vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-	  pattern = "*.wgsl",
-	  callback = function()
-		vim.bo.filetype = "wgsl"
-	  end,
+		pattern = "*.wgsl",
+		callback = function()
+			vim.bo.filetype = "wgsl"
+		end,
 	})
 
 	require'lspconfig'.wgsl_analyzer.setup({})
