@@ -88,7 +88,6 @@ nnoremap <F1> :Telescope buffers <CR>
 nnoremap <F2> :Telescope find_files<CR>
 nnoremap <F3> :Telescope live_grep<CR>
 nnoremap <F5> :Telescope current_buffer_fuzzy_find<CR>
-nnoremap <F10> :Telescope bookmarks list<CR>
 nnoremap <F11> :Telescope git_file_history<CR>
 
 autocmd FileType html setlocal sw=2 ts=2
@@ -155,7 +154,7 @@ if exists("g:neovide")
 
 	let g:neovide_fullscreen=v:true
 else
-	lua require('smear_cursor').enabled = true
+	" lua require('smear_cursor').enabled = true
 endif
 
 augroup cpp_coc_settings

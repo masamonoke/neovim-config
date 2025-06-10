@@ -82,6 +82,7 @@ call plug#begin()
 	Plug 'tzachar/highlight-undo.nvim'
 	Plug 'nvim-zh/colorful-winsep.nvim'
 	Plug 'NMAC427/guess-indent.nvim'
+	Plug 'folke/trouble.nvim'
 call plug#end()
 
 lua require('config')
@@ -153,6 +154,10 @@ lua << EOF
 	-- Show line diagnostics automatically in hover window
 	vim.o.updatetime = 250
 	vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
+	require("trouble").setup{}
+	vim.keymap.set('n', '<F10>', '<cmd>Trouble diagnostics toggle<CR>')
+	-- vim.api.nvim_set_keymap('n', '<F10>', '<cmd>lua vim.diagnostic.setqflist()<CR>', { noremap = true, silent = true })
 EOF
 
 noremap <Tab> :bn<CR>
@@ -172,7 +177,6 @@ nnoremap <F1> :Telescope buffers <CR>
 nnoremap <F2> :Telescope find_files<CR>
 nnoremap <F3> :Telescope live_grep<CR>
 nnoremap <F5> :Telescope current_buffer_fuzzy_find<CR>
-nnoremap <F10> :Telescope bookmarks list<CR>
 nnoremap <F11> :Telescope git_file_history<CR>
 
 autocmd FileType html setlocal sw=2 ts=2
