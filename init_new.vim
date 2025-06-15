@@ -21,25 +21,40 @@ call plug#begin()
 Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-commentary'
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+Plug 'nvim-tree/nvim-web-devicons'
 Plug 'itchyny/vim-gitbranch'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'yamatsum/nvim-cursorline'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'ryanoasis/vim-devicons'
+Plug 'folke/todo-comments.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'smoka7/hop.nvim'
 Plug 'folke/noice.nvim'
 Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'NMAC427/guess-indent.nvim'
+Plug 'nvim-tree/nvim-tree.lua'
 Plug 'lukas-reineke/virt-column.nvim'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'kevinhwang91/promise-async'
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'folke/snacks.nvim'
 Plug 'pocco81/auto-save.nvim'
+Plug 'yamatsum/nvim-cursorline'
+Plug 'karb94/neoscroll.nvim'
+Plug 'sphamba/smear-cursor.nvim'
+Plug 'akinsho/bufferline.nvim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'm-demare/hlargs.nvim'
+Plug 'nullromo/go-up.nvim'
+Plug 'NStefan002/visual-surround.nvim'
+Plug 'nvim-zh/colorful-winsep.nvim'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -91,6 +106,17 @@ vnoremap < <gv
 vnoremap > >gv
 
 lua << EOF
+require("nvim-tree").setup({
+	view = {
+		width = 70,
+	},
+	renderer = {
+		indent_markers = {
+			enable = true
+		}
+	}
+})
+
 if vim.fn.has('nvim-0.11') == 1 then
 	vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
 	vim.api.nvim_set_hl(0, "StatusLineNC", {reverse = false})
@@ -218,7 +244,9 @@ vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 require("snacks").setup({
 	quickfile = { enabled = true },
-	statuscolumn = { enabled = true }
+	statuscolumn = { enabled = true },
+	bufdelete = { enabled = true },
+	indent = { enabled = true }
 })
 
 require("auto-save").setup {
@@ -228,4 +256,80 @@ require("auto-save").setup {
 		end,
 	}
 }
+
+require("todo-comments").setup {}
+
+require('neoscroll').setup({
+	-- All these keys will be mapped to their corresponding default scrolling animation
+	mappings = {'<C-u>', '<C-d>', '<C-b>', '<C-f>',
+		'<C-y>', '<C-e>', 'zt', 'zz', 'zb'},
+	hide_cursor = true,          -- Hide cursor while scrolling
+	stop_eof = false,             -- Stop at <EOF> when scrolling downwards
+	respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+	cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+	easing_function = nil,       -- Default easing function
+	pre_hook = function()
+		local line_count = vim.api.nvim_buf_line_count(0) if line_count > 1000 then vim.g.neoscroll_performance_mode = true else vim.g.neoscroll_performance_mode = false end
+	end,
+})
+
+require('smear_cursor').enabled = true
+
+local bufferline = require('bufferline')
+bufferline.setup({
+	options = {
+		separator_style = "slant",
+		buffer_close_icon = '󰅖',
+		modified_icon = '● ',
+		close_icon = ' ',
+		left_trunc_marker = ' ',
+		right_trunc_marker = ' ',
+		truncate_names = false,
+		color_icons = true,
+		hover = {
+			enabled = true,
+			delay = 200,
+			reveal = {'close'}
+		},
+		diagnostics = "coc",
+		always_show_bufferline = false
+	}
+})
+
+require('nvim-cursorline').setup {
+	cursorword = {
+		enable = true,
+		min_length = 3,
+		hl = { underline = true },
+	},
+	cursorline = {
+		enable = true,
+		timeout = 100,
+		number = false,
+	},
+}
+
+require('go-up').setup()
+
+require("visual-surround").setup()
+
+require('colorful-winsep').setup()
+
+require'nvim-treesitter.configs'.setup {
+	ensure_installed = { "lua", "vim" },
+
+	sync_install = false,
+
+	auto_install = false,
+
+	highlight = {
+		enable = true,
+		disable = function(lang, bufnr)
+			return vim.api.nvim_buf_line_count(bufnr) > 3000
+		end,
+		additional_vim_regex_highlighting = false,
+	},
+}
+
+require('hlargs').setup()
 EOF
