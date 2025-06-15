@@ -83,6 +83,7 @@ call plug#begin()
 	Plug 'nvim-zh/colorful-winsep.nvim'
 	Plug 'NMAC427/guess-indent.nvim'
 	Plug 'folke/trouble.nvim'
+
 call plug#end()
 
 lua require('config')
@@ -157,7 +158,18 @@ lua << EOF
 
 	require("trouble").setup{}
 	vim.keymap.set('n', '<F10>', '<cmd>Trouble diagnostics toggle<CR>')
-	-- vim.api.nvim_set_keymap('n', '<F10>', '<cmd>lua vim.diagnostic.setqflist()<CR>', { noremap = true, silent = true })
+
+	require("cheeky").setup({
+		langs = {
+			all = true,
+			lua = true,
+			cpp = true,
+			asm = true,
+			cmake = true,
+			markdown = true,
+			supercollider = true
+		},
+	})
 EOF
 
 noremap <Tab> :bn<CR>

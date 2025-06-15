@@ -167,7 +167,7 @@ end
 require("virt-column").setup({
 })
 
- require("noice").setup({
+require("noice").setup({
 	presets = {
 		bottom_search = true, -- use a classic bottom cmdline for search
 		command_palette = true, -- position the cmdline and popupmenu together
@@ -175,20 +175,6 @@ require("virt-column").setup({
 		inc_rename = false, -- enables an input dialog for inc-rename.nvim
 		lsp_doc_border = false, -- add a border to hover docs and signature help
 	}
-})
-
-require("better_escape").setup()
-
-require("cheeky").setup({
-	langs = {
-		all = true,
-		lua = true,
-		cpp = true,
-		asm = true,
-		cmake = true,
-		markdown = true,
-		supercollider = true
-	},
 })
 
 require("snacks").setup({
