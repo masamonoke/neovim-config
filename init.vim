@@ -107,7 +107,7 @@ augroup END
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
-set foldmethod=manual
+set foldmethod=syntax
 
 autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
 

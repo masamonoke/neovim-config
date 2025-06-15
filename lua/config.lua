@@ -192,11 +192,12 @@ require("cheeky").setup({
 })
 
 require("snacks").setup({
-	bigfile = { enabled = true },
+	bigfile = { enabled = false },
 	quickfile = { enabled = true },
 	statuscolumn = { enabled = true },
-	words = { enabled = true },
-	bufdelete = { enabled = true }
+	words = { enabled = false },
+	bufdelete = { enabled = true },
+	indent = { enabled = true }
 })
 
 require("auto-save").setup {
@@ -247,9 +248,9 @@ require("nvim-autopairs").setup {}
 
 require("todo-comments").setup {}
 
-require('mini.indentscope').setup({
-	symbol = '┃',
-})
+-- require('mini.indentscope').setup({
+-- 	symbol = '┃',
+-- })
 
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = { "lua", "vim" },
