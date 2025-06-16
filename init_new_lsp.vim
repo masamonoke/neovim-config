@@ -314,8 +314,6 @@ require('mini.indentscope').setup({
 
 require('guess-indent').setup {}
 
-vim.diagnostic.config({ virtual_text = false })
-
 vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
 vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
 vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
