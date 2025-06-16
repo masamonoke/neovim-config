@@ -131,13 +131,13 @@ set lazyredraw
 
 nnoremap <silent> <F10> :CocList diagnostics --current<CR>
 
-if exists("g:neovide")
-	let s:uname = system("uname")
-	if s:uname == "Darwin\n"
-		nnoremap <D-s> :w<CR>
-		vnoremap <D-c> "+y
-		nnoremap <D-v> "+P
-		vnoremap <D-v> "+P
+	if exists("g:neovide")
+		let s:uname = system("uname")
+		if s:uname == "Darwin\n"
+			nnoremap <D-s> :w<CR>
+			vnoremap <D-c> "+y
+			nnoremap <D-v> "+P
+			vnoremap <D-v> "+P
 		cnoremap <D-v> <C-R>+
 		inoremap <D-v> <C-R>+
 	else

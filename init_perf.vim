@@ -91,12 +91,6 @@ vnoremap < <gv
 vnoremap > >gv
 
 lua << EOF
-if vim.fn.has('nvim-0.11') == 1 then
-	vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
-	vim.api.nvim_set_hl(0, "StatusLineNC", {reverse = false})
-end
-require('lualine').setup()
-
 require("telescope").setup {
 	defaults = {
 		preview = {
@@ -228,4 +222,8 @@ require("auto-save").setup {
 		end,
 	}
 }
+
+vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
+vim.api.nvim_set_hl(0, "StatusLineNC", {reverse = false})
+require('lualine').setup()
 EOF

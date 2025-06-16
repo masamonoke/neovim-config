@@ -55,6 +55,7 @@ Plug 'm-demare/hlargs.nvim'
 Plug 'nullromo/go-up.nvim'
 Plug 'NStefan002/visual-surround.nvim'
 Plug 'nvim-zh/colorful-winsep.nvim'
+Plug 'echasnovski/mini.indentscope'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -102,9 +103,6 @@ nnoremap <leader>h :HopWord<CR>
 
 au BufNewFile,BufRead *.wgsl set filetype=wgsl
 
-vnoremap < <gv
-vnoremap > >gv
-
 lua << EOF
 require("nvim-tree").setup({
 	view = {
@@ -116,12 +114,6 @@ require("nvim-tree").setup({
 		}
 	}
 })
-
-if vim.fn.has('nvim-0.11') == 1 then
-	vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
-	vim.api.nvim_set_hl(0, "StatusLineNC", {reverse = false})
-end
-require('lualine').setup()
 
 require("telescope").setup {
 	defaults = {
@@ -245,8 +237,7 @@ vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 require("snacks").setup({
 	quickfile = { enabled = true },
 	statuscolumn = { enabled = true },
-	bufdelete = { enabled = true },
-	indent = { enabled = true }
+	bufdelete = { enabled = true }
 })
 
 require("auto-save").setup {
@@ -273,7 +264,7 @@ require('neoscroll').setup({
 	end,
 })
 
-require('smear_cursor').enabled = true
+-- require('smear_cursor').enabled = true
 
 local bufferline = require('bufferline')
 bufferline.setup({
@@ -332,4 +323,28 @@ require'nvim-treesitter.configs'.setup {
 }
 
 require('hlargs').setup()
+
+vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
+vim.api.nvim_set_hl(0, "StatusLineNC", {reverse = false})
+require('lualine').setup()
+
+require('mini.indentscope').setup({
+	symbol = '┃'
+})
+
+require('guess-indent').setup {}
+
+vim.diagnostic.config({ virtual_text = false })
+
+vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+
+vim.api.nvim_set_keymap('n', '<C-c>', [[:let @+ = expand("%:p")<CR>]], {noremap = true, silent = true})
 EOF
+
+noremap d "_d
+
+vnoremap < <gv
+vnoremap > >gv
