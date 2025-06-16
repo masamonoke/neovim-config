@@ -352,10 +352,7 @@ require'lspconfig'.clangd.setup {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		require("inlay-hints").on_attach(client, bufnr)
-		local line_count = vim.api.nvim_buf_line_count(bufnr)
-		if line_count > 3000 then
-			client.server_capabilities.semanticTokensProvider = nil
-		end
+		client.server_capabilities.semanticTokensProvider = nil
 	end,
 	cmd = {
 		"clangd",
@@ -402,6 +399,8 @@ require("cheeky").setup({
 })
 
 vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>t', vim.lsp.buf.type_definition, { desc = "Go to Type Definition" })
 EOF
 
 noremap d "_d
