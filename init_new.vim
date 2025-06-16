@@ -78,6 +78,7 @@ nnoremap <F5> :Telescope current_buffer_fuzzy_find<CR>
 
 set keywordprg=:call\ CocActionAsync('doHover')
 nnoremap <C-]> :call CocActionAsync('jumpDefinition') <CR>
+nmap <silent> <leader>t <Plug>(coc-type-definition)
 nnoremap <silent> <leader>a :call CocActionAsync('codeAction')<CR>
 verbose nmap <leader>rn <Plug>(coc-rename)
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
@@ -308,16 +309,10 @@ require('colorful-winsep').setup()
 
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = { "lua", "vim" },
-
 	sync_install = false,
-
 	auto_install = false,
-
 	highlight = {
 		enable = true,
-		disable = function(lang, bufnr)
-			return vim.api.nvim_buf_line_count(bufnr) > 3000
-		end,
 		additional_vim_regex_highlighting = false,
 	},
 }
