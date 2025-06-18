@@ -54,12 +54,10 @@ Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
 Plug 'folke/trouble.nvim'
 Plug 'madskjeldgaard/cheeky-snippets.nvim'
 Plug 'L3MON4D3/LuaSnip'
@@ -312,8 +310,6 @@ require('mini.indentscope').setup({
 	symbol = '┃'
 })
 
-require('guess-indent').setup {}
-
 vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
 vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
 vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
@@ -327,7 +323,7 @@ cmp.setup({
 	snippet = {
 		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
-		vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+		require('luasnip').lsp_expand(args.body)
 		end,
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -339,7 +335,7 @@ cmp.setup({
 	}),
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
-		{ name = 'vsnip' }, -- For vsnip users.
+		{ name = 'luasnip' },
 	}, {
 		{ name = 'buffer' },
 	}),
@@ -350,7 +346,7 @@ require'lspconfig'.clangd.setup {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		require("inlay-hints").on_attach(client, bufnr)
-		client.server_capabilities.semanticTokensProvider = nil
+		-- client.server_capabilities.semanticTokensProvider = nil
 	end,
 	cmd = {
 		"clangd",
@@ -399,6 +395,25 @@ require("cheeky").setup({
 vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>t', vim.lsp.buf.type_definition, { desc = "Go to Type Definition" })
+
+local ls = require('luasnip')
+vim.keymap.set({'i', 's'}, '<C-j>', function()
+  if ls.jumpable(1) then
+    ls.jump(1)
+  else
+    return '<Tab>'
+  end
+end, {expr = true, silent = true})
+
+vim.keymap.set({'i', 's'}, '<C-k>', function()
+  if ls.jumpable(-1) then
+    ls.jump(-1)
+  else
+    return '<S-Tab>'
+  end
+end, {expr = true, silent = true})
+
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })
 EOF
 
 noremap d "_d
@@ -407,3 +422,6 @@ vnoremap < <gv
 vnoremap > >gv
 
 highlight LspInlayHint guibg=#707772
+
+lua require('guess-indent').setup {}
+
