@@ -54,12 +54,8 @@ Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'L3MON4D3/LuaSnip'
-Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/nvim-cmp'
+Plug 'Saghen/blink.cmp'
 Plug 'folke/trouble.nvim'
-Plug 'madskjeldgaard/cheeky-snippets.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
 call plug#end()
 
@@ -316,31 +312,17 @@ vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window s
 
 vim.api.nvim_set_keymap('n', '<C-c>', [[:let @+ = expand("%:p")<CR>]], {noremap = true, silent = true})
 
-local cmp = require'cmp'
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-cmp.setup({
-	snippet = {
-		-- REQUIRED - you must specify a snippet engine
-		expand = function(args)
-		require('luasnip').lsp_expand(args.body)
-		end,
-	},
-	mapping = cmp.mapping.preset.insert({
-		['<C-b>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		['<C-Space>'] = cmp.mapping.complete(),
-		['<C-e>'] = cmp.mapping.abort(),
-		['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-	}),
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-		{ name = 'luasnip' },
-	}, {
-		{ name = 'buffer' },
-	}),
+require('blink.cmp').setup({
+	completion = { documentation = { auto_show = true } },
+	keymap = {
+		['<TAB>'] = { 'accept', 'fallback' },
+		['<C-j>'] = { 'snippet_forward', 'fallback' },
+		['<C-k>'] = { 'snippet_backward', 'fallback' }
+	}
 })
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require'lspconfig'.clangd.setup {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
@@ -379,39 +361,9 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {f
 require("trouble").setup{}
 vim.keymap.set('n', '<F10>', '<cmd>Trouble diagnostics toggle<CR>')
 
-require("cheeky").setup({
-	langs = {
-		all = true,
-		lua = true,
-		cpp = true,
-		asm = true,
-		cmake = true,
-		markdown = true,
-		supercollider = true
-	},
-})
-
 vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>t', vim.lsp.buf.type_definition, { desc = "Go to Type Definition" })
-
-local ls = require('luasnip')
-vim.keymap.set({'i', 's'}, '<C-j>', function()
-  if ls.jumpable(1) then
-    ls.jump(1)
-  else
-    return '<Tab>'
-  end
-end, {expr = true, silent = true})
-
-vim.keymap.set({'i', 's'}, '<C-k>', function()
-  if ls.jumpable(-1) then
-    ls.jump(-1)
-  else
-    return '<S-Tab>'
-  end
-end, {expr = true, silent = true})
-
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })
 EOF
 
