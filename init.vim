@@ -18,8 +18,7 @@ set guicursor=n-v-c:block,i:ver25
 set foldmethod=syntax
 
 call plug#begin()
-Plug 'windwp/nvim-autopairs'
-Plug 'tpope/vim-commentary'
+Plug 'm4xshen/autoclose.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'itchyny/vim-gitbranch'
 Plug 'akinsho/toggleterm.nvim'
@@ -29,7 +28,6 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'yamatsum/nvim-cursorline'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'ryanoasis/vim-devicons'
 Plug 'folke/todo-comments.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lualine/lualine.nvim'
@@ -47,11 +45,11 @@ Plug 'folke/snacks.nvim'
 Plug 'pocco81/auto-save.nvim'
 Plug 'karb94/neoscroll.nvim'
 Plug 'akinsho/bufferline.nvim'
-Plug 'ntpeters/vim-better-whitespace'
+Plug 'nvim-zh/whitespace.nvim'
 Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
-Plug 'mrcjkb/haskell-tools.nvim'
 
+Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'Saghen/blink.cmp'
 Plug 'folke/trouble.nvim'
@@ -67,8 +65,6 @@ nnoremap <C-p> <C-i>
 highlight CocErrorFloat ctermfg=204 guifg=#ffffff
 
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
-
-autocmd TextChanged,TextChangedI <buffer> silent write
 
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
 
@@ -143,7 +139,7 @@ require("noice").setup({
 	}
 })
 
-require("nvim-autopairs").setup {}
+require("autoclose").setup()
 
 require("toggleterm").setup({
 	open_mapping = [[<F12>]],
