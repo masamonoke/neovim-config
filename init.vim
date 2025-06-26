@@ -350,6 +350,8 @@ require'lspconfig'.wgsl_analyzer.setup({})
 
 require'lspconfig'.pyright.setup({})
 
+require 'lspconfig'.bashls.setup {}
+
 require("inlay-hints").setup()
 
 -- Show line diagnostics automatically in hover window
