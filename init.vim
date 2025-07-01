@@ -48,6 +48,7 @@ Plug 'akinsho/bufferline.nvim'
 Plug 'nvim-zh/whitespace.nvim'
 Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
+Plug 'rmagatti/goto-preview'
 
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -365,6 +366,9 @@ vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR
 
 vim.keymap.set('n', '<leader>t', vim.lsp.buf.type_definition, { desc = "Go to Type Definition" })
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })
+
+require('goto-preview').setup()
+vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
 EOF
 
 noremap d "_d
