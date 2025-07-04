@@ -361,6 +361,7 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {f
 
 require("trouble").setup{}
 vim.keymap.set('n', '<F10>', '<cmd>Trouble diagnostics toggle<CR>')
+vim.keymap.set('n', '<F11>', '<cmd>Trouble lsp_references<CR>')
 
 vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
 
