@@ -16,6 +16,7 @@ set cursorline
 set formatprg=clang-format
 set guicursor=n-v-c:block,i:ver25
 set foldmethod=syntax
+set conceallevel=2
 
 call plug#begin()
 Plug 'm4xshen/autoclose.nvim'
@@ -49,6 +50,7 @@ Plug 'nvim-zh/whitespace.nvim'
 Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
 Plug 'rmagatti/goto-preview'
+Plug 'epwalsh/obsidian.nvim'
 
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -353,6 +355,8 @@ require'lspconfig'.pyright.setup({})
 
 require 'lspconfig'.bashls.setup {}
 
+require 'lspconfig'.marksman.setup {}
+
 require("inlay-hints").setup()
 
 -- Show line diagnostics automatically in hover window
@@ -370,6 +374,15 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable'
 
 require('goto-preview').setup()
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
+
+require("obsidian").setup({
+	workspaces = {
+		{
+			name = "notes",
+			path = "/home/mrudakov/Work/notes/base",
+		},
+	},
+})
 EOF
 
 noremap d "_d
