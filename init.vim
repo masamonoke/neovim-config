@@ -13,6 +13,7 @@ set clipboard+=unnamedplus
 set noshowmode
 set filetype=on
 set cursorline
+set formatprg=clang-format
 set guicursor=n-v-c:block,i:ver25
 set foldmethod=syntax
 set conceallevel=1
@@ -51,7 +52,6 @@ Plug 'echasnovski/mini.indentscope'
 Plug 'rmagatti/goto-preview'
 Plug 'epwalsh/obsidian.nvim'
 Plug 'folke/twilight.nvim'
-Plug 'stevearc/conform.nvim'
 
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -395,8 +395,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function(args)
 		local ft = vim.bo[args.buf].filetype
 		local formatters = {
-			c = "clang-format",
-			cpp = "clang-format",
 			python = "black -q -",
 			rust = "rustfmt"
 		}
