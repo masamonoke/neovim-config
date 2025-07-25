@@ -13,10 +13,9 @@ set clipboard+=unnamedplus
 set noshowmode
 set filetype=on
 set cursorline
-set formatprg=clang-format
 set guicursor=n-v-c:block,i:ver25
 set foldmethod=syntax
-set conceallevel=2
+set conceallevel=1
 
 call plug#begin()
 Plug 'm4xshen/autoclose.nvim'
@@ -51,6 +50,8 @@ Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
 Plug 'rmagatti/goto-preview'
 Plug 'epwalsh/obsidian.nvim'
+Plug 'folke/twilight.nvim'
+Plug 'stevearc/conform.nvim'
 
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -372,7 +373,10 @@ vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR
 vim.keymap.set('n', '<leader>t', vim.lsp.buf.type_definition, { desc = "Go to Type Definition" })
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })
 
-require('goto-preview').setup()
+require('goto-preview').setup({
+	-- width = 165,
+	-- height = 25
+})
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
 
 require("obsidian").setup({
@@ -382,6 +386,24 @@ require("obsidian").setup({
 			path = "/home/mrudakov/Work/notes/base",
 		},
 	},
+})
+
+require("twilight").setup{}
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function(args)
+		local ft = vim.bo[args.buf].filetype
+		local formatters = {
+			c = "clang-format",
+			cpp = "clang-format",
+			python = "black -q -",
+			rust = "rustfmt"
+		}
+		if formatters[ft] then
+			vim.bo.formatprg = formatters[ft]
+		end
+	end
 })
 EOF
 
