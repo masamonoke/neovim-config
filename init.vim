@@ -15,6 +15,7 @@ set filetype=on
 set cursorline
 set guicursor=n-v-c:block,i:ver25
 set foldmethod=syntax
+set conceallevel=1
 
 call plug#begin()
 Plug 'windwp/nvim-autopairs'
@@ -375,6 +376,8 @@ lspconfig.sqlls.setup {
 	filetypes = { 'sql', 'mysql' },
 }
 
+require 'lspconfig'.marksman.setup {}
+
 require("inlay-hints").setup()
 
 -- Show line diagnostics automatically in hover window
@@ -390,7 +393,10 @@ vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR
 vim.keymap.set('n', '<leader>t', vim.lsp.buf.type_definition, { desc = "Go to Type Definition" })
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })
 
-require('goto-preview').setup()
+require('goto-preview').setup({
+	-- width = 165,
+	-- height = 25
+})
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
 
 vim.api.nvim_create_autocmd("FileType", {
