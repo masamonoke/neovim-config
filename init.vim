@@ -13,12 +13,11 @@ set clipboard+=unnamedplus
 set noshowmode
 set filetype=on
 set cursorline
-set formatprg=clang-format
 set guicursor=n-v-c:block,i:ver25
 set foldmethod=syntax
 
 call plug#begin()
-Plug 'm4xshen/autoclose.nvim'
+Plug 'windwp/nvim-autopairs'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'itchyny/vim-gitbranch'
 Plug 'akinsho/toggleterm.nvim'
@@ -49,6 +48,8 @@ Plug 'nvim-zh/whitespace.nvim'
 Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
 Plug 'rmagatti/goto-preview'
+Plug 'm-demare/hlargs.nvim'
+Plug 'xiyaowong/transparent.nvim'
 
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -139,8 +140,6 @@ require("noice").setup({
 		lsp_doc_border = false, -- add a border to hover docs and signature help
 	}
 })
-
-require("autoclose").setup()
 
 require("toggleterm").setup({
 	open_mapping = [[<F12>]],
@@ -318,7 +317,9 @@ require('blink.cmp').setup({
 	}
 })
 
-require'lspconfig'.clangd.setup {
+local lspconfig = require('lspconfig')
+
+lspconfig.clangd.setup {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		require("inlay-hints").on_attach(client, bufnr)
@@ -336,9 +337,9 @@ require'lspconfig'.clangd.setup {
 	},
 }
 
-require'lspconfig'.glsl_analyzer.setup {}
+lspconfig.glsl_analyzer.setup {}
 
-require'lspconfig'.ts_ls.setup {}
+lspconfig.ts_ls.setup {}
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = "*.wgsl",
@@ -347,11 +348,32 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	end,
 })
 
-require'lspconfig'.wgsl_analyzer.setup({})
+lspconfig.wgsl_analyzer.setup({})
 
-require'lspconfig'.pyright.setup({})
+lspconfig.pyright.setup({})
 
-require 'lspconfig'.bashls.setup {}
+lspconfig.bashls.setup {}
+
+local configs = require('lspconfig.configs')
+if not configs.armls then
+  configs.armls = {
+    default_config = {
+      cmd = { 'armls' },  -- Ensure this is in your PATH
+      filetypes = { 'asm', 's', 'S' },  -- ARM assembly files
+      root_dir = lspconfig.util.root_pattern(".git", "Makefile"),  -- Optional
+      settings = {},  -- No extra settings needed for armls
+    },
+  }
+end
+lspconfig.armls.setup {
+	cmd = { "armls" },
+	filetypes = { "asm", "s", "S", "arm" },
+}
+
+lspconfig.sqlls.setup {
+	cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
+	filetypes = { 'sql', 'mysql' },
+}
 
 require("inlay-hints").setup()
 
@@ -370,6 +392,37 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable'
 
 require('goto-preview').setup()
 vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", {noremap=true})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "rust",
+  callback = function()
+    vim.bo.formatprg = "rustfmt"
+  end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "c", "cpp", "h", "hpp" },
+  callback = function()
+    vim.bo.formatexpr = "v:lua.vim.lsp.formatexpr(#{timeout_ms:500})"
+  end
+})
+
+-- to disable annoying sqlcomplete popup when using left and right arrows in insert mode
+vim.api.nvim_create_autocmd("Filetype", {
+    pattern = "sql",
+    callback = function()
+        vim.keymap.del('i','<left>',{buffer = true})
+        vim.keymap.del('i','<right>',{buffer = true})
+    end
+})
+
+require("nvim-autopairs").setup {}
+
+require('hlargs').setup({
+	hl_priority = 130
+})
+
+require("transparent").setup()
 EOF
 
 noremap d "_d
