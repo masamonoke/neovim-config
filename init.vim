@@ -51,6 +51,7 @@ Plug 'echasnovski/mini.indentscope'
 Plug 'rmagatti/goto-preview'
 Plug 'm-demare/hlargs.nvim'
 Plug 'xiyaowong/transparent.nvim'
+Plug 'MeanderingProgrammer/render-markdown.nvim'
 
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -320,61 +321,84 @@ require('blink.cmp').setup({
 
 local lspconfig = require('lspconfig')
 
-lspconfig.clangd.setup {
-	capabilities = capabilities,
-	on_attach = function(client, bufnr)
-		require("inlay-hints").on_attach(client, bufnr)
-		-- client.server_capabilities.semanticTokensProvider = nil
-	end,
-	cmd = {
-		"clangd",
-		"--header-insertion=never",
-		"--background-index",
-		"--suggest-missing-includes",
-		"-j=8",
-		"--clang-tidy",
-		"--inlay-hints=true",
-		"--pch-storage=memory"
-	},
-}
-
-lspconfig.glsl_analyzer.setup {}
-
-lspconfig.ts_ls.setup {}
-
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = "*.wgsl",
-	callback = function()
-		vim.bo.filetype = "wgsl"
-	end,
-})
-
-lspconfig.wgsl_analyzer.setup({})
-
-lspconfig.pyright.setup({})
-
-lspconfig.bashls.setup {}
-
-local configs = require('lspconfig.configs')
-if not configs.armls then
-  configs.armls = {
-    default_config = {
-      cmd = { 'armls' },  -- Ensure this is in your PATH
-      filetypes = { 'asm', 's', 'S' },  -- ARM assembly files
-      root_dir = lspconfig.util.root_pattern(".git", "Makefile"),  -- Optional
-      settings = {},  -- No extra settings needed for armls
+vim.lsp.config('clangd', {
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        require("inlay-hints").on_attach(client, bufnr)
+        -- client.server_capabilities.semanticTokensProvider = nil
+    end,
+    cmd = {
+        "clangd",
+        "--header-insertion=never",
+        "--background-index",
+        "--suggest-missing-includes",
+        "-j=8",
+        "--clang-tidy",
+        "--inlay-hints=true",
+        "--pch-storage=memory"
     },
-  }
-end
-lspconfig.armls.setup {
-	cmd = { "armls" },
-	filetypes = { "asm", "s", "S", "arm" },
-}
+})
+vim.lsp.enable('clangd')
 
-lspconfig.sqlls.setup {
-	cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
-	filetypes = { 'sql', 'mysql' },
-}
+-- lspconfig.clangd.setup {
+-- 	capabilities = capabilities,
+-- 	on_attach = function(client, bufnr)
+-- 		require("inlay-hints").on_attach(client, bufnr)
+-- 		-- client.server_capabilities.semanticTokensProvider = nil
+-- 	end,
+-- 	cmd = {
+-- 		"clangd",
+-- 		"--header-insertion=never",
+-- 		"--background-index",
+-- 		"--suggest-missing-includes",
+-- 		"-j=8",
+-- 		"--clang-tidy",
+-- 		"--inlay-hints=true",
+-- 		"--pch-storage=memory"
+-- 	},
+-- }
+
+-- lspconfig.glsl_analyzer.setup {}
+--
+-- lspconfig.ts_ls.setup {}
+--
+-- vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+-- 	pattern = "*.wgsl",
+-- 	callback = function()
+-- 		vim.bo.filetype = "wgsl"
+-- 	end,
+-- })
+--
+-- lspconfig.wgsl_analyzer.setup({})
+--
+-- lspconfig.pyright.setup({})
+
+vim.lsp.config('pyright', {})
+vim.lsp.enable('pyright')
+
+--
+-- lspconfig.bashls.setup {}
+--
+-- local configs = require('lspconfig.configs')
+-- if not configs.armls then
+--   configs.armls = {
+--     default_config = {
+--       cmd = { 'armls' },  -- Ensure this is in your PATH
+--       filetypes = { 'asm', 's', 'S' },  -- ARM assembly files
+--       root_dir = lspconfig.util.root_pattern(".git", "Makefile"),  -- Optional
+--       settings = {},  -- No extra settings needed for armls
+--     },
+--   }
+-- end
+-- lspconfig.armls.setup {
+-- 	cmd = { "armls" },
+-- 	filetypes = { "asm", "s", "S", "arm" },
+-- }
+--
+-- lspconfig.sqlls.setup {
+-- 	cmd = { 'sql-language-server', 'up', '--method', 'stdio' },
+-- 	filetypes = { 'sql', 'mysql' },
+-- }
 
 require 'lspconfig'.marksman.setup {}
 
@@ -429,6 +453,7 @@ require('hlargs').setup({
 })
 
 require("transparent").setup()
+require('render-markdown').setup({})
 EOF
 
 noremap d "_d
@@ -439,3 +464,6 @@ vnoremap > >gv
 highlight LspInlayHint guibg=#707772
 
 lua require('guess-indent').setup {}
+
+autocmd FileType markdown setlocal wrap
+autocmd FileType markdown setlocal linebreak
