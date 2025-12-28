@@ -27,12 +27,12 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'yamatsum/nvim-cursorline'
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master' }
 Plug 'folke/todo-comments.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'smoka7/hop.nvim'
-Plug 'folke/noice.nvim'
+Plug 'folke/noice.nvim', { 'tag': 'v4.10.0' }
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'NMAC427/guess-indent.nvim'
@@ -55,7 +55,7 @@ Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'HiPhish/rainbow-delimiters.nvim'
 
 Plug 'mrcjkb/haskell-tools.nvim'
-Plug 'neovim/nvim-lspconfig'
+"Plug 'neovim/nvim-lspconfig'
 Plug 'Saghen/blink.cmp'
 Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
@@ -320,28 +320,26 @@ require('blink.cmp').setup({
 	}
 })
 
-local lspconfig = require('lspconfig')
-
-vim.lsp.config('clangd', {
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        require("inlay-hints").on_attach(client, bufnr)
-        -- client.server_capabilities.semanticTokensProvider = nil
-    end,
-    cmd = {
-        "clangd",
-        "--header-insertion=never",
-        "--background-index",
-        "--suggest-missing-includes",
-        "-j=8",
-        "--clang-tidy",
-        "--inlay-hints=true",
-        "--pch-storage=memory"
-    },
+vim.api.nvim_create_autocmd('FileType', {
+	pattern = { 'c', 'cpp', 'objc', 'objcpp' },
+	callback = function(args)
+	vim.lsp.start({
+		name = 'clangd',
+		cmd = {
+			"clangd",
+			"--header-insertion=never",
+			"--background-index",
+			"--suggest-missing-includes",
+			"-j=8",
+			"--clang-tidy",
+			"--inlay-hints=true",
+			"--pch-storage=memory"
+		},
+		capabilities = capabilities,
+		root_dir = vim.fs.dirname(vim.fs.find({ 'compile_commands.json', '.git' }, { upward = true })[1]),
+	})
+	end,
 })
-vim.lsp.enable('clangd')
-
--- lspconfig.ts_ls.setup {}
 
 vim.lsp.config('ts_ls', {})
 vim.lsp.enable('ts_ls')
@@ -357,6 +355,24 @@ vim.lsp.enable('marksman')
 
 vim.lsp.config('gopls', {})
 vim.lsp.enable('gopls')
+
+local swift_lsp = vim.api.nvim_create_augroup("swift_lsp", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "swift" },
+	callback = function()
+		local root_dir = vim.fs.dirname(vim.fs.find({
+			"Package.swift",
+			".git",
+		}, { upward = true })[1])
+		local client = vim.lsp.start({
+			name = "sourcekit-lsp",
+			cmd = { "sourcekit-lsp" },
+			root_dir = root_dir,
+		})
+		vim.lsp.buf_attach_client(0, client)
+	end,
+	group = swift_lsp,
+})
 
 require("inlay-hints").setup()
 
