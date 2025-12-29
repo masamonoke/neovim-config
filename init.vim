@@ -55,7 +55,7 @@ Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'HiPhish/rainbow-delimiters.nvim'
 
 Plug 'mrcjkb/haskell-tools.nvim'
-"Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
 Plug 'Saghen/blink.cmp'
 Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
@@ -320,26 +320,23 @@ require('blink.cmp').setup({
 	}
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-	pattern = { 'c', 'cpp', 'objc', 'objcpp' },
-	callback = function(args)
-	vim.lsp.start({
-		name = 'clangd',
-		cmd = {
-			"clangd",
-			"--header-insertion=never",
-			"--background-index",
-			"--suggest-missing-includes",
-			"-j=8",
-			"--clang-tidy",
-			"--inlay-hints=true",
-			"--pch-storage=memory"
-		},
-		capabilities = capabilities,
-		root_dir = vim.fs.dirname(vim.fs.find({ 'compile_commands.json', '.git' }, { upward = true })[1]),
-	})
-	end,
+vim.lsp.config('clangd', {
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        require("inlay-hints").on_attach(client, bufnr)
+    end,
+    cmd = {
+        "clangd",
+        "--header-insertion=never",
+        "--background-index",
+        "--suggest-missing-includes",
+        "-j=8",
+        "--clang-tidy",
+        "--inlay-hints=true",
+        "--pch-storage=memory"
+    },
 })
+vim.lsp.enable('clangd')
 
 vim.lsp.config('ts_ls', {})
 vim.lsp.enable('ts_ls')
@@ -354,7 +351,7 @@ vim.lsp.config('marksman', {})
 vim.lsp.enable('marksman')
 
 vim.lsp.config('gopls', {})
-vim.lsp.enable('gopls')
+vim.lsp.enable({'gopls'})
 
 local swift_lsp = vim.api.nvim_create_augroup("swift_lsp", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
