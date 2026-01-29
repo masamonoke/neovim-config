@@ -53,6 +53,7 @@ Plug 'm-demare/hlargs.nvim'
 Plug 'xiyaowong/transparent.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'HiPhish/rainbow-delimiters.nvim'
+Plug 'oskarnurm/koda.nvim'
 
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -209,6 +210,8 @@ require("gruvbox").setup({
 })
 vim.o.background = "dark"
 vim.cmd("colorscheme gruvbox")
+
+-- vim.cmd("colorscheme koda")
 
 vim.o.foldcolumn = '0' -- '0' is not bad
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
