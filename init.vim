@@ -54,13 +54,13 @@ Plug 'xiyaowong/transparent.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'HiPhish/rainbow-delimiters.nvim'
 Plug 'oskarnurm/koda.nvim'
-
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'Saghen/blink.cmp'
 Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
 Plug 'mrcjkb/rustaceanvim'
+Plug 'sphamba/smear-cursor.nvim'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -426,6 +426,13 @@ require('hlargs').setup({
 
 require("transparent").setup()
 require('render-markdown').setup({})
+
+require('smear_cursor').enabled = true
+
+vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true })
+vim.keymap.set("n", "<A-Up>",   ":m .-2<CR>==", { silent = true })
+vim.keymap.set("v", "<A-Up>",   ":m '<-2<CR>gv=gv", { silent = true })
+vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true })
 EOF
 
 noremap d "_d
