@@ -59,8 +59,9 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'Saghen/blink.cmp'
 Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
-Plug 'mrcjkb/rustaceanvim'
-Plug 'sphamba/smear-cursor.nvim'
+Plug 'jbyuki/nabla.nvim'
+Plug 'ravibrock/spellwarn.nvim'
+Plug 'epwalsh/obsidian.nvim'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -68,10 +69,9 @@ noremap <S-Tab> :bp<CR>
 nnoremap <F4> :bp \| sp \| bn \| bd<CR>
 nnoremap <C-p> <C-i>
 
-highlight CocErrorFloat ctermfg=204 guifg=#ffffff
-
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 
+" TODO: ???
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
 
 nnoremap <F1> :Telescope buffers <CR>
@@ -295,6 +295,7 @@ require'nvim-treesitter.configs'.setup {
 		enable = true,
 		additional_vim_regex_highlighting = false,
 	},
+	indent = { enable = true, disable = { "python", "cpp" } },
 }
 
 vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
@@ -328,13 +329,14 @@ vim.lsp.config('clangd', {
     on_attach = function(client, bufnr)
         require("inlay-hints").on_attach(client, bufnr)
     end,
+	documentation = { markdown = true, },
     cmd = {
-        "clangd",
+        -- "/Users/masamonoke/dev/work/mpe-linter/llvm-project/build/bin/clangd",
+		"clangd",
         "--header-insertion=never",
         "--background-index",
         "--suggest-missing-includes",
         "-j=8",
-        "--clang-tidy",
         "--inlay-hints=true",
         "--pch-storage=memory"
     },
@@ -355,6 +357,32 @@ vim.lsp.enable('marksman')
 
 vim.lsp.config('gopls', {})
 vim.lsp.enable({'gopls'})
+
+vim.lsp.config('csharp-ls', {})
+vim.lsp.enable('csharp-ls')
+
+vim.lsp.config.rust_analyzer = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = { 'rust-analyzer' },
+    filetypes = { 'rust' },
+    root_markers = {"Cargo.toml", ".git"},
+    single_file_support = true,
+    settings = {
+        ['rust-analyzer'] = {
+            diagnostics = {
+                enable = true;
+            }
+        }
+    },
+    before_init = function(init_params, config)
+        -- See https://github.com/rust-lang/rust-analyzer/blob/eb5da56d839ae0a9e9f50774fa3eb78eb0964550/docs/dev/lsp-extensions.md?plain=1#L26
+        if config.settings and config.settings['rust-analyzer'] then
+            init_params.initializationOptions = config.settings['rust-analyzer']
+        end
+    end,
+}
+vim.lsp.enable("rust_analyzer")
 
 local swift_lsp = vim.api.nvim_create_augroup("swift_lsp", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
@@ -425,14 +453,23 @@ require('hlargs').setup({
 })
 
 require("transparent").setup()
-require('render-markdown').setup({})
-
-require('smear_cursor').enabled = true
 
 vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true })
 vim.keymap.set("n", "<A-Up>",   ":m .-2<CR>==", { silent = true })
 vim.keymap.set("v", "<A-Up>",   ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true })
+
+require("spellwarn").setup()
+
+require("obsidian").setup({
+  workspaces = {
+        {
+          name = "work",
+          path = "~/dev/work/mpe-notes/",
+        },
+    }
+})
+
 EOF
 
 noremap d "_d
@@ -446,3 +483,5 @@ lua require('guess-indent').setup {}
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType markdown setlocal linebreak
+
+nnoremap <leader>p :lua require("nabla").popup()<CR> " Customize with popup({border = ...})  : `single` (default), `double`, `rounded`
