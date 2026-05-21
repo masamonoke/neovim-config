@@ -61,7 +61,7 @@ Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
 Plug 'jbyuki/nabla.nvim'
 Plug 'ravibrock/spellwarn.nvim'
-Plug 'epwalsh/obsidian.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -70,9 +70,6 @@ nnoremap <F4> :bp \| sp \| bn \| bd<CR>
 nnoremap <C-p> <C-i>
 
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
-
-" TODO: ???
-inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
 
 nnoremap <F1> :Telescope buffers <CR>
 nnoremap <F2> :Telescope find_files<CR>
@@ -295,7 +292,7 @@ require'nvim-treesitter.configs'.setup {
 		enable = true,
 		additional_vim_regex_highlighting = false,
 	},
-	indent = { enable = true, disable = { "python", "cpp" } },
+	indent = { enable = true, disable = { "cpp" } },
 }
 
 vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
@@ -460,16 +457,6 @@ vim.keymap.set("v", "<A-Up>",   ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true })
 
 require("spellwarn").setup()
-
-require("obsidian").setup({
-  workspaces = {
-        {
-          name = "work",
-          path = "~/dev/work/mpe-notes/",
-        },
-    }
-})
-
 EOF
 
 noremap d "_d
