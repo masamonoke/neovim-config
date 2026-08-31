@@ -2,7 +2,7 @@ if $TERM_PROGRAM != "Apple_Terminal"
     set termguicolors
 endif
 syntax on
-set ts=4 sw=4
+set ts=2 sw=2
 set nostartofline
 set number
 set mouse=a
@@ -27,7 +27,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'yamatsum/nvim-cursorline'
-Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main' }
 Plug 'folke/todo-comments.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lualine/lualine.nvim'
@@ -56,11 +56,10 @@ Plug 'HiPhish/rainbow-delimiters.nvim'
 Plug 'oskarnurm/koda.nvim'
 Plug 'mrcjkb/haskell-tools.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'Saghen/blink.cmp'
+" TODO: upgrade to v2
+Plug 'Saghen/blink.cmp', { 'branch': 'v1' }
 Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
-Plug 'jbyuki/nabla.nvim'
-Plug 'ravibrock/spellwarn.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 call plug#end()
 
@@ -284,16 +283,31 @@ require('nvim-cursorline').setup {
 
 require('colorful-winsep').setup()
 
-require'nvim-treesitter.configs'.setup {
-	ensure_installed = { "lua", "vim" },
-	sync_install = false,
-	auto_install = false,
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = false,
-	},
-	indent = { enable = true, disable = { "cpp" } },
-}
+-- INFO: this treesitter setup not compatible with nvim version < 0.12
+local treesitter = require("nvim-treesitter")
+
+treesitter.setup({
+	install_dir = vim.fn.stdpath("data") .. "/site",
+})
+
+treesitter.install({ "lua", "vim" }):wait(300000)
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function(args)
+		local ok = pcall(vim.treesitter.start, args.buf)
+		if not ok then
+			return
+		end
+
+		vim.bo[args.buf].syntax = ""
+
+		if vim.bo[args.buf].filetype ~= "cpp" then
+			vim.bo[args.buf].indentexpr =
+				"v:lua.require'nvim-treesitter'.indentexpr()"
+		end
+	end,
+})
 
 vim.api.nvim_set_hl(0, "StatusLine", {reverse = false})
 vim.api.nvim_set_hl(0, "StatusLineNC", {reverse = false})
@@ -455,8 +469,6 @@ vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true })
 vim.keymap.set("n", "<A-Up>",   ":m .-2<CR>==", { silent = true })
 vim.keymap.set("v", "<A-Up>",   ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true })
-
-require("spellwarn").setup()
 EOF
 
 noremap d "_d
@@ -470,5 +482,3 @@ lua require('guess-indent').setup {}
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType markdown setlocal linebreak
-
-nnoremap <leader>p :lua require("nabla").popup()<CR> " Customize with popup({border = ...})  : `single` (default), `double`, `rounded`
