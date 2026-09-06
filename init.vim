@@ -413,6 +413,19 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = swift_lsp,
 })
 
+vim.lsp.config("armls", {
+    cmd = { "armls" },
+    filetypes = { "asm", "s", "S" },
+    settings = {
+        armls = {
+            diagnostics = {
+                enable = false
+            },
+        },
+    },
+})
+vim.lsp.enable("armls")
+
 require("inlay-hints").setup()
 
 -- Show line diagnostics automatically in hover window
