@@ -60,6 +60,8 @@ Plug 'Saghen/blink.cmp', { 'branch': 'v1' }
 Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'josstei/whisk.nvim'
+Plug 'sphamba/smear-cursor.nvim'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -220,8 +222,12 @@ require("snacks").setup({
 	quickfile = { enabled = true },
 	statuscolumn = { enabled = true },
 	bufdelete = { enabled = true },
-	scroll = { enabled = true }
+	-- works bad: after insert mode on first scroll it scrolls not smooth
+	-- scroll = { enabled = true }
 })
+-- for smooth scroll
+require("whisk").setup()
+
 
 require("auto-save").setup {
 	execution_message = {
@@ -276,7 +282,6 @@ local treesitter = require("nvim-treesitter")
 treesitter.setup({
 	install_dir = vim.fn.stdpath("data") .. "/site",
 })
-
 treesitter.install({ "lua", "vim" }):wait(300000)
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -469,6 +474,8 @@ vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==", { silent = true })
 vim.keymap.set("n", "<A-Up>",   ":m .-2<CR>==", { silent = true })
 vim.keymap.set("v", "<A-Up>",   ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true })
+
+require('smear_cursor').setup()
 EOF
 
 noremap d "_d
