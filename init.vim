@@ -44,7 +44,7 @@ Plug 'kevinhwang91/nvim-ufo'
 Plug 'folke/snacks.nvim'
 Plug 'pocco81/auto-save.nvim'
 Plug 'akinsho/bufferline.nvim'
-Plug 'nvim-zh/whitespace.nvim'
+"Plug 'nvim-zh/whitespace.nvim'
 Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
 Plug 'rmagatti/goto-preview'
@@ -60,7 +60,9 @@ Plug 'Saghen/blink.cmp', { 'branch': 'v1' }
 Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
-Plug 'josstei/whisk.nvim'
+Plug 'karb94/neoscroll.nvim'
+"Plug 'josstei/whisk.nvim'
+Plug 'nvim-mini/mini.nvim'
 Plug 'sphamba/smear-cursor.nvim'
 call plug#end()
 
@@ -223,11 +225,17 @@ require("snacks").setup({
 	statuscolumn = { enabled = true },
 	bufdelete = { enabled = true },
 	-- works bad: after insert mode on first scroll it scrolls not smooth
-	-- scroll = { enabled = true }
+	-- scroll = {
+	-- 	enabled = true,
+	-- }
 })
--- for smooth scroll
-require("whisk").setup()
 
+require('neoscroll').setup({
+	duration_multiplier = 1
+})
+
+require('mini.trailspace').setup()
+require('mini.surround').setup()
 
 require("auto-save").setup {
 	execution_message = {
@@ -255,7 +263,7 @@ bufferline.setup({
 			delay = 200,
 			reveal = {'close'}
 		},
-		diagnostics = "coc",
+		diagnostics = "nvim_lsp",
 		always_show_bufferline = false
 	}
 })
@@ -273,7 +281,6 @@ require('nvim-cursorline').setup {
 	},
 	disable_filetypes = { "pdf" },
 }
-
 require('colorful-winsep').setup()
 
 -- INFO: this treesitter setup not compatible with nvim version < 0.12
