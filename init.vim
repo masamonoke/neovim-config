@@ -44,7 +44,6 @@ Plug 'kevinhwang91/nvim-ufo'
 Plug 'folke/snacks.nvim'
 Plug 'pocco81/auto-save.nvim'
 Plug 'akinsho/bufferline.nvim'
-"Plug 'nvim-zh/whitespace.nvim'
 Plug 'nvim-zh/colorful-winsep.nvim'
 Plug 'echasnovski/mini.indentscope'
 Plug 'rmagatti/goto-preview'
@@ -61,9 +60,9 @@ Plug 'folke/trouble.nvim'
 Plug 'MysticalDevil/inlay-hints.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 Plug 'karb94/neoscroll.nvim'
-"Plug 'josstei/whisk.nvim'
 Plug 'nvim-mini/mini.nvim'
 Plug 'sphamba/smear-cursor.nvim'
+Plug 'olimorris/codecompanion.nvim'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -330,7 +329,9 @@ require('blink.cmp').setup({
 	keymap = {
 		['<TAB>'] = { 'accept', 'fallback' },
 		['<C-j>'] = { 'snippet_forward', 'fallback' },
-		['<C-k>'] = { 'snippet_backward', 'fallback' }
+		['<C-k>'] = { 'snippet_backward', 'fallback' },
+		['<A-j>'] = { 'select_next', 'fallback' },
+		['<A-k>'] = { 'select_prev', 'fallback' }
 	}
 })
 
@@ -482,7 +483,112 @@ vim.keymap.set("n", "<A-Up>",   ":m .-2<CR>==", { silent = true })
 vim.keymap.set("v", "<A-Up>",   ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { silent = true })
 
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { silent = true })
+vim.keymap.set("n", "<A-k>",   ":m .-2<CR>==", { silent = true })
+vim.keymap.set("v", "<A-k>",   ":m '<-2<CR>gv=gv", { silent = true })
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { silent = true })
+
+
 require('smear_cursor').setup()
+
+require("codecompanion").setup({
+  interactions = {
+    chat = {
+      adapter = "ollama",
+    },
+    inline = {
+      adapter = "ollama",
+    },
+    cmd = {
+      adapter = "ollama",
+    },
+  },
+
+  adapters = {
+    http = {
+      ollama = function()
+        return require("codecompanion.adapters").extend("ollama", {
+          env = {
+            url = "http://127.0.0.1:11434",
+          },
+          schema = {
+            model = {
+              default = "qwen2.5-coder:7b",
+            },
+          },
+        })
+      end,
+    },
+  },
+})
+
+vim.keymap.set("n", "<leader>ar", function()
+  local diff = vim.fn.systemlist({
+    "git",
+    "diff",
+    "--no-ext-diff",
+    "--",
+  })
+
+  if vim.v.shell_error ~= 0 then
+    vim.notify(
+      "Could not read staged Git changes",
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
+  if #diff == 0 then
+    vim.notify(
+      "No staged Git changes to review",
+      vim.log.levels.INFO
+    )
+    return
+  end
+
+  vim.cmd("new")
+
+  local buf = vim.api.nvim_get_current_buf()
+
+  vim.bo[buf].buftype = "nofile"
+  vim.bo[buf].bufhidden = "hide"
+  vim.bo[buf].swapfile = false
+  vim.bo[buf].filetype = "diff"
+
+  vim.api.nvim_buf_set_name(
+    buf,
+    "CodeCompanion Staged Git Diff"
+  )
+
+  vim.api.nvim_buf_set_lines(
+    buf,
+    0,
+    -1,
+    false,
+    diff
+  )
+
+  vim.bo[buf].modified = false
+  vim.api.nvim_win_set_cursor(0, { 1, 0 })
+
+  -- The '%' explicitly supplies the entire diff as the source range.
+  vim.cmd("%CodeCompanionChat Add")
+end, {
+  desc = "Add staged Git diff to CodeCompanion",
+})
+
+vim.keymap.set("n", "<A-l>", "zl", { desc = "Scroll right" })
+vim.keymap.set("n", "<A-h>", "zh", { desc = "Scroll left" })
+vim.keymap.set("i", "<C-l>", "<C-o>a", {
+  noremap = true,
+  silent = true,
+  desc = "Move one character right in Insert mode"
+})
+vim.keymap.set("i", "<C-h>", "<C-o>h", {
+  noremap = true,
+  silent = true,
+  desc = "Move one character left in Insert mode",
+})
 EOF
 
 noremap d "_d
