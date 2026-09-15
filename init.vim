@@ -63,6 +63,7 @@ Plug 'karb94/neoscroll.nvim'
 Plug 'nvim-mini/mini.nvim'
 Plug 'sphamba/smear-cursor.nvim'
 Plug 'olimorris/codecompanion.nvim'
+Plug 'm4xshen/hardtime.nvim'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -589,6 +590,8 @@ vim.keymap.set("i", "<A-h>", "<C-o>h", {
   silent = true,
   desc = "Move one character left in Insert mode",
 })
+
+require("hardtime").setup()
 EOF
 
 noremap d "_d
