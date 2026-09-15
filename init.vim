@@ -592,6 +592,8 @@ vim.keymap.set("i", "<A-h>", "<C-o>h", {
 })
 
 require("hardtime").setup()
+
+vim.opt.relativenumber = true
 EOF
 
 noremap d "_d
