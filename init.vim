@@ -579,12 +579,12 @@ end, {
 
 vim.keymap.set("n", "<A-l>", "zl", { desc = "Scroll right" })
 vim.keymap.set("n", "<A-h>", "zh", { desc = "Scroll left" })
-vim.keymap.set("i", "<C-l>", "<C-o>a", {
+vim.keymap.set("i", "<A-l>", "<C-o>a", {
   noremap = true,
   silent = true,
   desc = "Move one character right in Insert mode"
 })
-vim.keymap.set("i", "<C-h>", "<C-o>h", {
+vim.keymap.set("i", "<A-h>", "<C-o>h", {
   noremap = true,
   silent = true,
   desc = "Move one character left in Insert mode",
