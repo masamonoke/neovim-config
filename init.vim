@@ -85,7 +85,7 @@ nnoremap <C-n> :NvimTreeToggle <CR>
 set undofile
 set undodir=~/.vim/undo
 
-nnoremap <leader>h :HopWord<CR>
+nnoremap f :HopWord<CR>
 
 au BufNewFile,BufRead *.wgsl set filetype=wgsl
 
