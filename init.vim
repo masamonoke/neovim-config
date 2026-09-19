@@ -230,9 +230,7 @@ require("snacks").setup({
 	-- }
 })
 
-require('neoscroll').setup({
-	duration_multiplier = 1
-})
+require('neoscroll').setup({})
 
 require('mini.trailspace').setup()
 require('mini.surround').setup()
@@ -430,8 +428,8 @@ vim.lsp.enable("armls")
 require("inlay-hints").setup()
 
 -- Show line diagnostics automatically in hover window
-vim.o.updatetime = 250
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- vim.o.updatetime = 250
+-- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
 require("trouble").setup{}
 vim.keymap.set('n', '<F10>', '<cmd>Trouble diagnostics toggle<CR>')
@@ -596,7 +594,7 @@ require("hardtime").setup()
 vim.opt.relativenumber = true
 EOF
 
-noremap d "_d
+xnoremap d "_d
 
 vnoremap < <gv
 vnoremap > >gv
