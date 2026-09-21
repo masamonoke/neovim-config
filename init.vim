@@ -589,7 +589,9 @@ vim.keymap.set("i", "<A-h>", "<C-o>h", {
   desc = "Move one character left in Insert mode",
 })
 
-require("hardtime").setup()
+require("hardtime").setup({
+	disable_mouse = false,
+})
 
 vim.opt.relativenumber = true
 EOF
