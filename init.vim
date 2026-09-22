@@ -64,6 +64,8 @@ Plug 'nvim-mini/mini.nvim'
 Plug 'sphamba/smear-cursor.nvim'
 Plug 'olimorris/codecompanion.nvim'
 Plug 'm4xshen/hardtime.nvim'
+Plug 'dchinmay2/clangd_extensions.nvim'
+Plug 'chrisgrieser/nvim-spider'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -594,6 +596,11 @@ require("hardtime").setup({
 })
 
 vim.opt.relativenumber = true
+
+vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>")
+vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>")
+vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>")
+vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>")
 EOF
 
 xnoremap d "_d
