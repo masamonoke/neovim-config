@@ -61,11 +61,10 @@ Plug 'MysticalDevil/inlay-hints.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 Plug 'karb94/neoscroll.nvim'
 Plug 'nvim-mini/mini.nvim'
-Plug 'sphamba/smear-cursor.nvim'
 Plug 'olimorris/codecompanion.nvim'
-Plug 'm4xshen/hardtime.nvim'
 Plug 'dchinmay2/clangd_extensions.nvim'
 Plug 'chrisgrieser/nvim-spider'
+Plug 'Skosulor/nibbler'
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -490,8 +489,6 @@ vim.keymap.set("v", "<A-k>",   ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { silent = true })
 
 
-require('smear_cursor').setup()
-
 require("codecompanion").setup({
   interactions = {
     chat = {
@@ -591,16 +588,14 @@ vim.keymap.set("i", "<A-h>", "<C-o>h", {
   desc = "Move one character left in Insert mode",
 })
 
-require("hardtime").setup({
-	disable_mouse = false,
-})
-
 vim.opt.relativenumber = true
 
 vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>")
 vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>")
 vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>")
 vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>")
+
+require('nibbler').setup()
 EOF
 
 xnoremap d "_d
