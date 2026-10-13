@@ -63,8 +63,8 @@ Plug 'karb94/neoscroll.nvim'
 Plug 'nvim-mini/mini.nvim'
 Plug 'olimorris/codecompanion.nvim'
 Plug 'dchinmay2/clangd_extensions.nvim'
-Plug 'chrisgrieser/nvim-spider'
 Plug 'Skosulor/nibbler'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 call plug#end()
 
 noremap <Tab> :bn<CR>
@@ -81,7 +81,7 @@ nnoremap <F5> :Telescope current_buffer_fuzzy_find<CR>
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
-nnoremap <C-n> :NvimTreeToggle <CR>
+nnoremap <C-g> :NvimTreeToggle <CR>
 
 set undofile
 set undodir=~/.vim/undo
@@ -590,12 +590,11 @@ vim.keymap.set("i", "<A-h>", "<C-o>h", {
 
 vim.opt.relativenumber = true
 
-vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>")
-vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>")
-vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>")
-vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>")
-
 require('nibbler').setup()
+
+vim.g.VM_filetypes = {
+  blacklist = { "TelescopePrompt", "telescope", "NvimTree", "neo-tree", "lazy", "mason" },
+}
 EOF
 
 xnoremap d "_d
