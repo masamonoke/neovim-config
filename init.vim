@@ -335,6 +335,7 @@ require('blink.cmp').setup({
 	}
 })
 
+-- TODO: move lsp setup into separate module
 vim.lsp.config('clangd', {
     capabilities = capabilities,
     on_attach = function(client, bufnr)
@@ -394,6 +395,19 @@ vim.lsp.config.rust_analyzer = {
     end,
 }
 vim.lsp.enable("rust_analyzer")
+
+vim.lsp.config["neocmake"] = {
+  cmd = { "neocmakelsp", "stdio" },
+  filetypes = { "cmake" },
+  root_markers = { "CMakeLists.txt", "CMakePresets.json", ".git" },
+  init_options = {
+    format = {
+      enable = true,
+    },
+    scan_cmake_in_package = true,
+  },
+}
+vim.lsp.enable("neocmake")
 
 local swift_lsp = vim.api.nvim_create_augroup("swift_lsp", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
