@@ -389,10 +389,3 @@ require('nibbler').setup()
 vim.g.VM_filetypes = {
 	blacklist = { "TelescopePrompt", "telescope", "NvimTree", "neo-tree", "lazy", "mason" },
 }
-
-vim.filetype.add({
-	extension = {
-		pro = 'qmake',
-		pri = 'qmake',
-	},
-})

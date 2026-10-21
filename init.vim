@@ -68,8 +68,22 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'sheerun/vim-polyglot'
 call plug#end()
 
-lua require("plugin")
-lua require("lsp")
+lua << EOF
+require("plugin")
+require("lsp")
+
+-- fucking prolog filetype detect doesn't let to set qmake type as usual
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+  pattern = { "*.pro", "*.pri" },
+  callback = function(args)
+    vim.schedule(function()
+      if vim.api.nvim_buf_is_valid(args.buf) then
+        vim.bo[args.buf].filetype = "qmake"
+      end
+    end)
+  end,
+})
+EOF
 
 noremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
