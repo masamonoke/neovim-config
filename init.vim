@@ -65,7 +65,7 @@ Plug 'olimorris/codecompanion.nvim'
 Plug 'dchinmay2/clangd_extensions.nvim'
 Plug 'Skosulor/nibbler'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-Plug 'artoj/qmake-syntax-vim'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 lua require("plugin")
