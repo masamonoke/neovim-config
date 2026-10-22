@@ -13,9 +13,6 @@ require('blink.cmp').setup({
 
 vim.lsp.config('clangd', {
 	capabilities = capabilities,
-	on_attach = function(client, bufnr)
-		require("inlay-hints").on_attach(client, bufnr)
-	end,
 	documentation = { markdown = true, },
 	cmd = {
 		-- "/Users/masamonoke/dev/work/mpe-linter/llvm-project/build/bin/clangd",
@@ -130,3 +127,5 @@ vim.lsp.config("armls", {
 	},
 })
 vim.lsp.enable("armls")
+
+vim.lsp.inlay_hint.enable(true)

@@ -189,7 +189,11 @@ local treesitter = require("nvim-treesitter")
 treesitter.setup({
 	install_dir = vim.fn.stdpath("data") .. "/site",
 })
-treesitter.install({ "lua", "vim" }):wait(300000)
+local is_windows = os.getenv("OS") == "Windows_NT" or os.getenv("WINDIR") ~= nil
+
+if not is_windows then
+	treesitter.install({ "lua", "vim" }):wait(300000)
+end
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
@@ -222,8 +226,6 @@ vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window b
 vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
 
 vim.api.nvim_set_keymap('n', '<C-c>', [[:let @+ = expand("%:p")<CR>]], { noremap = true, silent = true })
-
-require("inlay-hints").setup()
 
 -- Show line diagnostics automatically in hover window
 -- vim.o.updatetime = 250
