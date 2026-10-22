@@ -391,3 +391,5 @@ require('nibbler').setup()
 vim.g.VM_filetypes = {
 	blacklist = { "TelescopePrompt", "telescope", "NvimTree", "neo-tree", "lazy", "mason" },
 }
+
+require('guess-indent').setup {}

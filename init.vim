@@ -71,18 +71,7 @@ call plug#end()
 lua << EOF
 require("plugin")
 require("lsp")
-
--- fucking prolog filetype detect doesn't let to set qmake type as usual
-vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
-  pattern = { "*.pro", "*.pri" },
-  callback = function(args)
-    vim.schedule(function()
-      if vim.api.nvim_buf_is_valid(args.buf) then
-        vim.bo[args.buf].filetype = "qmake"
-      end
-    end)
-  end,
-})
+require("postinit")
 EOF
 
 noremap <Tab> :bn<CR>
@@ -114,8 +103,6 @@ vnoremap < <gv
 vnoremap > >gv
 
 highlight LspInlayHint guibg=#707772
-
-lua require('guess-indent').setup {}
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType markdown setlocal linebreak
