@@ -11,7 +11,9 @@ set nowrap
 set hlsearch
 set clipboard+=unnamedplus
 set noshowmode
-set filetype=on
+" strange bug with it, if you enable it and try to open a file like "nvim file"
+" neovim will not set any filetype for some reason
+"set filetype=on
 set cursorline
 set guicursor=n-v-c:block,i:ver25
 set foldmethod=syntax

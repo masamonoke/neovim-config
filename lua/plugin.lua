@@ -137,6 +137,8 @@ require("snacks").setup({
 	-- works bad: after insert mode on first scroll it scrolls not smooth
 	scroll = {
 		enabled = true,
+		duration = 200,
+		easing = "linear",
 	}
 })
 
