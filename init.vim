@@ -58,7 +58,6 @@ Plug 'neovim/nvim-lspconfig'
 " TODO: upgrade to v2
 Plug 'Saghen/blink.cmp', { 'branch': 'v1' }
 Plug 'folke/trouble.nvim'
-Plug 'MysticalDevil/inlay-hints.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 " TODO: replaced by snacks' scroll, in future updates remove
 "Plug 'karb94/neoscroll.nvim'
@@ -68,6 +67,7 @@ Plug 'dchinmay2/clangd_extensions.nvim'
 Plug 'Skosulor/nibbler'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'sheerun/vim-polyglot'
+Plug 'numtostr/comment.nvim'
 call plug#end()
 
 lua << EOF

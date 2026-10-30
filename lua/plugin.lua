@@ -191,11 +191,6 @@ local treesitter = require("nvim-treesitter")
 treesitter.setup({
 	install_dir = vim.fn.stdpath("data") .. "/site",
 })
-local is_windows = os.getenv("OS") == "Windows_NT" or os.getenv("WINDIR") ~= nil
-
-if not is_windows then
-	treesitter.install({ "lua", "vim" }):wait(300000)
-end
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
@@ -395,3 +390,5 @@ vim.g.VM_filetypes = {
 }
 
 require('guess-indent').setup {}
+
+require('Comment').setup()
