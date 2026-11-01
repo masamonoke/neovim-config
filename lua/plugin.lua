@@ -24,16 +24,14 @@ require("telescope").setup {
 				["i"] = {
 					-- your custom insert mode mappings
 					["<Tab>"] = false,
-					["<S-Tab>"] = false
+					["<S-Tab>"] = false,
 				},
 				["n"] = {
-					-- your custom normal mode mappings
 				},
 			},
 		},
 	},
 }
-
 require("telescope").load_extension "file_browser"
 vim.api.nvim_set_keymap(
 	"n",
@@ -41,8 +39,8 @@ vim.api.nvim_set_keymap(
 	":Telescope file_browser path=%:p:h select_buffer=true<CR>",
 	{ noremap = false }
 )
-
 require('telescope').load_extension('fzf')
+require('telescope').load_extension('ui-select')
 
 require("noice").setup({
 	presets = {
@@ -139,8 +137,14 @@ require("snacks").setup({
 		enabled = true,
 		duration = 200,
 		easing = "linear",
+	},
+	scratch = {
+		enabled = true
 	}
 })
+vim.keymap.set("n", "<leader>.", function()
+  Snacks.scratch()
+end, { desc = "Toggle Scratch Buffer" })
 
 -- require('neoscroll').setup({})
 
@@ -304,7 +308,7 @@ require("codecompanion").setup({
 					},
 					schema = {
 						model = {
-							default = "qwen2.5-coder:7b",
+							default = "qwen3.8:27b",
 						},
 					},
 				})
@@ -392,3 +396,21 @@ vim.g.VM_filetypes = {
 require('guess-indent').setup {}
 
 require('Comment').setup()
+
+require("scroll").setup({
+	minimap = false,
+	marks = {
+		git = true,
+		diagnostics = { severity = { min = vim.diagnostic.severity.WARN } },
+	},
+	visibility = "always",
+	horizontal = {
+		enabled = false,
+	}
+})
+
+require('vellum').setup()
+
+require("mermaid").setup()
+
+require("auto-session").setup()

@@ -129,3 +129,19 @@ vim.lsp.config("armls", {
 vim.lsp.enable("armls")
 
 vim.lsp.inlay_hint.enable(true)
+
+vim.lsp.config('html', {
+  cmd = { 'vscode-html-language-server', '--stdio' },
+  filetypes = { 'html', 'templ' },
+  root_markers = { 'package.json', '.git' },
+  init_options = {
+    provideFormatter = true,
+    embeddedLanguages = {
+      css = true,
+      javascript = true,
+    },
+  },
+  capabilities = capabilities,
+})
+
+vim.lsp.enable('html')

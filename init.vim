@@ -2,7 +2,6 @@ if $TERM_PROGRAM != "Apple_Terminal"
     set termguicolors
 endif
 syntax on
-set ts=2 sw=2
 set nostartofline
 set number
 set mouse=a
@@ -28,6 +27,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'yamatsum/nvim-cursorline'
 Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main' }
 Plug 'folke/todo-comments.nvim'
@@ -68,6 +68,12 @@ Plug 'Skosulor/nibbler'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'sheerun/vim-polyglot'
 Plug 'numtostr/comment.nvim'
+Plug 'mihovilrak/scroll.nvim'
+Plug 'blackhat-7/vellum.nvim'
+Plug 'kevalin/mermaid.nvim'
+Plug 'vgraman0/glinter'
+Plug 'brianhuster/live-preview.nvim'
+Plug 'rmagatti/auto-session'
 call plug#end()
 
 lua << EOF
@@ -108,3 +114,8 @@ highlight LspInlayHint guibg=#707772
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType markdown setlocal linebreak
+
+set noexpandtab
+set softtabstop=2
+set shiftwidth=2
+set softtabstop=2
