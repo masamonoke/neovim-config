@@ -162,6 +162,8 @@ require('mini.surround').setup()
 require('mini.indentscope').setup({
 	symbol = '┃'
 })
+require('mini.notify').setup()
+require('mini.starter').setup()
 
 require("todo-comments").setup {}
 
