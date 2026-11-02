@@ -1,4 +1,4 @@
-local capabilities = require('blink.cmp').get_lsp_capabilities()
+vim.lsp.inlay_hint.enable(true)
 
 require('blink.cmp').setup({
 	completion = { documentation = { auto_show = true } },
@@ -7,9 +7,20 @@ require('blink.cmp').setup({
 		['<C-j>'] = { 'snippet_forward', 'fallback' },
 		['<C-k>'] = { 'snippet_backward', 'fallback' },
 		['<A-j>'] = { 'select_next', 'fallback' },
-		['<A-k>'] = { 'select_prev', 'fallback' }
+		['<A-k>'] = { 'select_prev', 'fallback' },
+		["<A-Space>"] = {
+			function(cmp)
+				if cmp.is_visible() then
+					cmp.hide()
+				else
+					cmp.show()
+				end
+				return true
+			end,
+		},
 	}
 })
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 vim.lsp.config('clangd', {
 	capabilities = capabilities,
@@ -35,15 +46,6 @@ vim.lsp.enable('pyright')
 
 vim.lsp.config('bashls', {})
 vim.lsp.enable('bashls')
-
-vim.lsp.config('marksman', {})
-vim.lsp.enable('marksman')
-
-vim.lsp.config('gopls', {})
-vim.lsp.enable({ 'gopls' })
-
-vim.lsp.config('csharp-ls', {})
-vim.lsp.enable('csharp-ls')
 
 vim.lsp.config.rust_analyzer = {
 	capabilities = capabilities,
@@ -95,41 +97,6 @@ vim.lsp.config('lua_ls', {
 })
 vim.lsp.enable('lua_ls')
 
-local swift_lsp = vim.api.nvim_create_augroup("swift_lsp", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "swift" },
-	callback = function()
-		local root_dir = vim.fs.dirname(vim.fs.find({
-			"Package.swift",
-			".git",
-		}, { upward = true })[1])
-		local client = vim.lsp.start({
-			name = "sourcekit-lsp",
-			cmd = { "sourcekit-lsp" },
-			root_dir = root_dir,
-		})
-		if client ~= nil then
-			vim.lsp.buf_attach_client(0, client)
-		end
-	end,
-	group = swift_lsp,
-})
-
-vim.lsp.config("armls", {
-	cmd = { "armls" },
-	filetypes = { "asm", "s", "S" },
-	settings = {
-		armls = {
-			diagnostics = {
-				enable = false
-			},
-		},
-	},
-})
-vim.lsp.enable("armls")
-
-vim.lsp.inlay_hint.enable(true)
-
 vim.lsp.config('html', {
   cmd = { 'vscode-html-language-server', '--stdio' },
   filetypes = { 'html', 'templ' },
@@ -143,5 +110,4 @@ vim.lsp.config('html', {
   },
   capabilities = capabilities,
 })
-
 vim.lsp.enable('html')

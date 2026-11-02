@@ -10,9 +10,6 @@ set nowrap
 set hlsearch
 set clipboard+=unnamedplus
 set noshowmode
-" strange bug with it, if you enable it and try to open a file like "nvim file"
-" neovim will not set any filetype for some reason
-"set filetype=on
 set cursorline
 set guicursor=n-v-c:block,i:ver25
 set foldmethod=syntax
@@ -34,7 +31,7 @@ Plug 'folke/todo-comments.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'smoka7/hop.nvim'
-Plug 'folke/noice.nvim', { 'tag': 'v4.10.0' }
+Plug 'folke/noice.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'NMAC427/guess-indent.nvim'
@@ -59,8 +56,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'Saghen/blink.cmp', { 'branch': 'v1' }
 Plug 'folke/trouble.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
-" TODO: replaced by snacks' scroll, in future updates remove
-"Plug 'karb94/neoscroll.nvim'
 Plug 'nvim-mini/mini.nvim'
 Plug 'olimorris/codecompanion.nvim'
 Plug 'dchinmay2/clangd_extensions.nvim'
@@ -79,29 +74,16 @@ call plug#end()
 lua << EOF
 require("plugin")
 require("lsp")
-require("postinit")
+require("autocmd")
+require("shortcut")
 EOF
-
-noremap <Tab> :bn<CR>
-noremap <S-Tab> :bp<CR>
-nnoremap <F4> :bp \| sp \| bn \| bd<CR>
-nnoremap <C-p> <C-i>
 
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 
-nnoremap <F1> :Telescope buffers <CR>
-nnoremap <F2> :Telescope find_files<CR>
-nnoremap <F3> :Telescope live_grep<CR>
-nnoremap <F5> :Telescope current_buffer_fuzzy_find<CR>
-
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
-
-nnoremap <C-g> :NvimTreeToggle <CR>
 
 set undofile
 set undodir=~/.vim/undo
-
-nnoremap f :HopWord<CR>
 
 au BufNewFile,BufRead *.wgsl set filetype=wgsl
 
