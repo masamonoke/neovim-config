@@ -69,6 +69,9 @@ Plug 'kevalin/mermaid.nvim'
 Plug 'vgraman0/glinter'
 Plug 'brianhuster/live-preview.nvim'
 Plug 'rmagatti/auto-session'
+Plug 'chrisgrieser/nvim-recorder'
+Plug 'kylechui/nvim-surround'
+Plug 'CoreyKaylor/diffbandit.nvim'
 call plug#end()
 
 lua << EOF
@@ -91,13 +94,14 @@ xnoremap d "_d
 
 vnoremap < <gv
 vnoremap > >gv
+nnoremap ciw "_ciw
 
 highlight LspInlayHint guibg=#707772
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType markdown setlocal linebreak
 
-set noexpandtab
-set softtabstop=2
+set tabstop=2
 set shiftwidth=2
-set softtabstop=2
+set softtabstop=0
+set noexpandtab

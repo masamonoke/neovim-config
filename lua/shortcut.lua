@@ -66,3 +66,13 @@ map.set('n', '<F5>', '<cmd>Telescope current_buffer_fuzzy_find<CR>')
 map.set('n', '<C-g>', '<cmd>NvimTreeToggle<CR>')
 
 map.set('n', 'f', '<cmd>HopWord<CR>')
+
+local columlimit = "120"
+vim.opt.colorcolumn = ""
+vim.keymap.set('n', '<leader>cc', function()
+  if vim.wo.colorcolumn == "" then
+    vim.wo.colorcolumn = columlimit
+  else
+    vim.wo.colorcolumn = ""
+  end
+end, { desc = "Toggle Color Column", silent = true })

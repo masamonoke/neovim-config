@@ -111,3 +111,10 @@ vim.lsp.config('html', {
   capabilities = capabilities,
 })
 vim.lsp.enable('html')
+
+vim.lsp.config.asm_lsp = {
+  cmd = { "asm-lsp" },
+  filetypes = { "asm" },
+  root_markers = { ".asm-lsp.toml", ".git" },
+}
+vim.lsp.enable("asm_lsp")

@@ -158,12 +158,10 @@ require("snacks").setup({
 })
 
 require('mini.trailspace').setup()
-require('mini.surround').setup()
 require('mini.indentscope').setup({
 	symbol = '┃'
 })
 require('mini.notify').setup()
-require('mini.starter').setup()
 
 require("todo-comments").setup {}
 
@@ -255,3 +253,10 @@ require('vellum').setup()
 require("mermaid").setup()
 
 require("auto-session").setup()
+
+require("recorder").setup({})
+require("recorder").recordingStatus()
+
+require("nvim-surround").setup()
+
+require("diffbandit").setup()
