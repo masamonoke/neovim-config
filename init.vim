@@ -72,6 +72,9 @@ Plug 'rmagatti/auto-session'
 Plug 'chrisgrieser/nvim-recorder'
 Plug 'kylechui/nvim-surround'
 Plug 'CoreyKaylor/diffbandit.nvim'
+Plug 'FabijanZulj/blame.nvim'
+Plug 'olimorris/codecompanion.nvim'
+Plug 'stevearc/dressing.nvim'
 call plug#end()
 
 lua << EOF

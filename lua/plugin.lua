@@ -106,6 +106,8 @@ require('gitsigns').setup {
 	},
 }
 
+require('blame').setup {}
+
 require("gruvbox").setup({
 	italic = {
 		strings = true,
@@ -210,7 +212,33 @@ treesitter.setup({
 
 vim.api.nvim_set_hl(0, "StatusLine", { reverse = false })
 vim.api.nvim_set_hl(0, "StatusLineNC", { reverse = false })
-require('lualine').setup()
+local function macro_recording()
+  local register = vim.fn.reg_recording()
+
+  if register == "" then
+    return ""
+  end
+
+  return "󰑋 REC @" .. register
+end
+vim.api.nvim_create_autocmd({ "RecordingEnter", "RecordingLeave" }, {
+  callback = function()
+    require("lualine").refresh({ scope = "all" })
+  end,
+})
+require("lualine").setup({
+  sections = {
+    lualine_x = {
+      {
+        macro_recording,
+        color = { fg = "#ff5555", gui = "bold" },
+      },
+      "encoding",
+      "fileformat",
+      "filetype",
+    },
+  },
+})
 
 require("trouble").setup {}
 
@@ -260,3 +288,31 @@ require("recorder").recordingStatus()
 require("nvim-surround").setup()
 
 require("diffbandit").setup()
+
+require("codecompanion").setup({
+  strategies = {
+    chat = {
+      adapter = "ollama",
+    },
+    inline = {
+      adapter = "ollama",
+    },
+    cmd = {
+      adapter = "ollama",
+    },
+  },
+  adapters = {
+    ollama = function()
+      return require("codecompanion.adapters").extend("ollama", {
+        schema = {
+          model = {
+            default = "qwen3.8:27b",
+          },
+          num_ctx = {
+            default = 16384,
+          },
+        },
+      })
+    end,
+  },
+})
