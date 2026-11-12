@@ -262,7 +262,13 @@ vim.g.VM_filetypes = {
 
 require('guess-indent').setup {}
 
-require('Comment').setup()
+require('Comment').setup({
+	padding = false
+})
+
+local ft = require('Comment.ft')
+ft.set('c', { '//%s', '/*%s*/' })
+ft.set('cpp', { '//%s', '/*%s*/' })
 
 require("scroll").setup({
 	minimap = false,
@@ -289,30 +295,4 @@ require("nvim-surround").setup()
 
 require("diffbandit").setup()
 
-require("codecompanion").setup({
-  strategies = {
-    chat = {
-      adapter = "ollama",
-    },
-    inline = {
-      adapter = "ollama",
-    },
-    cmd = {
-      adapter = "ollama",
-    },
-  },
-  adapters = {
-    ollama = function()
-      return require("codecompanion.adapters").extend("ollama", {
-        schema = {
-          model = {
-            default = "qwen3.8:27b",
-          },
-          num_ctx = {
-            default = 16384,
-          },
-        },
-      })
-    end,
-  },
-})
+require("which-key").setup()

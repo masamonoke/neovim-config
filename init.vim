@@ -75,6 +75,7 @@ Plug 'CoreyKaylor/diffbandit.nvim'
 Plug 'FabijanZulj/blame.nvim'
 Plug 'olimorris/codecompanion.nvim'
 Plug 'stevearc/dressing.nvim'
+Plug 'folke/which-key.nvim'
 call plug#end()
 
 lua << EOF
@@ -82,6 +83,7 @@ require("plugin")
 require("lsp")
 require("autocmd")
 require("shortcut")
+require("llm")
 EOF
 
 au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
